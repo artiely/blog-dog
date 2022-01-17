@@ -1,0 +1,9 @@
+/* Nunito */
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Nunito'), local('Nunito'), url('../fonts/Nunito.woff2') format('woff2');
+  font-display: fallback;
+}

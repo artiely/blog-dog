@@ -1,0 +1,28 @@
+{
+  "name": "vuepress-starter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "artiely <1119696785@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "dependencies": {
+    "@vuepress/plugin-register-components": "^2.0.0-beta.33",
+    "address": "^1.1.2",
+    "co": "^4.6.0",
+    "colorthief": "^2.3.2",
+    "dayjs": "^1.10.7",
+    "express": "^4.17.2",
+    "js-yaml": "^4.1.0",
+    "loadsh": "^0.0.4",
+    "reading-time": "^1.5.0",
+    "remove-markdown": "^0.3.0",
+    "unocss": "^0.22.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "vuepress": "^2.0.0-beta.33"
+  }
+}
