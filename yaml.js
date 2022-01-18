@@ -183,7 +183,7 @@ const writeYaml = (contentArray, newYaml, dir) => {
   }
   fs.writeFileSync(dir, contentArray.join("\r\n"));
 };
-const  getPostsSidebar=(dir)=> {
+const  getPosts=(dir)=> {
   let files = readFiles(dir);
   files = files.map((fileDir) => {
     // 读取内容
@@ -198,4 +198,4 @@ const  getPostsSidebar=(dir)=> {
   });
 }
 
-getPostsSidebar(path.resolve(__dirname, "./docs/posts"));
+getPosts(path.resolve(__dirname, "./docs/posts"));
