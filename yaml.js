@@ -4,10 +4,10 @@ const path = require("path");
 const yaml = require("js-yaml");
 const removeMd = require("remove-markdown");
 const execSync = require("child_process").execSync;
-
+const readingTime = require("reading-time");
 const dayjs = require("dayjs");
 
-function readDir(entry, files) {
+const readDir=(entry, files)=> {
   const dirInfo = fs.readdirSync(entry);
 
   dirInfo.forEach((item) => {
@@ -23,7 +23,7 @@ function readDir(entry, files) {
   });
 }
 
-function readFiltes(dir) {
+const readFiles=(dir)=> {
   let files = [];
   readDir(dir, files);
   return files;
@@ -130,7 +130,7 @@ const getCoverColor = (cover) => {
         resolve([primary, secondary]);
       });
     } catch {
-      resolve([dddddd, 333333]);
+      resolve(['dddddd', '8085ab']);
     }
   });
 };
@@ -150,6 +150,10 @@ const replaceYaml = (yamlJson = {}, dir, content, contentArray) => {
     const [primary, secondary] = await getCoverColor(yaml.cover);
     yaml.primary = yamlJson.primary || primary;
     yaml.secondary = yamlJson.secondary || secondary;
+    let tim = readingTime(content);
+    yaml.readTime = yamlJson.readTime||tim.text;
+    yaml.words = yamlJson.words||tim.words;
+
     resolve({ ...yamlJson, ...yaml });
   });
 };
@@ -179,8 +183,8 @@ const writeYaml = (contentArray, newYaml, dir) => {
   }
   fs.writeFileSync(dir, contentArray.join("\r\n"));
 };
-function getPostSidebar(dir) {
-  let files = readFiltes(dir);
+const  getPostsSidebar=(dir)=> {
+  let files = readFiles(dir);
   files = files.map((fileDir) => {
     // 读取内容
     let [content, contentArray] = contentToArray(fileDir);
@@ -189,66 +193,9 @@ function getPostSidebar(dir) {
     replaceYaml(yamlJson, fileDir, content, contentArray).then((res) => {
       // 修改
       let newYaml = jsonToYamlArr(res);
-      console.log(
-        "🚀 ~ file: color.js ~ line 175 ~ files=files.map ~ newYaml",
-        newYaml
-      );
       writeYaml(contentArray, newYaml, fileDir);
     });
-
-    // let res = replaceYaml(yamlToJson(yamlData()),item,content)
-    // console.log("🚀 ~ file: color.js ~ line 142 ~ files=files.map ~ res", res)
-
-    // let re = /---(.*?)---/gs;
-    // let s = re.exec(content);
-    // let frontmatters = s && s[1] ? s[1] : {};
-    // let json = yaml.load(frontmatters);
-    // // console.log(json);
-    // // console.log(s);
-    // let data = fs.readFileSync(item, "utf8").split(/\r\n|\n|\r/gm);
-    // console.log(">>>>");
-
-    // yamlToJson(yamlData(data));
-    // fs.stat(item, (err, stats) => {
-    //   console.log(
-    //     "🚀 ~ file: color.js ~ line 45 ~ files=files.map ~ res",
-    //     stats.birthtime
-    //   );
-    // });
-    // let json = {
-    //   primary: [41, 116, 209],  // 图片主色调
-    //   secondary: [41, 116, 209], // 图片的对比色
-    //   title: "Electron 镜像下载慢的解决办法", // 文章的标题没有取文章的第一个#
-    //   tag: ["electron"], // 非必须
-    //   author: "Artiely", // 没有就取git，没有就取空
-    //   date: "2020-3-18", // 时间没有当前
-    //   cover:
-    //     "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", // 封面
-    //   base64: "2e7bd7",
-    //   summary: '' 文章简介 没有就文章200字截取
-    //   category: "electron",// 分类 非必须
-    // };
-    // console.log()
-
-    // let frontmattersArr = [];
-    // ColorThief.getColor(json.cover).then((color) => {
-    //   let primary = rgbToHex(color[0], color[1], color[2]);
-    //   let secondary = rgbToHex(255 - color[0], 255 - color[1], 255 - color[2]);
-    //   frontmattersArr.push(`primary: ${primary}`);
-    //   frontmattersArr.push(`secondary: ${secondary}`);
-
-    //   if (!json.title) {
-    //     const title = data.filter((v) => {
-    //       return v.startsWith("#");
-    //     })[0];
-    //     frontmattersArr.push(`title: [${title}]`);
-    //   }
-
-    //   console.log(frontmattersArr);
-    //   data.splice(1, 0, ...frontmattersArr);
-    //   // fs.writeFileSync(item, data.join('\r\n'))
-    // });
   });
 }
 
-getPostSidebar(path.resolve(__dirname, "./docs/post"));
+getPostsSidebar(path.resolve(__dirname, "./docs/posts"));

@@ -1,0 +1,52 @@
+:root {
+  --prism-foreground: #393a34;
+  --prism-background: #fbfbfb;
+  --prism-comment: #a0ada0;
+  --prism-string: #b56959;
+  --prism-literal: #2f8a89;
+  --prism-keyword: #1c6b48;
+  --prism-function: #6c7834;
+  --prism-deleted: #a14f55;
+  --prism-class: #2993a3;
+  --prism-builtin: #ab5959;
+  --prism-property: #b58451;
+  --prism-namespace: #b05a78;
+  --prism-punctuation: #8e8f8b;
+  --prism-decorator: #bd8f8f;
+  --prism-number: #296aa3;
+  --prism-boolean: #1c6b48;
+  --prism-constant: #a65e2b;
+  --prism-regex: #ab5e3f;
+  --prism-json-property: #698c96;
+
+  --code-bg-color:#fafafa;
+  --code-font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --code-font-size:15px;
+
+  --text-color: rgba(44, 62, 80,.8);
+  --code-hl-bg-color: #eee;
+}
+pre,code{
+  font-family: var(--code-font-family);
+  font-size: var(--code-font-size);
+}
+pre code{
+  background: none;
+  font-family: var(--code-font-family);
+  font-size: var(--code-font-size);
+}
+pre code *{
+  font-family: var(--code-font-family);
+  font-size: var(--code-font-size);
+}
+div[class*=language-].line-numbers-mode .line-numbers .line-number{
+  font-size: var(--code-font-size);
+}
+div[class*=language-].line-numbers-mode .line-numbers{
+  line-height: 1.5;
+  padding-top: 1rem;
+}
+p{
+  color:var(--text-color);
+  letter-spacing: 1px;
+}

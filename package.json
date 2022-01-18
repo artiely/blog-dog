@@ -6,9 +6,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "vuepress dev docs",
+    "dev2": "vuepress dev docs2",
     "build": "vuepress build docs"
   },
   "dependencies": {
+    "@vuepress/plugin-prismjs": "^2.0.0-beta.4",
     "@vuepress/plugin-register-components": "^2.0.0-beta.33",
     "address": "^1.1.2",
     "co": "^4.6.0",

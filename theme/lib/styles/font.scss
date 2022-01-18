@@ -7,3 +7,10 @@
   src: local('Nunito'), local('Nunito'), url('../fonts/Nunito.woff2') format('woff2');
   font-display: fallback;
 }
+@font-face {
+  font-family: 'Consolas';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/consola.ttf');
+  font-display: fallback;
+}

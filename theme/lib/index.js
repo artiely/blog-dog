@@ -37,8 +37,14 @@ function readFiltes(dir) {
   readDir(dir, files);
   return files;
 }
-function getPostSidebar(dir) {
-  let files = readFiltes(dir);
+function getPostsSidebar(dir) {
+  let files=[]
+  try {
+    files = readFiltes(dir);
+  }catch (e) {
+    console.log("🚀 ~ file: index.js ~ line 45 ~ getPostsSidebar ~ 请设置正确的postsDir", e)
+  }
+  
   files = files
     .map( (item) => {
       // 读取内容
@@ -158,7 +164,7 @@ function getPostSidebar(dir) {
   console.log(files)
   return {
     power: "artiely",
-    post: files,
+    posts: files,
     tags,
     timeline,
   }
@@ -179,7 +185,7 @@ const dogTheme = (options, app) => {
         path: '/',
         // 设置 frontmatter
         frontmatter: {
-          layout: 'Home',
+          layout: 'Layout',
         },
       })
       // 把它添加到 `app.pages`
@@ -194,7 +200,7 @@ const dogTheme = (options, app) => {
     },
     extends:'@vuepress/theme-default',
     define: {
-      __POST__:  getPostSidebar(options.articlesDir),
+      __POSTS__:  getPostsSidebar(options.postsDir),
       __NAVBAR__: options.navbar
     },
     extendsPageData: (page) => {
@@ -231,6 +237,11 @@ const dogTheme = (options, app) => {
           componentsDir: path.resolve(__dirname, './layouts'),
         },
       ],
+      [
+        '@vuepress/plugin-prismjs',{
+          preloadLanguages:['markdown', 'jsdoc', 'yaml']
+        }
+      ]
     ]
     
   }

@@ -1,0 +1,6 @@
+---
+#layout: CustomHome
+---
+# foo
+
+<Test />

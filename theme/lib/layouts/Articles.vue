@@ -1,18 +1,23 @@
 <template>
   <div class="article-wrapper">
-    <article class="article" v-for="item in post">
+    <article class="article" v-for="item in posts">
       <div class="poster-wrapper" v-if="item.frontmatter">
-        <div class="category" v-if="item.frontmatter.category">
-          <span
-            class="category-inner"
-            :style="{
-              backgroundColor: `#${item.frontmatter.secondary}`,
-              color: `#${item.frontmatter.primary}`,
-            }"
-            >{{ item.frontmatter.category }}</span
-          >
-        </div>
-        <Cover :item="item" />
+        <a :href="item.link">
+          <div class="category" v-if="item.frontmatter.category">
+            <span
+              class="category-inner"
+              :style="{
+                backgroundColor: hexToRgba(
+                  `#${item.frontmatter.secondary}`,
+                  0.6
+                ),
+                color: `#${item.frontmatter.primary}`,
+              }"
+              >{{ item.frontmatter.category }}</span
+            >
+          </div>
+          <Cover :item="item" />
+        </a>
       </div>
       <div class="article-info" v-if="item.frontmatter">
         <h1 class="article-title">
@@ -31,7 +36,11 @@
         </div>
 
         <div class="more">
-          <span>{{ item.frontmatter.text }}</span>
+          <span
+            >{{ item.frontmatter.words }}字/{{
+              parseInt(item.frontmatter.readTime)
+            }}分钟</span
+          >
           <span class="read">阅读全文-></span>
         </div>
       </div>
@@ -40,11 +49,13 @@
 </template>
 <script setup>
 import Cover from "./Cover.vue";
-const post = __POST__.post;
+import { hexToRgba } from "../utils/index.js";
+const posts = __POSTS__.posts;
 </script>
 <style lang="scss" scoped>
+@import "../styles/var.scss";
 .article-wrapper {
-  max-wrapper: 1200px;
+  max-wrapper: $main_width;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,6 +69,7 @@ const post = __POST__.post;
     width: 100%;
     overflow: hidden;
     position: relative;
+    /* background: #ddd; */
   }
   .article-info {
     padding: 20px;
@@ -74,6 +86,7 @@ const post = __POST__.post;
     right: 0;
     z-index: 12;
     .category-inner {
+      backdrop-filter: saturate(180%) blur(10px);
       display: -webkit-flex;
       display: flex;
       -webkit-justify-content: center;

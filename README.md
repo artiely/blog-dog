@@ -149,21 +149,30 @@ import Layout from "@theme/Layout.vue";
 ```
 
 # Frontmatter
-
+可插件生成的
 ```yaml
 ---
-# 自定义页面的类
-pageClass: custom-page-class 
-# 页面的语言。
-lang:  
 #页面的标题。
 title: 
 #页面的描述
 description:
-#页面 <head> 标签内添加的额外标签。
-head:
+summary:
 # 页面的创建日期。
 date: 
+#阅读时间
+readTime: 2 min read
+# 文字统计
+words: 172
+# 文章封面
+cover: 
+---
+
+```
+非必须的
+```yaml
+
+#一个系列的文章拥有一样的group值
+group: npm系列
 #页面的永久链接。
 permalink:
 permalinkPattern:
@@ -171,8 +180,33 @@ permalinkPattern:
 layout:
 #是否在当前页面的外部链接的后面添加外链图标。
 externalIcon:
----
-
+#页面 <head> 标签内添加的额外标签。
+head:
+# 自定义页面的类
+pageClass: custom-page-class 
+# 页面的语言。
+lang:  
 ```
 
 # 如何为你的网站开启搜索
+
+todo:
+
+
+# 布局替换规则
+
+```
+---
+#layout: CustomHome #全局替换整个页面，你有更大的自由度。
+---
+# foo
+
+<Test /> # 渲染到`.md-body`中
+```
+
+如果你想全局部分替换可以再`CustomHome`导入主题自带组件
+主题提供的自带组件目前有
+```js
+import Navbar from '@theme/Navbar.vue'
+import Navbar from '@theme/Layout.vue'
+```

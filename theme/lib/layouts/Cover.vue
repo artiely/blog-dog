@@ -20,19 +20,8 @@ import { ref } from "vue";
 const props = defineProps({
   item: Object,
 });
-const hexToRgba = (hex, opacity) => {
-  return (
-    "rgba(" +
-    parseInt("0x" + hex.slice(1, 3)) +
-    "," +
-    parseInt("0x" + hex.slice(3, 5)) +
-    "," +
-    parseInt("0x" + hex.slice(5, 7)) +
-    "," +
-    opacity +
-    ")"
-  );
-};
+import {hexToRgba} from '../utils/index.js'
+
 let isLoaded = ref(false);
 const imgLoaded = () => {
   console.log("加载完毕");
