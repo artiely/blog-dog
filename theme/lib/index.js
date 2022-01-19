@@ -4,7 +4,7 @@ const ColorThief = require('colorthief');
 const { createPage } = require('@vuepress/core');
 // const Unocss =require('unocss/vite').default
 // const  presetWind = require('@unocss/preset-wind').default
-const co=require('co')
+// const co=require('co')
 // const  WindiCSS = require('vite-plugin-windicss').default
 // const toc = require("markdown-toc");
 // const styleImport = require("vite-plugin-style-import").default;
@@ -57,8 +57,6 @@ function getPostsSidebar(dir) {
       json.date = dayjs(json.date).format("YYYY-MM-DD");
       json.author = json.author || "Artiely";
       json.password = json.password || false;
-      json.author =
-        json.author.slice(0, 1).toUpperCase() + json.author.slice(1);
       json.base64 = json.base64 || "fafafa";
       json.summary = json.password
         ? "加密内容"

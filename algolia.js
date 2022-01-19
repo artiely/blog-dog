@@ -1,11 +1,11 @@
-const path = require('path')
+const path = require("path");
 const execSync = require("child_process").execSync;
 // 修改
-const index_name = 'xx'
+const index_name = "xx";
 // 修改
-const domain = 'http://'
+const domain = "http://";
 // 修改
-const postsDir = path.resolve(__dirname, './xx')
+const postsDir = path.resolve(__dirname, "./xx");
 
 const searchConfig = {
   index_name: index_name,
@@ -26,7 +26,7 @@ const searchConfig = {
   },
   nb_hits: 100,
 };
-const readDir=(entry, files)=> {
+const readDir = (entry, files) => {
   const dirInfo = fs.readdirSync(entry);
 
   dirInfo.forEach((item) => {
@@ -40,33 +40,30 @@ const readDir=(entry, files)=> {
       }
     }
   });
-}
+};
 
-const readFiles=(dir)=> {
+const readFiles = (dir) => {
   let files = [];
   readDir(dir, files);
   return files;
-}
+};
 let files = readFiles(postsDir);
-try {
-  const urls = files.map((v) => `${domain}${v.link}`);
-  searchConfig.start_urls = [...searchConfig.start_urls, ...urls];
+const urls = files.map((v) => `${domain}${v.link}`);
+searchConfig.start_urls = [...searchConfig.start_urls, ...urls];
 // TODO: 验证是否可行
-  // execSync(`docker run -it --env-file=.env -e "CONFIG=${JSON.stringify(searchConfig)}" algolia/docsearch-scraper`)
+ execSync(`docker run -it --env-file=.env -e "CONFIG=${JSON.stringify(searchConfig)}" algolia/docsearch-scraper`)
 
-  fs.writeFile(
-    path.join(path.dirname(__dirname), "../config.json"),
-    JSON.stringify(searchConfig),
-    function (error) {
-      if (error) {
-        console.log("写入失败");
-      } else {
-        execSync(`docker run -it --env-file=.env -e "CONFIG=$(cat config.json | jq -r tostring)" algolia/docsearch-scraper`)
-        // console.log("写入成功了");
-      }
-    }
-  );
-} catch (error) {
-  console.log("🚀 ~ file: config.js ~error", error);
-}
-
+// fs.writeFile(
+//   path.join(path.dirname(__dirname), "../config.json"),
+//   JSON.stringify(searchConfig),
+//   function (error) {
+//     if (error) {
+//       console.log("写入失败");
+//     } else {
+//       execSync(
+//         `docker run -it --env-file=.env -e "CONFIG=$(cat config.json | jq -r tostring)" algolia/docsearch-scraper`
+//       );
+//       // console.log("写入成功了");
+//     }
+//   }
+// );

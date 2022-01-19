@@ -1,3 +1,4 @@
+// 基本样式白色主题
 :root {
   --prism-foreground: #393a34;
   --prism-background: #fbfbfb;
@@ -19,34 +20,52 @@
   --prism-regex: #ab5e3f;
   --prism-json-property: #698c96;
 
-  --code-bg-color:#fafafa;
-  --code-font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-  --code-font-size:15px;
-
-  --text-color: rgba(44, 62, 80,.8);
+  --code-bg-color: #fafafa;
+  --font-family-code: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  --code-font-size: 15px;
+  --font-family: Optima-Regular, PingFangTC-light;
+  --text-color: rgba(44, 62, 80, 0.8);
   --code-hl-bg-color: #eee;
+  --nav-bg:rgba(--c-bg,0.5);
+  // --md-body-bg-color: #fff;
 }
-pre,code{
-  font-family: var(--code-font-family);
+html {
+  -webkit-font-smoothing: antialiased;
+}
+.md-body {
+  // background: var(--md-body-bg-color);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px 20px 60px 20px;
+  img {
+    max-width: 100%;
+    display: block;
+  }
+}
+pre,
+code {
+  font-family: var(--font-family-code);
   font-size: var(--code-font-size);
 }
-pre code{
+pre code {
   background: none;
-  font-family: var(--code-font-family);
+  font-family: var(--font-family-code);
   font-size: var(--code-font-size);
 }
-pre code *{
-  font-family: var(--code-font-family);
+pre code * {
+  // font-family: var(--code-font-family);
   font-size: var(--code-font-size);
 }
-div[class*=language-].line-numbers-mode .line-numbers .line-number{
+div[class*="language-"].line-numbers-mode .line-numbers .line-number {
   font-size: var(--code-font-size);
 }
-div[class*=language-].line-numbers-mode .line-numbers{
+div[class*="language-"].line-numbers-mode .line-numbers {
   line-height: 1.5;
   padding-top: 1rem;
 }
-p{
-  color:var(--text-color);
+p {
+  color: var(--text-color);
   letter-spacing: 1px;
 }

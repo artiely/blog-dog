@@ -15,7 +15,7 @@
 </template>
 <script setup>
 import { useSiteData, usePageData } from "@vuepress/client";
-import { markRaw, toRaw } from "vue";
+import { markRaw, toRaw,onMounted } from "vue";
 import Home from "./Home.vue";
 import Detail from "./Detail.vue";
 import NavBar from "./NavBar.vue";
@@ -23,12 +23,12 @@ import Footer from "./Footer.vue";
 
 let dynamic = usePageData().value.path == "/" ? Home : Detail;
 // let dynamic = usePageData().value.path == "/" ? Detail : Detail;
+onMounted(()=>{
+  document.querySelector('html').classList.add('newsprint')
+})
 </script>
 <style lang="scss">
-* {
-  font-family: Nunito, sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
+
 @import '../styles/var.scss';
 @import '../styles/index.scss';
 /* 从调色板中引入变量 */

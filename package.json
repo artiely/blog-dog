@@ -13,7 +13,6 @@
     "@vuepress/plugin-prismjs": "^2.0.0-beta.4",
     "@vuepress/plugin-register-components": "^2.0.0-beta.33",
     "address": "^1.1.2",
-    "co": "^4.6.0",
     "colorthief": "^2.3.2",
     "dayjs": "^1.10.7",
     "express": "^4.17.2",

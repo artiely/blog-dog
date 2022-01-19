@@ -33,7 +33,7 @@ console.log(
   display: flex;
   align-items: center;
   backdrop-filter: saturate(180%) blur(20px);
-  background:$nav_bg;
+  background:var(--nav-bg);
   .nav{
     margin:0 auto;
     max-width: $main_width;
