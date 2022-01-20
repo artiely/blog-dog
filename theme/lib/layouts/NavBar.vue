@@ -1,5 +1,9 @@
 <template>
   <header class="header">
+  <span @click="handleTheme('')">light</span>
+  <span @click="handleTheme('dark')">dark</span>
+  <span @click="handleTheme('newsprint')">theme1</span>
+  <span @click="handleTheme('theme2')">theme2</span>
     <nav class="nav">
       <a :href="item.link"  v-for="item in navBar" class="link">{{ item.text }}</a>
       <ToggleDarkModeButton v-if="enableDarkMode" />
@@ -11,15 +15,15 @@ import { useSiteData, usePageData } from "@vuepress/client";
 import { useThemeLocaleData } from "@vuepress/plugin-theme-data/lib/client";
 
 import ToggleDarkModeButton from "@theme/ToggleDarkModeButton.vue";
-import { computed } from "vue";
+import { computed ,onMounted} from "vue";
 const navBar = __NAVBAR__;
 const themeLocale = useThemeLocaleData();
 const enableDarkMode = computed(() => themeLocale.value.darkMode);
-console.log(
-  "🚀 ~ file: NavBar.vue ~ line 6 ~ useSiteData, usePageData",
-  useSiteData().value,
-  usePageData().value
-);
+const handleTheme = (theme)=>{
+  document.querySelector('html').classList=theme
+}
+onMounted(()=>{
+})
 </script>
 <style lang="scss">
 @import '../styles/var.scss';

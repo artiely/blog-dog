@@ -223,7 +223,14 @@ const dogTheme = (options, app) => {
     markdown:{
 
     },
-    
+    extendsMarkdown: (md) => {
+      // md.use(require('markdown-it-attribution'), {
+      //   classNameContainer: 'md-body',
+      //   // classNameAttribution: 'c-quote__attribution',
+      //   marker: '>>',
+      //   removeMarker: false,
+      // })
+    },
     plugins: [
       [
         '@vuepress/plugin-palette',

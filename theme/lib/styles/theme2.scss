@@ -1,0 +1,46 @@
+html.theme2 {
+  --font-family:'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", 'Segoe UI Emoji', sans-serif;
+  body {
+    color: #595959;
+    // font-family: Optima-Regular, Optima, PingFangTC-Light, PingFangSC-light,
+    //   PingFangTC-light;
+    letter-spacing: 2px;
+    background-image: linear-gradient(
+        90deg,
+        rgba(50, 0, 0, 0.05) 3%,
+        rgba(0, 0, 0, 0) 3%
+      ),
+      linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
+    background-size: 20px 20px;
+    background-position: center center;
+  }
+  // h2{
+  //   padding-left: 22px;
+  //   position: relative;
+  //   &:before {
+  //     // position: absolute;
+  //     // left:0;
+  //     content: "";
+  //     // bottom: 0;
+  //     display: flex;
+  //     width: 20px;
+  //     height: 20px;
+  //     background-size: 20px 20px;
+  //     background-image: url(http://img.macrozheng.com/mall/md/fullstack-1.png);
+  //     // margin-bottom: -22px;
+  //     // margin-left: -22px;
+  //   }
+  // }
+  em {
+    background: #f6eeff;
+  }
+  strong {
+    color: #595959;
+    &::before {
+      content: "「";
+    }
+    &::after {
+      content: "」";
+    }
+  }
+}

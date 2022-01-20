@@ -23,9 +23,7 @@ import Footer from "./Footer.vue";
 
 let dynamic = usePageData().value.path == "/" ? Home : Detail;
 // let dynamic = usePageData().value.path == "/" ? Detail : Detail;
-onMounted(()=>{
-  document.querySelector('html').classList.add('newsprint')
-})
+
 </script>
 <style lang="scss">
 

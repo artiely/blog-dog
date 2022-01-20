@@ -974,11 +974,6 @@ clone@^1.0.2:
   resolved "https://registry.npm.taobao.org/clone/download/clone-1.0.4.tgz?cache=0&sync_timestamp=1589682821772&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fclone%2Fdownload%2Fclone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-co@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
-  integrity sha1-bqa989hTrlTMuOR7+gvz+QMfsYQ=
-
 color-convert@^2.0.1:
   version "2.0.1"
   resolved "https://registry.npmmirror.com/color-convert/download/color-convert-2.0.1.tgz#72d3a68d598c9bdb3af2ad1e84f21d896abd4de3"
@@ -1884,6 +1879,11 @@ markdown-it-anchor@^8.4.1:
   resolved "https://registry.npmmirror.com/markdown-it-anchor/download/markdown-it-anchor-8.4.1.tgz#29e560593f5edb80b25fdab8b23f93ef8a91b31e"
   integrity sha1-KeVgWT9e24CyX9q4sj+T74qRsx4=
 
+markdown-it-attribution@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/markdown-it-attribution/-/markdown-it-attribution-0.1.4.tgz#278e332a388faf26afcd92e2d97aa42e0286aa52"
+  integrity sha512-9oNU/Gb7gTyfJlLJKbMhijFfV/Frp+k4efoFwp5zgIDiBWFOXr986YfUHdGmQQz4hG0SMpjtAxGBBK+ukvZwaA==
+
 markdown-it-container@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npm.taobao.org/markdown-it-container/download/markdown-it-container-3.0.0.tgz#1d19b06040a020f9a827577bb7dbf67aa5de9a5b"
@@ -1893,11 +1893,6 @@ markdown-it-emoji@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/markdown-it-emoji/download/markdown-it-emoji-2.0.0.tgz#3164ad4c009efd946e98274f7562ad611089a231"
   integrity sha1-MWStTACe/ZRumCdPdWKtYRCJojE=
-
-markdown-it-table-of-contents@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-table-of-contents/-/markdown-it-table-of-contents-0.6.0.tgz#7c9e8d619fb12f88c9fb05a7b32b2fe932b9c541"
-  integrity sha512-jHvEjZVEibyW97zEYg19mZCIXO16lHbvRaPDkEuOfMPBmzlI7cYczMZLMfUvwkhdOVQpIxu3gx6mgaw46KsNsQ==
 
 markdown-it@^12.0.4, markdown-it@^12.3.2:
   version "12.3.2"

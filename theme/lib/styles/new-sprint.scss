@@ -1,14 +1,18 @@
 html.newsprint {
-  --active-file-bg-color: #dadada;
-  --active-file-bg-color: rgba(32, 43, 51, 0.63);
-  --active-file-text-color: white;
+  // --active-file-bg-color: #dadada;
+  // --active-file-bg-color: rgba(32, 43, 51, 0.63);
+  // --active-file-text-color: white;
   --c-bg: #f3f2ee;
-  --text-color: #1f0909;
-  --control-text-color: #444;
-  --rawblock-edit-panel-bd: #e5e5e5;
-  --select-text-bg-color: rgba(32, 43, 51, 0.63);
-  --select-text-font-color: white;
+  // --text-color: #1f0909;
+  // --control-text-color: #444;
+  // --rawblock-edit-panel-bd: #e5e5e5;
+  // --select-text-bg-color: rgba(32, 43, 51, 0.63);
+  // --select-text-font-color: white;
   --font-family: "PT Serif", "Times New Roman", Times, serif;
+}
+
+html.newsprint.dark {
+  --c-bg: #272622;
 }
 
 html.newsprint {
@@ -200,35 +204,35 @@ html.newsprint {
     border-bottom: 1px solid;
     border-left: none;
   }
-  h1 {
-    border-color: #c5c5c5;
-  }
-  blockquote {
-    border-color: #bababa;
-    color: #656565;
-  }
+  // h1 {
+  //   border-color: #c5c5c5;
+  // }
+  // blockquote {
+  //   border-color: #bababa;
+  //   color: #656565;
+  // }
 
   blockquote ul,
   blockquote ol {
     margin-left: 0;
   }
 
-  thead {
-    background-color: #dadada;
-  }
-  tr:nth-child(even) {
-    background: #e8e7e7;
-  }
-  hr {
-    border-color: #c5c5c5;
-  }
+  // thead {
+  //   background-color: #dadada;
+  // }
+  // tr:nth-child(even) {
+  //   background: #e8e7e7;
+  // }
+  // hr {
+  //   border-color: #c5c5c5;
+  // }
 
   blockquote {
     text-size-adjust: 100%;
     line-height: 1.55em;
     font-weight: 400;
     // border-radius: 6px;
-    color: #595959;
+    // color: #595959;
     font-style: normal;
     text-align: left;
     box-sizing: inherit;
@@ -236,13 +240,14 @@ html.newsprint {
     // border: 1px solid #1b900d;
     // background: #fafafa;
 		background:rgba(0,0,0,.05);
-		--b-color:#e3dac2;
+		--b-color:#555;
     &::before {
-      content: "❝";
+      content: "“";
       color: var(--b-color);
-      font-size: 34px;
-      line-height: 1;
+      font-size: 4em;
+      line-height: 1em;
       font-weight: 700;
+      font-family: Arial, serif;
     }
     // &::after {
     //   content: "❞";
@@ -250,7 +255,7 @@ html.newsprint {
     //   color: var(--b-color);
     // }
   }
-	blockquote>blockquote{
+	blockquote blockquote{
 		border: none;
 		padding-left: 0;
 		margin:0;
