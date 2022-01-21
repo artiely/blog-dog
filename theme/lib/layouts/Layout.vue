@@ -20,10 +20,14 @@ import Home from "./Home.vue";
 import Detail from "./Detail.vue";
 import NavBar from "./NavBar.vue";
 import Footer from "./Footer.vue";
-
+import Heti from 'heti/umd/heti-addon.min.js'
 let dynamic = usePageData().value.path == "/" ? Home : Detail;
 // let dynamic = usePageData().value.path == "/" ? Detail : Detail;
 
+onMounted(()=>{
+  // const heti = new Heti('.heti');
+  // heti.autoSpacing();
+})
 </script>
 <style lang="scss">
 

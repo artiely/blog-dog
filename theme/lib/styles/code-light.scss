@@ -35,6 +35,7 @@ html {
 }
 .md-body {
   // background: var(--md-body-bg-color);
+  font-family: var(--font-family);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   max-width: 900px;
   margin: 40px auto;
@@ -42,6 +43,9 @@ html {
   img {
     max-width: 100%;
     display: block;
+  }
+  s{
+    opacity: .5;
   }
   p a{
     border-bottom: 1px solid currentColor;
@@ -59,12 +63,13 @@ pre,
 code {
   font-family: var(--font-family-code);
   font-size: var(--code-font-size);
+  padding: 0;
 }
 pre code {
   background: none;
   font-family: var(--font-family-code);
   font-size: var(--code-font-size);
-  display: inline-block;
+  // display: inline-block;
 }
 pre code * {
   // font-family: var(--code-font-family);

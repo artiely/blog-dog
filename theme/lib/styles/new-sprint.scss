@@ -15,7 +15,8 @@ html.newsprint.dark {
   --c-bg: #272622;
 }
 
-html.newsprint {
+html.newsprint .md-body{
+  
   ol li {
     list-style-type: decimal;
     list-style-position: outside;
@@ -130,7 +131,7 @@ html.newsprint {
 
   ul,
   ol {
-    margin: 0 0 1.5em 1.5em;
+    // margin: 0 0 1em 1em;
   }
 
   table {
@@ -138,6 +139,9 @@ html.newsprint {
     /*24 / 16*/
     font-size: 1em;
     /* width: 100%; */
+    width: 100%;
+    display:table;
+    overflow-x: scroll;
   }
   thead th,
   tfoot th {
@@ -197,6 +201,7 @@ html.newsprint {
   h2,
   h3 {
     margin-bottom: 0.75em;
+    text-align: center;
   }
   hr {
     border-top: none;

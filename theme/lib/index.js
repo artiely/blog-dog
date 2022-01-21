@@ -2,7 +2,6 @@ const { path } = require('@vuepress/utils')
 const removeMd = require("remove-markdown");
 const ColorThief = require('colorthief');
 const { createPage } = require('@vuepress/core');
-// const Unocss =require('unocss/vite').default
 // const  presetWind = require('@unocss/preset-wind').default
 // const co=require('co')
 // const  WindiCSS = require('vite-plugin-windicss').default
@@ -15,6 +14,7 @@ const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const readingTime = require("reading-time");
+
 
 function readDir(entry, files) {
   const dirInfo = fs.readdirSync(entry);
@@ -191,11 +191,18 @@ const dogTheme = (options, app) => {
     }
   },
     name: 'vuepress-theme-dog',
-    alias: {
-      // 为可替换的组件设置别名
-      '@theme/Navbar.vue': path.resolve(__dirname, 'layouts/Navbar.vue'),
-      '@theme/Layout.vue': path.resolve(__dirname, 'layouts/Layout.vue'),
-    },
+    // alias: {
+    //   // 为可替换的组件设置别名
+    //   '@theme/Navbar.vue': path.resolve(__dirname, 'layouts/Navbar.vue'),
+    //   '@theme/Layout.vue': path.resolve(__dirname, 'layouts/Layout.vue'),
+    // },
+    alias: Object.fromEntries(fs
+      .readdirSync(path.resolve(__dirname, 'layouts'))
+      .filter((file) => file.endsWith('.vue'))
+      .map((file) => [
+      `@theme/${file}`,
+      path.resolve(__dirname, 'layouts', file),
+  ])),
     extends:'@vuepress/theme-default',
     define: {
       __POSTS__:  getPostsSidebar(options.postsDir),
@@ -230,23 +237,40 @@ const dogTheme = (options, app) => {
       //   marker: '>>',
       //   removeMarker: false,
       // })
+
+      md.use(require('./markdown/markdown-it-span.js')) // 在标题标签中添加span
+      .use(require('./markdown/markdown-it-table-container.js')) // 在表格外部添加容器
+      // .use(require('./markdown/markdown-it-math.js')) // 数学公式
+      // .use(require('markdown-it-math'))
+      // .use(require('markdown-it-katex'))
+      .use(require('markdown-it-table-of-contents'), {
+        transformLink: () => "",
+        includeLevel: [2, 3],
+        markerPattern: /^\[toc\]/im,
+      }) // TOC仅支持二级和三级标题
+      .use(require('markdown-it-implicit-figures'), {figcaption: true}) // 图示
+      .use(require('markdown-it-deflist')) // 定义列表
+      .use(require('./markdown/markdown-it-multiquote')) // 给多级引用加 class
+      .use(require('markdown-it-imsize'))
+      .use(require('markdown-it-ruby'));
+
     },
     plugins: [
-      [
-        '@vuepress/plugin-palette',
-        { preset: 'sass'},
-      ],
+      // [
+      //   '@vuepress/plugin-palette',
+      //   { preset: 'sass'},
+      // ],
       [
         '@vuepress/register-components',
         {
           componentsDir: path.resolve(__dirname, './layouts'),
         },
       ],
-      [
-        '@vuepress/plugin-prismjs',{
-          preloadLanguages:['markdown', 'jsdoc', 'yaml']
-        }
-      ]
+      // [
+      //   '@vuepress/plugin-prismjs',{
+      //     preloadLanguages:['markdown', 'jsdoc', 'yaml']
+      //   }
+      // ]
     ]
     
   }

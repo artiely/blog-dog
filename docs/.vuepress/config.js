@@ -1,6 +1,4 @@
 const { path } = require('@vuepress/utils')
-const Unocss =require('unocss/vite').default
-const  presetWind = require('@unocss/preset-wind').default
 module.exports = {
   base:'/',
   lang: 'zh-CN',
