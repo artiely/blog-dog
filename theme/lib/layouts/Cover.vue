@@ -53,7 +53,7 @@ const imgLoaded = () => {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 2;
   opacity: 0.8;
   backdrop-filter: saturate(180%) blur(20px);
   &:hover {

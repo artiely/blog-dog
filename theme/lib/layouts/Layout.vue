@@ -11,28 +11,23 @@
     <slot name="footer">
       <Footer />
     </slot>
+   
   </div>
 </template>
 <script setup>
-import { useSiteData, usePageData } from "@vuepress/client";
-import { markRaw, toRaw,onMounted } from "vue";
+
+import {  usePageData } from "@vuepress/client";
 import Home from "./Home.vue";
 import Detail from "./Detail.vue";
 import NavBar from "./NavBar.vue";
 import Footer from "./Footer.vue";
-import Heti from 'heti/umd/heti-addon.min.js'
-let dynamic = usePageData().value.path == "/" ? Home : Detail;
-// let dynamic = usePageData().value.path == "/" ? Detail : Detail;
 
-onMounted(()=>{
-  // const heti = new Heti('.heti');
-  // heti.autoSpacing();
-})
+let dynamic = usePageData().value.path == "/" ? Home : Detail;
+
 </script>
 <style lang="scss">
-
-@import '../styles/var.scss';
-@import '../styles/index.scss';
+@import "../styles/var.scss";
+@import "../styles/index.scss";
 /* 从调色板中引入变量 */
 @import "@vuepress/plugin-palette/palette";
 /* 设置变量的默认值 */
@@ -51,7 +46,38 @@ $color: red !default;
   flex-direction: column;
   .main {
     flex: 1;
-    padding-top:$nav_height;
+    padding-top: $nav_height;
   }
 }
+.sidebar {
+  background: none;
+  /* width:auto; */
+  /* position:relative;
+  top: 0; */
+}
+
+@media (max-width: 1400px) {
+  .sidebar-box {
+    display: none;
+  }
+}
+/* .dog-sidebar{
+  ul,ol{
+  list-style: none;
+  line-height:1.4;
+  padding-left:0;
+}
+.sidebar-item.sidebar-heading{
+  font-size:1em;
+  padding-left:0;
+}
+.sidebar-item:not(.sidebar-heading){
+  font-size:.6em;
+  line-height:1;
+  padding-left:1em;
+}
+.sidebar-item-children .sidebar-item-children .sidebar-item:not(.sidebar-heading){
+  padding-left:1em;
+}
+} */
 </style>

@@ -21,37 +21,50 @@ words: 908
 如图我们下载下来可以直接点击就安装了。
 
 如果安装失败，将下载包复制到一个指定的文件夹，重命名并解压。
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316121739.png)
+
 你也可以放在默认路径下，下图是如何查看路径
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316143153.png)
+
 解压后可以删除压缩包
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316122002.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316121904.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316121936.png)
+
 现在就可以访问谷歌商店了，当然你也可以使用谷歌搜索等
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316122132.png)
 
 ## 广告拦截
 去死吧！狗皮膏药。
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316122902.png)
 
 ## 清晰的历史记录
+
 历史记录按天分类
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316124229.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316124309.png)
 
 ## 可以整理你的标签<推荐>
 杂乱标签分类管理
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316125321.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316125224.png)
 
 ## 扩展程序管理
 轻松管理扩展程序的开关
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316131243.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316131321.png)
 
 ## 图片下载
 所有图片轻松下载
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316131845.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316131919.png)
 
@@ -61,18 +74,23 @@ words: 908
 
 ## 前端开发助手
 集成了前端常用工具
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316143527.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316143448.png)
 
 ## 优化github文件目录
 可以让你访问的github项目结构在左边清晰展示方便查阅
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316144651.png)
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316144736.png)
 
 ## 优化github下载
 可以单独下载某个文件
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316145036.png)
 通过双击选择要下载的文件
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316145214.png)
 
 
@@ -83,6 +101,7 @@ words: 908
 
 ## vimium
 想使用vim一样使用chrome
+
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200322122222.png)
 ```shell
 # 常用快捷键

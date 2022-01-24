@@ -169,7 +169,15 @@ function getPostsSidebar(dir) {
     
 }
 
-
+const resolveActiveHeaderLinksPluginOptions = (themePlugins) => {
+  if ((themePlugins === null || themePlugins === void 0 ? void 0 : themePlugins.activeHeaderLinks) === false) {
+      return false;
+  }
+  return {
+      headerLinkSelector: 'a.sidebar-item',
+      headerAnchorSelector: '.header-anchor',
+  };
+};
 
 const dogTheme = (options, app) => {
   console.log(options.navbar, app.options.themeConfig)
@@ -237,17 +245,18 @@ const dogTheme = (options, app) => {
       //   marker: '>>',
       //   removeMarker: false,
       // })
-
+      // 原来这个东西会导致header-active失效
+      
       md.use(require('./markdown/markdown-it-span.js')) // 在标题标签中添加span
-      .use(require('./markdown/markdown-it-table-container.js')) // 在表格外部添加容器
+      md.use(require('./markdown/markdown-it-table-container.js')) // 在表格外部添加容器
       // .use(require('./markdown/markdown-it-math.js')) // 数学公式
       // .use(require('markdown-it-math'))
       // .use(require('markdown-it-katex'))
-      .use(require('markdown-it-table-of-contents'), {
-        transformLink: () => "",
-        includeLevel: [2, 3],
-        markerPattern: /^\[toc\]/im,
-      }) // TOC仅支持二级和三级标题
+      // .use(require('markdown-it-table-of-contents'), {
+      //   transformLink: () => "",
+      //   includeLevel: [2, 3],
+      //   markerPattern: /^\[toc\]/im,
+      // }) // TOC仅支持二级和三级标题
       .use(require('markdown-it-implicit-figures'), {figcaption: true}) // 图示
       .use(require('markdown-it-deflist')) // 定义列表
       .use(require('./markdown/markdown-it-multiquote')) // 给多级引用加 class
@@ -256,21 +265,16 @@ const dogTheme = (options, app) => {
 
     },
     plugins: [
-      // [
-      //   '@vuepress/plugin-palette',
-      //   { preset: 'sass'},
-      // ],
+      // FIXME:
+      // ['@vuepress/plugin-medium-zoom',{
+      //   selector:'.md-body'
+      // }],
       [
         '@vuepress/register-components',
         {
           componentsDir: path.resolve(__dirname, './layouts'),
         },
       ],
-      // [
-      //   '@vuepress/plugin-prismjs',{
-      //     preloadLanguages:['markdown', 'jsdoc', 'yaml']
-      //   }
-      // ]
     ]
     
   }

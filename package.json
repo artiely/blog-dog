@@ -5,13 +5,15 @@
   "author": "artiely <1119696785@qq.com>",
   "license": "MIT",
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "vuepress dev docs",
     "dev2": "vuepress dev docs2",
     "build": "vuepress build docs"
   },
   "dependencies": {
+    "@vuepress/plugin-active-header-links": "^2.0.0-beta.35",
     "@vuepress/plugin-prismjs": "^2.0.0-beta.4",
-    "@vuepress/plugin-register-components": "^2.0.0-beta.33",
+    "@vuepress/plugin-register-components": "^2.0.0-beta.35",
     "address": "^1.1.2",
     "colorthief": "^2.3.2",
     "dayjs": "^1.10.7",
@@ -26,11 +28,13 @@
     "markdown-it-math": "^4.1.1",
     "markdown-it-ruby": "^0.1.1",
     "markdown-it-table-of-contents": "^0.6.0",
+    "patch-package": "^6.4.7",
+    "pinyin": "^2.10.2",
     "reading-time": "^1.5.0",
     "remove-markdown": "^0.3.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "vuepress": "^2.0.0-beta.33"
+    "vuepress": "^2.0.0-beta.35"
   }
 }

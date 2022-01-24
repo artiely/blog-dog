@@ -1,5 +1,6 @@
 // 基本样式白色主题
 :root {
+  // 代码
   --prism-foreground: #393a34;
   --prism-background: #fbfbfb;
   --prism-comment: #a0ada0;
@@ -19,30 +20,58 @@
   --prism-constant: #a65e2b;
   --prism-regex: #ab5e3f;
   --prism-json-property: #698c96;
-
+  --navbar-height:5.5em;
   --code-bg-color: #fafafa;
   --font-family-code: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
   --code-font-size: 15px;
-  --font-family: Optima-Regular, PingFangTC-light;
+  // 
   --text-color: rgba(44, 62, 80, 0.8);
   --code-hl-bg-color: #eee;
+// 导航
   --nav-bg: var(--c-bg);
+  --nav-height:90px;
+  --nav-content-max-width:1200px;
   // --md-body-bg-color: #fff;
 }
 html {
   -webkit-font-smoothing: antialiased;
 }
+.custom-container{
+  border-width: 4px!important
+}
+.navbar{
+  border:none;
+  box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+}
+.multiquote-1,.multiquote-2,.multiquote-3{
+  background: rgba(150,150,150,.1);
+}
+.code-group__nav ul{
+  padding: 0;
+  margin: 0;
+}
+figure a{
+  .external-link-icon{
+    display:none;
+  }
+}
 .md-body {
   // background: var(--md-body-bg-color);
-  font-family: var(--font-family);
+  // font-family: var(--font-family);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   max-width: 900px;
-  margin: 40px auto;
+  margin: 2em auto;
   padding: 20px 20px 60px 20px;
   img {
     max-width: 100%;
     display: block;
+  }
+  .external-link-icon{
+    color:currentColor;
+  }
+  .code-group ul li{
+    list-style: none!important
   }
   s{
     opacity: .5;
@@ -58,6 +87,9 @@ html {
     color: #ddd;
     // opacity: 0.7;
   }
+}
+blockquote{
+  color:currentColor;
 }
 pre,
 code {

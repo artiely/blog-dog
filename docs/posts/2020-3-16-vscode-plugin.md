@@ -21,7 +21,7 @@ VS Code 写代码是真好用、真爽、真香！
 但是呢，VS Code 并不是像 PyCharm/WebStorm 那样开箱即用的，需要额外安装一些插件、掌握一些快捷键和技巧，才能顺手的用起来。
 
 我花了一点时间，为你整理了可能是前端超好用的插件，效率加倍。
-# 推荐插件
+## 推荐插件
 
 ## 汉化 VS code
 > 安装之后一秒汉化 VS code ，再也不用担心看不懂英文。
@@ -78,19 +78,19 @@ ctrl+shift+p
 > 可通过github登录同步你的配置和插件
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316110305.png)
 
-## 主题配置
+### 主题配置
 > 主题是很主观的选择在市场输入theme即可试用还是图标主题加入icon关键词即可
 
-## 快捷console
+### 快捷console
 > 调试避免不了打印变量，我们只需要选择对应的变量 `ctrl + alt + L` 即可输出一句console.log
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316110847.png)
 
-## 待办高亮
+### 待办高亮
 > 工作中难免遇到一些未完成的待办事项 可以通过写注释的形式提醒自己
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316111512.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316111609.png)
 
-## 引入体积
+### 引入体积
 > 可以让你知道引入的体积大小，调整引入使代码体积更小
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316113433.png)
 ![](https://gitee.com/artiely/Figure-bed/raw/master/images/20200316113649.png)

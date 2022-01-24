@@ -84,7 +84,7 @@ const posts = __POSTS__.posts;
     position: absolute;
     top: 0;
     right: 0;
-    z-index: 12;
+    z-index: 3;
     .category-inner {
       backdrop-filter: saturate(180%) blur(10px);
       display: -webkit-flex;
