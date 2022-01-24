@@ -12,6 +12,7 @@ import SidebarItems from "@theme/SidebarItems.vue";
   </aside>
 </template>
 <style lang="scss">
+
 .sidebar-box {
   position: fixed;
   top: 0;

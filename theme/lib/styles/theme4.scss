@@ -1,11 +1,11 @@
-@import './sino/variables.scss';
+@import "./sino/variables.scss";
 html.theme4 {
-  --c-bg: rgba(211,203,197,.5);
+  --c-bg: rgba(211, 203, 197, 0.5);
   --font-family: $font-family-kai;
-  --c-brand:rgb(52, 61, 35);
+  --c-brand: rgb(52, 61, 35);
   --c-text-accent: var(--c-brand);
-  --c-border: rgba(211,203,197,.8);
-  --text-color:rgb(72 85 49);
+  --c-border: rgba(211, 203, 197, 0.8);
+  --text-color: rgb(72 85 49);
 }
 
 html.theme4 .md-body {
@@ -13,11 +13,33 @@ html.theme4 .md-body {
   // background-image: url('https://gitee.com/artiely/Figure-bed/raw/master/20220123165541.png');
   background-color: #d3cbc5;
   background-image: linear-gradient(
-        180deg,
-        #dcd6ce 0%,
-        #d3cbc5 80%,
-        #d3cbc5 100%
-      );
+    180deg,
+    #dcd6ce 0%,
+    #d3cbc5 80%,
+    #d3cbc5 100%
+  );
+  // :not(h1) .content {
+  //   position: relative;
+  //   padding: 0.25em 1em;
+  //   border-top: solid 2px currentColor;
+  //   border-bottom: solid 2px currentColor;
+  //   &:before,
+  //   &:after {
+  //     content: "";
+  //     position: absolute;
+  //     top: -7px;
+  //     width: 2px;
+  //     height: -webkit-calc(100% + 14px);
+  //     height: calc(100% + 14px);
+  //     background-color: currentColor;
+  //   }
+  //   &:before {
+  //     left: 7px;
+  //   }
+  //   &:after {
+  //     right: 7px;
+  //   }
+  // }
   ol li {
     list-style-type: decimal;
     list-style-position: outside;
@@ -54,7 +76,7 @@ html.theme4 .md-body {
   h6 {
     font-weight: bold;
     // color: #5c8eab;
-    color:var(--c-brand);
+    color: var(--c-brand);
   }
   h1 {
     font-size: 1.875em;
@@ -108,8 +130,6 @@ html.theme4 .md-body {
   h6 {
     margin-bottom: 1.5em;
   }
-  
-
 
   pre > code {
     background-color: none !important;
@@ -163,14 +183,15 @@ html.theme4 .md-body {
     border-bottom: 1px solid;
     border-left: none;
   }
-  
 
   blockquote ul,
   blockquote ol {
     margin-left: 0;
   }
-  
-  .multiquote-1,.multiquote-2,.multiquote-3 {
+
+  .multiquote-1,
+  .multiquote-2,
+  .multiquote-3 {
     font-style: normal;
     padding: 10px;
     position: relative;
@@ -190,7 +211,7 @@ html.theme4 .md-body {
     padding-right: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
-    opacity: .9;
+    opacity: 0.9;
     background-image: linear-gradient(
         90deg,
         rgba(50, 0, 0, 0.05) 3%,
@@ -209,7 +230,7 @@ html.theme4 .md-body {
       line-height: 1em;
       font-weight: 700;
     }
-    blockquote{
+    blockquote {
       margin: 0;
       padding: 0;
       border: none;
@@ -223,6 +244,5 @@ html.theme4 .md-body {
     text-align: left;
     box-sizing: inherit;
     border-left: none;
-   
   }
 }

@@ -56,6 +56,13 @@ figure a{
     display:none;
   }
 }
+@media (max-width: 419px){
+  .code-group__nav{
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
 .md-body {
   // background: var(--md-body-bg-color);
   // font-family: var(--font-family);

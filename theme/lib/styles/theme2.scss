@@ -4,6 +4,7 @@ html.theme2 {
   --c-bg: #eaeef1;
   --c-brand:#31855f;
   --c-text-accent: var(--c-brand);
+  --code-bg-color: #fafafa50;
   body {
     color: #595959;
     background-image: linear-gradient(
@@ -18,6 +19,23 @@ html.theme2 {
   em {
     background: #f6eeff;
   }
+  h2,h3,h4,h5,h6 {
+    .content{
+      position: relative;
+      z-index: 1;
+      &::after{
+        content:'';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: .4em;
+        width: 100%;
+        background: rgba(49, 133 ,95,.6);
+        z-index:-1;
+        // border-bottom: .2em solid rgba(50, 0, 0, 0.05);
+      }
+    }
+  }
   strong {
     color: #595959;
     &::before {
@@ -26,5 +44,8 @@ html.theme2 {
     &::after {
       content: "」";
     }
+  }
+  div[class*=language-]{
+    border-radius: none;
   }
 }

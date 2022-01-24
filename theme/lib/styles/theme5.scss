@@ -23,6 +23,7 @@ html.theme5 .md-body {
       );
       :not(h1) .content{
         background: var(--secondary-color);
+        background: linear-gradient(to right, var(--secondary-color), transparent);
         padding:2px 4px;
       }
   ol li {

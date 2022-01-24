@@ -56,11 +56,7 @@ $color: red !default;
   top: 0; */
 }
 
-@media (max-width: 1400px) {
-  .sidebar-box {
-    display: none;
-  }
-}
+
 /* .dog-sidebar{
   ul,ol{
   list-style: none;
