@@ -70,9 +70,15 @@ figure a{
   max-width: 900px;
   margin: 2em auto;
   padding: 20px 20px 60px 20px;
+  // FIXME: 图片阴影
   img {
-    max-width: 100%;
+    max-width: 90%;
     display: block;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom:.5em;
+    margin-top:.5em;
   }
   .external-link-icon{
     color:currentColor;
