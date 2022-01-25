@@ -11,13 +11,14 @@
     <slot name="footer">
       <Footer />
     </slot>
-   
+   <ThemeMeta />
   </div>
 </template>
 <script setup>
 
 import {  usePageData } from "@vuepress/client";
 import Home from "./Home.vue";
+import ThemeMeta from "./ThemeMeta.vue";
 import Detail from "./Detail.vue";
 import NavBar from "./NavBar.vue";
 import Footer from "./Footer.vue";

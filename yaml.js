@@ -139,7 +139,7 @@ const replaceYaml = (yamlJson = {}, dir, content, contentArray) => {
   return new Promise(async (resolve, reject) => {
     let yaml = {};
     yaml.title = yamlJson.title || getMdTitle(contentArray) || "";
-    yaml.data =
+    yaml.date =
       yamlJson.date ||
       (await getBirthtime(dir)) ||
       dayjs(new Date()).format("YYYY-MM-DD");

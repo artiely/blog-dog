@@ -17,8 +17,8 @@ const handleTheme = (theme) => {
 </script>
 <style lang="scss">
 .theme-box {
-  position: absolute;
-  left: -100px;
+  position: fixed;
+  left: 0;
   top: 100px;
   display: flex;
   align-items: center;

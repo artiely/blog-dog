@@ -229,12 +229,12 @@ html.theme1 .md-body {
     text-align: center;
     border-bottom:none;
     margin-top: 3em;
-    border-top: 1px solid #bfbaba;
+    border-top: 1px solid #dd3a0d;
     .content{
       // border-style: double;
       // border-top: 1px solid ;
       // border-bottom: 2px solid ;
-      background: #bfbaba;
+      // background: #bfbaba;
       padding-top:0.5em;
       text-align: center;
       // padding-bottom: 1em;
@@ -246,6 +246,9 @@ html.theme1 .md-body {
       font-size: 1em;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
+      // color: #dd3a0d;
+      background: #dd3a0d;
+      color: #ece5d7;
       &::after{
         position: absolute;
         content: '';

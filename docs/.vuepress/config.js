@@ -1,12 +1,12 @@
 const { path } = require('@vuepress/utils')
 module.exports = {
-  base:'/',
+  // base:'/',
   lang: 'zh-CN',
   title: '你好， VuePress ！',
   description: '这是我的第一个 VuePress 站点',
   debug: true,
   shouldPrefetch:true,
-  home:'/',
+  // home:'/',
   themeConfig: {
     postsDir:path.resolve(__dirname, '../posts'),
     logo: 'https://vuejs.org/images/logo.png',

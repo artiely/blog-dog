@@ -25,17 +25,22 @@
   --font-family-code: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
   --code-font-size: 15px;
-  // 
-  --text-color: rgba(44, 62, 80, 0.8);
+  // p标签颜色
+  --text-color: rgba(12, 28, 44, 0.8);
   --code-hl-bg-color: #eee;
 // 导航
   --nav-bg: var(--c-bg);
   --nav-height:90px;
   --nav-content-max-width:1200px;
   // --md-body-bg-color: #fff;
+  // 详情
+  --md-body-width:900px;
 }
 html {
   -webkit-font-smoothing: antialiased;
+}
+th,td{
+  border:none;
 }
 .custom-container{
   border-width: 4px!important

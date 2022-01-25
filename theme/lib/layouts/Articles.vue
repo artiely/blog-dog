@@ -2,7 +2,7 @@
   <div class="article-wrapper">
     <article class="article" v-for="item in posts">
       <div class="poster-wrapper" v-if="item.frontmatter">
-        <a :href="item.link">
+        <a :href="link(item.link)">
           <div class="category" v-if="item.frontmatter.category">
             <span
               class="category-inner"
@@ -21,7 +21,7 @@
       </div>
       <div class="article-info" v-if="item.frontmatter">
         <h1 class="article-title">
-          <a :href="item.link">{{ item.frontmatter.title }}</a>
+          <a :href="link(item.link)">{{ item.frontmatter.title }}</a>
         </h1>
         <div class="article-tags" v-if="item.frontmatter.tags">
           <span class="tag" v-for="tag in item.frontmatter.tag">{{ tag }}</span>
@@ -51,6 +51,8 @@
 import Cover from "./Cover.vue";
 import { hexToRgba } from "../utils/index.js";
 const posts = __POSTS__.posts;
+const link=(link)=>`${link}.html`
+// console.log("🚀 ~ file: Articles.vue ~ line 54 ~ __POSTS__", __POSTS__)
 </script>
 <style lang="scss" scoped>
 @import "../styles/var.scss";
