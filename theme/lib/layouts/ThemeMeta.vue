@@ -8,6 +8,7 @@
     <span class="theme-btn" @click="handleTheme('theme4')">秋半</span>
     <span class="theme-btn" @click="handleTheme('theme5')">十漾</span>
     <span class="theme-btn" @click="handleTheme('theme6')">666</span>
+    <span class="theme-btn" @click="handleTheme('theme7')">777</span>
   </div>
 </template>
 <script setup>

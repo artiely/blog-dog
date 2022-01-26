@@ -49,14 +49,8 @@ html.theme6 .md-body {
     padding: 0.2em 0.5em;
     color: #454545;
   }
-  th {
-    // break-word:
-    white-space: nowrap;
-  }
-  tr:nth-child(2n) {
-    /* background-color: var(--c-bg-light); */
-    background: transparent;
-  }
+ 
+  
   tr td:first-child,
   tr th:first-child {
     border-right: 1px solid var(--c-border-dark);

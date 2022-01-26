@@ -47,6 +47,18 @@ onMounted(() => {
     }).join(" ");
     v.setAttribute("pinyin", py);
   });
+  // TODO:
+  // if(document.querySelector("html").classList=='theme6'){
+    Array.from(document.querySelectorAll(".default-content img")).map((v) => {
+    v.onload=((res)=>{
+      // 27为一个行高 16=1em 26=1.7em
+      // v.width=100
+      console.log(v.height/27)
+      v.height=parseInt(v.height/27)*27
+    })
+  })
+  // }
+  
 });
 </script>
 <style lang="scss">

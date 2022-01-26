@@ -1,0 +1,213 @@
+// 本主题为笔记本格子风格，主要保证元素的行高为27
+@import "./sino/variables.scss";
+html.theme7 {
+  --c-bg: #fefffe;
+  --font-family: $font-family-kai;
+  --c-brand: #00324a;
+  --c-text-accent: var(--c-brand);
+  --c-border: rgba(0, 50, 74, 0.8);
+  --text-color: var(--c-brand);
+  --code-bg-color: #ebeee8;
+  --secondary-color: rgba(236, 217, 199, 1);
+  --c-border: var(--secondary-color);
+  --primary-bg: #faf6ed;
+  --c-border-dark: transparent;
+  --page-meta-bg: rgba(101, 194, 192, 0.9);
+  --bottom-line-height:27px;
+}
+@mixin BottomLine{
+  background-image: linear-gradient(
+    90deg,
+    rgba(#dfd7b1, 1) 0%,
+    rgba(#dfd7b1, 0) 0%
+  ),
+  linear-gradient(360deg, rgba(#dfd7b1, .8) 1px, rgba(#dfd7b1, 0) 1px);
+background-size: 27px 27px;
+background-position: top;
+}
+.page-meta {
+  background: var(--page-meta-bg);
+  backdrop-filter: blur(4px);
+}
+html.theme7 .md-body {
+  font-family: $font-family-kai;
+  background-color: var(--primary-bg);
+  .default-content{
+    line-height: var(--bottom-line-height);;
+    @include BottomLine();
+  }
+  pre{
+    padding-top:14px;
+    padding-bottom:13px;
+    margin-top:13px;
+    margin-bottom:14px;
+  }
+  code{
+    line-height:var(--bottom-line-height);;
+  }
+    
+  p{
+    margin:0;
+    line-height:var(--bottom-line-height);;
+    padding-bottom: var(--bottom-line-height);;
+    // @include BottomLine();
+  }
+  figure{
+    margin:0;
+    padding: 0;
+    // @include BottomLine();
+    figcaption{
+      line-height: var(--bottom-line-height);
+    }
+  }
+  table{
+    // background: #f8f1e1;
+    border-spacing: 0;
+    overflow: hidden;
+    border-collapse: inherit;
+  }
+  tr td:first-child,
+  tr th:first-child {
+    border-right: 1px solid var(--c-border-dark);
+  }
+  tr:last-child {
+    // border-top: 1px solid var(--c-border-dark);
+    border-bottom: 1px solid var(--c-border-dark);
+    transition: border-color var(--t-color);
+  }
+  tr{
+    border: none;
+  }
+  th,td{
+    margin:0;
+    padding:0;
+    line-height: var(--bottom-line-height);
+    // @include BottomLine();
+    padding: 0 .5em;
+  }
+  /* headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+    // color: #5c8eab;
+    color: var(--c-brand);
+    margin:0;
+    border: none;
+    font-size: 1em;
+  }
+  h1{
+    .content{
+      font-size: var(--bottom-line-height);
+    }
+  }
+  h2,h3{
+    font-size: 1em;
+    margin:0;padding:0;
+    height:54px;
+    // @include BottomLine();
+    .content{
+      font-size: 1.5em;
+      line-height:var(--bottom-line-height)
+    }
+  }
+  a {
+    text-decoration: none;
+    color: var(--secondary-color);
+  }
+  img{
+    margin: auto;
+    border-radius: 0;
+  }
+  ul,ol{
+    margin: 0;
+    padding-top: 27px;;
+    padding-bottom: 27px;
+    li{
+      line-height: var(--bottom-line-height);
+    }
+  }
+  /* block spacing */
+
+  .custom-container.tip, .custom-container.warning, .custom-container.danger{
+    padding:0;
+    padding-top:13px;
+    padding-bottom:14px;
+    padding-left: 1em;
+    margin-bottom:27px;
+  }
+  .custom-container.details{
+    margin:0;
+    // height:54px;
+    padding:0;
+    padding-left: 1em;
+    line-height:54px;
+  }
+  .multiquote-1,
+  .multiquote-2,
+  .multiquote-3 {
+    font-style: normal;
+    font-size: 1em;
+    padding: 10px;
+    position: relative;
+    line-height: var(--bottom-line-height);
+    text-indent: 0;
+    border: none;
+    // color: #888;
+    display: block;
+    // font-size: 0.9em;
+    overflow: auto;
+    overflow-scrolling: touch;
+    background: rgba(0, 0, 0, 0.02);
+    // color: #6a737d;
+    // padding-top: 1em;
+    // padding-bottom: .7em;
+    padding-left: 20px;
+    padding-right: 10px;
+    opacity: 0.9;
+    background-image: linear-gradient(
+        90deg,
+        rgba(50, 0, 0, 0.05) 3%,
+        rgba(0, 0, 0, 0) 3%
+      ),
+      linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
+    background-size: 20px 27px;
+    background-position: center center;
+    // border-top: 4px solid #00598e;
+    margin:0;
+    margin-top:var(--bottom-line-height);
+    margin-bottom:var(--bottom-line-height);
+    padding:27px 1em 0 1em;
+    box-sizing: border-box;
+    overflow: hidden;
+    &::before {
+      content: "“";
+      display: inline;
+      color: #999;
+      font-size: 4em;
+      font-family: Arial, serif;
+      line-height: 32px;
+      font-weight: 700;
+      position:absolute;
+      top: 0.2em;
+      left:0em;
+    }
+    blockquote {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+  blockquote {
+    text-size-adjust: 100%;
+    line-height: 1.55em;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    box-sizing: inherit;
+    border-left: none;
+  }
+}

@@ -1,3 +1,4 @@
+// 逍遥
 @import './sino/variables.scss';
 html.theme3 {
   --c-bg: #f3f2ee;
@@ -16,7 +17,7 @@ html.theme3 .md-body {
     list-style-type: disc;
     list-style-position: outside;
   }
- 
+  
   ol,
   ul {
     list-style: none;
@@ -152,7 +153,9 @@ html.theme3 .md-body {
     border-bottom: 1px solid;
     border-left: none;
   }
-  
+  td{
+    border-right: 1px solid #ccc;
+  }
 
   blockquote ul,
   blockquote ol {

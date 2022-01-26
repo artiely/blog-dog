@@ -42,6 +42,14 @@ html {
 th,td{
   border:none;
 }
+tr:nth-child(2n) {
+  /* background-color: var(--c-bg-light); */
+  background: transparent;
+}
+th {
+  // break-word:
+  white-space: nowrap;
+}
 .custom-container{
   border-width: 4px!important
 }
