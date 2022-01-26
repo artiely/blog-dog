@@ -14,7 +14,20 @@ html.theme7 {
   --c-border-dark: transparent;
   --page-meta-bg: rgba(101, 194, 192, 0.9);
   --bottom-line-height:27px;
+  // --nav-bg:#716052;
+
+  .header{
+    background: rgba(#716052,.5);
+    background-image: linear-gradient(
+    90deg,
+    rgba(#716052, .8) 2px,
+    rgba(#716052, .4) 0%
+  ),
+  linear-gradient(360deg, rgba(#716052, .8) 2px, rgba(#716052, .4) 0);
+  background-size: 3px 3px;
+  }
 }
+
 @mixin BottomLine{
   background-image: linear-gradient(
     90deg,
