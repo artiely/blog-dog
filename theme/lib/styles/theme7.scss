@@ -84,6 +84,7 @@ html.theme7 .md-body {
     line-height: var(--bottom-line-height);
     // @include BottomLine();
     padding: 0 .5em;
+    vertical-align: top;
   }
   /* headings */
   h1,
@@ -122,6 +123,17 @@ html.theme7 .md-body {
     margin: auto;
     border-radius: 0;
   }
+  .code-group{
+    margin:0;
+    margin-bottom:27px;
+    .code-group__nav{
+      margin-top:0;
+      ul{
+        padding:0;
+      }
+    }
+  }
+  
   ul,ol{
     margin: 0;
     padding-top: 27px;;
@@ -168,14 +180,14 @@ html.theme7 .md-body {
     padding-left: 20px;
     padding-right: 10px;
     opacity: 0.9;
-    background-image: linear-gradient(
-        90deg,
-        rgba(50, 0, 0, 0.05) 3%,
-        rgba(0, 0, 0, 0) 3%
-      ),
-      linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
-    background-size: 20px 27px;
-    background-position: center center;
+    // background-image: linear-gradient(
+    //     90deg,
+    //     rgba(50, 0, 0, 0.05) 3%,
+    //     rgba(0, 0, 0, 0) 3%
+    //   ),
+    //   linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
+    // background-size: 20px 27px;
+    // background-position: center center;
     // border-top: 4px solid #00598e;
     margin:0;
     margin-top:var(--bottom-line-height);
@@ -187,7 +199,7 @@ html.theme7 .md-body {
       content: "“";
       display: inline;
       color: #999;
-      font-size: 4em;
+      font-size: 3em;
       font-family: Arial, serif;
       line-height: 32px;
       font-weight: 700;
