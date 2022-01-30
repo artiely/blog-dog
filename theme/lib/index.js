@@ -54,6 +54,9 @@ function getPostsSidebar(dir) {
       let frontmatters = s && s[1] ? s[1] : {};
       let json = yaml.load(frontmatters);
       json.tag = json.tag || json.tags || [];
+      if(Object.prototype.toString.call(json.tag) !== '[object Array]'){
+        json.tag= [json.tag]
+      }
       json.date = dayjs(json.date).format("YYYY-MM-DD");
       json.author = json.author || "Artiely";
       json.password = json.password || false;
@@ -197,6 +200,19 @@ const dogTheme = (options, app) => {
       // 把它添加到 `app.pages`
       app.pages.push(homepage)
     }
+    // 如果时间线不存在
+    if (app.pages.every((page) => page.path !== '/timeline')) {
+      // 创建一个主页
+      const homepage = await createPage(app, {
+        path: '/timeline',
+        // 设置 frontmatter
+        frontmatter: {
+          layout: 'Timeline',
+        },
+      })
+      // 把它添加到 `app.pages`
+      app.pages.push(homepage)
+    }
   },
     name: 'vuepress-theme-dog',
     // alias: {
@@ -231,6 +247,10 @@ const dogTheme = (options, app) => {
         {
           text: 'Home',
           link: '/',
+        },
+        {
+          text: 'Timeline',
+          link: '/timeline',
         },
       ],
     },

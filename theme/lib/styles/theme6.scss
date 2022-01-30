@@ -17,6 +17,10 @@ html.theme6 {
   inset 0 1px 1px rgb(255 255 255 / 70%),
   inset 0 -10px 20px rgb(0 0 0 / 20%),
   inset 0 40px 40px rgb(255 255 255 / 30%);
+
+  --shadow_all: 0px 1px 2px rgb(0 0 0 / 10%), inset 0 0px 0 rgb(0 0 0 / 50%), inset 0 1px 0px rgb(255 255 255 / 70%), inset 0 -1px 0px rgb(0 0 0 / 20%), inset 0 0px 0px rgb(255 255 255 / 30%);
+
+  --text-shadow:0px 1px 1px rgb(0 0 0 / 50%);
 }
 .page-meta {
   background: var(--page-meta-bg);
@@ -47,6 +51,7 @@ html.theme6 .md-body {
     box-shadow: 0px 0px 0px 5px var(--secondary-color);
     border: dashed 1px rgb(156 140 124);
     padding: 0.2em 0.5em;
+    filter: drop-shadow(0px 1px 1px #444);
     color: #454545;
   }
  
@@ -70,17 +75,41 @@ html.theme6 .md-body {
     font-weight: bold;
     // color: #5c8eab;
     color: var(--c-brand);
+    text-shadow: var(--text-shadow);
   }
-
+  p{
+    text-shadow: var(--text-shadow);
+  }
   a {
     text-decoration: none;
     color: var(--secondary-color);
+    filter: drop-shadow(0px 1px 1px #444);
+  }
+  table{
+    padding:1em;
+    box-shadow: var(--shadow_all);
   }
   img{
     margin: auto;
+    // padding:1em;
+    box-shadow: var(--shadow_all);
+    filter: drop-shadow(0px 1px 1px #444);
   }
   /* block spacing */
-
+  div[class*=language-]{
+    box-shadow: var(--shadow_all);
+    border-radius: 0px;
+  }
+  code{
+    filter: drop-shadow(0px 0px 1px #fafafa);
+  }
+  .code-group__nav{
+    border-radius: 0px
+  }
+  .custom-container.details{
+    box-shadow: var(--shadow_all);
+    border-radius: 0px;
+  }
   .custom-container.tip,
   .custom-container.warning,
   .custom-container.danger {
@@ -91,13 +120,14 @@ html.theme6 .md-body {
     padding: 1.2em 1em 1em;
     background: var(--primary-bg);
     // filter: brightness(90%);
+    filter: drop-shadow(0px 1px 1px #444);
     .custom-container-title {
       font-weight: 700;
       font-size: 1.1em;
       background: var(--primary-bg);
       padding: 0 0.5em;
       position: absolute;
-      top: -0.5em;
+      top: 0;
       line-height: 1;
       margin-left: 0.5em;
       margin: 0;
@@ -116,15 +146,16 @@ html.theme6 .md-body {
     font-style: normal;
     padding: 10px;
     position: relative;
+    z-index: 2;
     line-height: 1.8;
     text-indent: 0;
     border: none;
     // color: #888;
     display: block;
     font-size: 0.9em;
-    overflow: auto;
+    // overflow: auto;
     overflow-scrolling: touch;
-    background: rgba(0, 0, 0, 0.02);
+    // background: rgba(0, 0, 0, 1);
     // color: #6a737d;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -132,16 +163,19 @@ html.theme6 .md-body {
     padding-right: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
-    opacity: 0.9;
-    background-image: linear-gradient(
-        90deg,
-        rgba(50, 0, 0, 0.05) 3%,
-        rgba(0, 0, 0, 0) 3%
-      ),
-      linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
-    background-size: 20px 20px;
-    background-position: center center;
-    border-top: 4px solid #00598e;
+    // opacity: 0.9;
+    // background-image: linear-gradient(
+    //     90deg,
+    //     rgba(50, 0, 0, 0.05) 3%,
+    //     rgba(0, 0, 0, 0) 3%
+    //   ),
+    //   linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
+    // background-size: 20px 20px;
+    // background-position: center center;
+    // border-top: 4px solid #00598e;
+    // border: 2px solid #000;
+    border-radius: 0px;
+    box-shadow: 0px 1px 2px rgb(0 0 0 / 10%), inset 0 0px 0 rgb(0 0 0 / 50%), inset 0 1px 0px rgb(255 255 255 / 70%), inset 0 -1px 0px rgb(0 0 0 / 20%), inset 0 40px 0px rgb(255 255 255 / 30%);;
     &::before {
       content: "“";
       display: inline;
@@ -151,6 +185,16 @@ html.theme6 .md-body {
       line-height: 1em;
       font-weight: 700;
     }
+    // &::after{
+    //   content: "";
+    //   position: absolute;
+    //   top: 10px;
+    //   left: 10px;
+    //   width:100%;
+    //   height:100%;
+    //   background-color:#999;
+    //   z-index: -1;
+    // }
     blockquote {
       margin: 0;
       padding: 0;

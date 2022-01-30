@@ -5,7 +5,7 @@
       <Sidebar />
     </div>
   </div>
-  <div class="page-meta-box">
+  <!-- <div class="page-meta-box">
     
   <img v-if="frontmatter.cover" class="cover" :src="frontmatter.cover" alt="">
   <div class="page-meta">
@@ -20,7 +20,7 @@
     </p>
     <p class="summary">{{ frontmatter.summary }}</p>
   </div>
-  </div>
+  </div> -->
 
   <div class="md-body sino sino-kai" :class="useLayout">
     <div class="default-content">
@@ -35,10 +35,17 @@ import { usePageData } from "@vuepress/client";
 import { onMounted } from "vue";
 import pinyin from "pinyin";
 import dayjs from "dayjs";
+import calendar from "../calendar.js";
+
 
 const { useLayout } = usePageData().value.frontmatter || {};
 const frontmatter = usePageData().value.frontmatter || {};
 console.log(usePageData().value)
+
+console.log(dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-'))
+const [y,m,d] = dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-')
+
+console.log(calendar.solar2lunar(y,m,d))
 onMounted(() => {
   Array.from(document.querySelectorAll(".content")).map((v) => {
     //let py = pinyin(v.innerText.replace(/[^\u4e00-\u9fa5|,]+/,'')).join(' ')
@@ -47,17 +54,26 @@ onMounted(() => {
     }).join(" ");
     v.setAttribute("pinyin", py);
   });
+
+  // document.querySelector("date").setAttribute("calendar")
   // TODO:
   // if(document.querySelector("html").classList=='theme6'){
     Array.from(document.querySelectorAll(".default-content img")).map((v) => {
     v.onload=((res)=>{
-      // 27为一个行高 16=1em 26=1.7em
+      // 30为一个行高 16=1em 26=1.7em
       // v.width=100
-      console.log(v.height/27)
-      v.height=parseInt(v.height/27)*27
+      console.log(v.height/30)
+      v.height=parseInt(v.height/30)*30
     })
   })
   // }
+  // const ctrl=`<div class="jsx-261514322 window-controls"><svg xmlns="http://www.w3.org/2000/svg" width="54" height="14" viewBox="0 0 54 14"><g fill="none" fill-rule="evenodd" transform="translate(1 1)"><circle cx="6" cy="6" r="6" fill="#FF5F56" stroke="#E0443E" stroke-width=".5"></circle><circle cx="26" cy="6" r="6" fill="#FFBD2E" stroke="#DEA123" stroke-width=".5"></circle><circle cx="46" cy="6" r="6" fill="#27C93F" stroke="#1AAB29" stroke-width=".5"></circle></g></svg><div class="jsx-261514322 window-title-container"></div></div>`
+  // var newItem=document.createElement("div")
+  // newItem.innerHTML = ctrl
+  // Array.from(document.querySelectorAll("div[class*=language-]")).map((v)=>{
+  //   v.appendChild(newItem)
+  //   console.log("🚀 ~ file: Detail.vue ~ line 76 ~ Array.from ~ v", v.appendChild)
+  // })
   
 });
 </script>

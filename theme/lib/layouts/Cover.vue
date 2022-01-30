@@ -63,7 +63,7 @@ const imgLoaded = () => {
 }
 
 .isLoaded {
-  transition: 0.4s;
+  transition: 1s;
   opacity: 0;
 }
 </style>

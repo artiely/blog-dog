@@ -20,6 +20,10 @@ module.exports = {
         text: 'Foo',
         link: '/foo',
       },
+      {
+        text: 'Timeline',
+        link: '/timeline',
+      },
     ],
   },
   plugins: [

@@ -12,11 +12,13 @@ html.theme1 {
   // --select-text-font-color: white;
   // --font-family: "PT Serif", "Times New Roman", Times, serif;
   --font-family: $font-family-song;
-
+  font-family: $font-family-song;
   --code-bg-color:#f7f3d5;
   --c-brand:#515659;
   --c-text-accent: var(--c-brand);
   --c-warning-bg:#f7f0d0;
+
+ 
 }
 
 html.theme1.dark {
@@ -26,6 +28,15 @@ html.theme1.dark {
 html.theme1 .md-body {
   background:#fcfae0;
   font-family: $font-family-song;
+  div[class*="language-"].line-numbers-mode .line-numbers {
+    display: none;
+  }
+  div[class*="language-"].line-numbers-mode::after {
+    display: none;
+  }
+  div[class*="language-"].line-numbers-mode pre {
+    margin-left: 0;
+  }
   figure{
     padding:20px;
     // border:10px solid #6e4b37;

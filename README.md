@@ -1,4 +1,12 @@
-# 配置文章的路径
+## todo
+
+[x] 详情上一篇下一篇
+
+[x] 详情相关文章推荐
+
+[x] 搜索
+ 
+## 配置文章的路径
 
 `.vuepress/config.js`
 
@@ -6,10 +14,21 @@
 themeConfig: {
     articlesDir:path.resolve(__dirname, '../post'),
     //...
+    navbar:[
+      // 默认配置
+      {
+        text: 'Home',
+        link: '/',
+      },
+      {
+        text: 'Timeline',
+        link: '/timeline',
+      },
+    ]
 }
 ```
 
-# 主题提供的全局数据
+## 主题提供的全局数据
 ```js
 // 所有的文章列表信息
 const articles = __POST__
@@ -17,7 +36,7 @@ const articles = __POST__
 const nav = __NAVBAR__
 ```
 
-# 自定义主题颜色
+## 自定义主题颜色
 
 新建`.vuepress/styles/palette.scss`文件
 
@@ -82,7 +101,7 @@ console.log({nav,post})
 重启服务`yarn dev`
 
 访问`/page`就可以看到自定义的页面
-# 自定义布局
+## 自定义布局
 在 `.vuepress/clientAppEnhance.js` 文件中注册一个布局组件：
 ```js
 import { defineClientAppEnhance } from '@vuepress/client'
@@ -121,7 +140,7 @@ import Layout from "@theme/Layout.vue";
 
 
 
-# 项目结构
+## 项目结构
 ```sh
 ├──docs
 │ ├──.vuepress
@@ -148,7 +167,7 @@ import Layout from "@theme/Layout.vue";
 └──yarn.lock
 ```
 
-# Frontmatter
+## Frontmatter
 可插件生成的
 ```yaml
 ---
@@ -188,12 +207,12 @@ pageClass: custom-page-class
 lang:  
 ```
 
-# 如何为你的网站开启搜索
+## 如何为你的网站开启搜索
 
 todo:
 
 
-# 布局替换规则
+## 布局替换规则
 
 ```
 ---

@@ -2,7 +2,9 @@
 primary: 2974d1
 secondary: d68b2e
 title: Electron 镜像下载慢的解决办法
-tag: electron,javascrip
+tag: 
+  - electron
+  - javascrip
 author: Artiely
 date: 2020-3-18
 cover: https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png

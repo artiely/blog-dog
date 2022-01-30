@@ -2,7 +2,7 @@
 @import "./sino/variables.scss";
 html.theme7 {
   --c-bg: #fefffe;
-  --font-family: $font-family-kai;
+  --font-family: $font-family-hei;
   --c-brand: #00324a;
   --c-text-accent: var(--c-brand);
   --c-border: rgba(0, 50, 74, 0.8);
@@ -12,21 +12,37 @@ html.theme7 {
   --c-border: var(--secondary-color);
   --primary-bg: #faf6ed;
   --c-border-dark: transparent;
-  --page-meta-bg: rgba(101, 194, 192, 0.9);
-  --bottom-line-height:27px;
+  --page-meta-bg: #c3ccc7;
+  --bottom-line-height:30px;
   // --nav-bg:#716052;
 
+  --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
   .header{
-    background: rgba(#716052,.5);
-    background-image: linear-gradient(
-    90deg,
-    rgba(#716052, .8) 2px,
-    rgba(#716052, .4) 0%
-  ),
-  linear-gradient(360deg, rgba(#716052, .8) 2px, rgba(#716052, .4) 0);
-  background-size: 3px 3px;
+  //   background: rgba(#716052,.5);
+  //   background-image: linear-gradient(
+  //   90deg,
+  //   rgba(#716052, .8) 2px,
+  //   rgba(#716052, .4) 0%
+  // ),
+  // linear-gradient(360deg, rgba(#716052, .8) 2px, rgba(#716052, .4) 0);
+  // background-size: 3px 3px;
+  }
+  .dog-sidebar{
+    // border-left: 1px dashed #a87e56;
+    .sidebar-item.active:not(p.sidebar-heading){
+      border: none;
+    }
+    .sidebar-item:not(.sidebar-heading){
+      // padding-left: .5em;
+    }
+    .sidebar-item:not(.sidebar-heading) + .sidebar-item-children{
+      padding-left: 0;
+    }
   }
 }
+
+$unityHeight:var(--bottom-line-height);
 
 @mixin BottomLine{
   background-image: linear-gradient(
@@ -34,35 +50,54 @@ html.theme7 {
     rgba(#dfd7b1, 1) 0%,
     rgba(#dfd7b1, 0) 0%
   ),
-  linear-gradient(360deg, rgba(#dfd7b1, .8) 1px, rgba(#dfd7b1, 0) 1px);
-background-size: 27px 27px;
-background-position: top;
+  linear-gradient(360deg, rgba(#dfd7b1, .5) 1px, rgba(#dfd7b1, 0) 1px);
+background-size: $unityHeight $unityHeight;
+background-position: -27px  -27px;
 }
+
+
 .page-meta {
   background: var(--page-meta-bg);
   backdrop-filter: blur(4px);
+  // box-shadow: 0 0 10 0 rgba(0, 0, 0, 0.1);
 }
 html.theme7 .md-body {
-  font-family: $font-family-kai;
+  font-family: $font-family-hei;
   background-color: var(--primary-bg);
   .default-content{
-    line-height: var(--bottom-line-height);;
-    @include BottomLine();
+    line-height: $unityHeight;;
+    // @include BottomLine();
   }
+
+// 重置部分
+
+// md的常见块标签
+p,h1,h2,h3,h4,h5,h6,table,thead,tbody,tfoot,tr,blockquote,figure{
+  margin: 0;
+  padding: 0;
+  
+}
+p,h1,h2,h3,h4,h5,h6,pre,table,blockquote{
+  @include BottomLine();
+}
+
   pre{
-    padding-top:14px;
-    padding-bottom:13px;
-    margin-top:13px;
-    margin-bottom:14px;
+    padding-top:calc( $unityHeight / 2);
+    padding-bottom:calc( $unityHeight / 2);
+    margin-top:0;
+    margin-bottom:$unityHeight;
   }
   code{
-    line-height:var(--bottom-line-height);;
+    line-height:$unityHeight!important;
   }
-    
+  div[class*=language-].line-numbers-mode .line-numbers{
+    line-height: $unityHeight;
+    padding-top: calc( $unityHeight / 2);
+  }
   p{
     margin:0;
-    line-height:var(--bottom-line-height);;
-    padding-bottom: var(--bottom-line-height);;
+    line-height:$unityHeight;
+    padding-bottom: $unityHeight;;
     // @include BottomLine();
   }
   figure{
@@ -70,7 +105,7 @@ html.theme7 .md-body {
     padding: 0;
     // @include BottomLine();
     figcaption{
-      line-height: var(--bottom-line-height);
+      line-height: $unityHeight;
     }
   }
   table{
@@ -94,10 +129,13 @@ html.theme7 .md-body {
   th,td{
     margin:0;
     padding:0;
-    line-height: var(--bottom-line-height);
+    line-height: $unityHeight;
     // @include BottomLine();
     padding: 0 .5em;
     vertical-align: top;
+  }
+  td{
+    opacity: .8;
   }
   /* headings */
   h1,
@@ -114,18 +152,20 @@ html.theme7 .md-body {
     font-size: 1em;
   }
   h1{
+    line-height: calc($unityHeight * 2) ;
+    height: calc($unityHeight * 2);
     .content{
-      font-size: var(--bottom-line-height);
+      font-size: $unityHeight;
     }
   }
   h2,h3{
     font-size: 1em;
     margin:0;padding:0;
-    height:54px;
+    height:calc($unityHeight * 2);
     // @include BottomLine();
     .content{
       font-size: 1.5em;
-      line-height:var(--bottom-line-height)
+      line-height:$unityHeight
     }
   }
   a {
@@ -135,12 +175,44 @@ html.theme7 .md-body {
   img{
     margin: auto;
     border-radius: 0;
+    background: #dadfe3;
+  }
+  figure{
+    margin: $unityHeight auto;
+    position: relative;
+    figcaption{
+      opacity:.7;
+    }
+    &::before{
+      content:'';
+      position: absolute;
+      top: 0px;
+      left: 0;
+      height: calc( $unityHeight / 2);
+      width:100%;
+      background: rgba(#dadfe3, 0.5);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    }
+    // &::after{
+    //   content:'';
+    //   position: absolute;
+    //   bottom: 27px;
+    //   right: 0;
+    //   height: calc( $unityHeight / 2);
+    //   width:100%;
+    //   background: rgba(#dadfe3, 0.5);
+    //   backdrop-filter: blur(4px);
+    //   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    // }
   }
   .code-group{
     margin:0;
-    margin-bottom:27px;
+    margin-bottom:$unityHeight;
     .code-group__nav{
       margin-top:0;
+      margin-bottom:0;
+      padding-bottom: 0;
       ul{
         padding:0;
       }
@@ -149,27 +221,28 @@ html.theme7 .md-body {
   
   ul,ol{
     margin: 0;
-    padding-top: 27px;;
-    padding-bottom: 27px;
+    padding-top: $unityHeight;;
+    padding-bottom: $unityHeight;
     li{
-      line-height: var(--bottom-line-height);
+      line-height: $unityHeight;
     }
   }
   /* block spacing */
 
   .custom-container.tip, .custom-container.warning, .custom-container.danger{
     padding:0;
-    padding-top:13px;
-    padding-bottom:14px;
+    padding-top: calc( $unityHeight / 2);
+    padding-bottom:calc( $unityHeight / 2);
     padding-left: 1em;
-    margin-bottom:27px;
+    margin-top: 0;
+    padding-right:1em;
+    margin-bottom:$unityHeight;
   }
   .custom-container.details{
     margin:0;
-    // height:54px;
     padding:0;
     padding-left: 1em;
-    line-height:54px;
+    line-height:calc($unityHeight * 2);
   }
   .multiquote-1,
   .multiquote-2,
@@ -178,7 +251,7 @@ html.theme7 .md-body {
     font-size: 1em;
     padding: 10px;
     position: relative;
-    line-height: var(--bottom-line-height);
+    line-height: $unityHeight;
     text-indent: 0;
     border: none;
     // color: #888;
@@ -193,19 +266,13 @@ html.theme7 .md-body {
     padding-left: 20px;
     padding-right: 10px;
     opacity: 0.9;
-    // background-image: linear-gradient(
-    //     90deg,
-    //     rgba(50, 0, 0, 0.05) 3%,
-    //     rgba(0, 0, 0, 0) 3%
-    //   ),
-    //   linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
-    // background-size: 20px 27px;
-    // background-position: center center;
-    // border-top: 4px solid #00598e;
     margin:0;
-    margin-top:var(--bottom-line-height);
-    margin-bottom:var(--bottom-line-height);
-    padding:27px 1em 0 1em;
+    margin-top:$unityHeight;
+    margin-bottom:$unityHeight;
+    padding-top:$unityHeight;
+    padding-right: 1em;
+    padding-bottom:0;
+    padding-left:1em;
     box-sizing: border-box;
     overflow: hidden;
     &::before {
@@ -219,6 +286,15 @@ html.theme7 .md-body {
       position:absolute;
       top: 0.2em;
       left:0em;
+      // content:'';
+      // position: absolute;
+      // top: 0px;
+      // left: 0;
+      // height: 100%;
+      // width: 100%;
+      // background: rgba(#dadfe3, 0.5);
+      // backdrop-filter: blur(4px);
+      // box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
     }
     blockquote {
       margin: 0;

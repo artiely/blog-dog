@@ -34,7 +34,7 @@ const hasOwn$1 = (val, key) => hasOwnProperty$2.call(val, key);
 const isArray$3 = Array.isArray;
 const isMap$1 = (val) => toTypeString$1(val) === "[object Map]";
 const isFunction$3 = (val) => typeof val === "function";
-const isString$4 = (val) => typeof val === "string";
+const isString$5 = (val) => typeof val === "string";
 const isSymbol = (val) => typeof val === "symbol";
 const isObject$2 = (val) => val !== null && typeof val === "object";
 const objectToString$1 = Object.prototype.toString;
@@ -42,7 +42,7 @@ const toTypeString$1 = (value) => objectToString$1.call(value);
 const toRawType = (value) => {
   return toTypeString$1(value).slice(8, -1);
 };
-const isIntegerKey = (key) => isString$4(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
+const isIntegerKey = (key) => isString$5(key) && key !== "NaN" && key[0] !== "-" && "" + parseInt(key, 10) === key;
 const hasChanged$1 = (value, oldValue) => !Object.is(value, oldValue);
 const def$1 = (obj, key, value) => {
   Object.defineProperty(obj, key, {
@@ -478,11 +478,11 @@ function get$1(target, key, isReadonly2 = false, isShallow2 = false) {
   }
   !isReadonly2 && track(rawTarget, "get", rawKey);
   const { has: has2 } = getProto(rawTarget);
-  const wrap = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
+  const wrap3 = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
   if (has2.call(rawTarget, key)) {
-    return wrap(target.get(key));
+    return wrap3(target.get(key));
   } else if (has2.call(rawTarget, rawKey)) {
-    return wrap(target.get(rawKey));
+    return wrap3(target.get(rawKey));
   } else if (target !== rawTarget) {
     target.get(key);
   }
@@ -560,10 +560,10 @@ function createForEach(isReadonly2, isShallow2) {
     const observed = this;
     const target = observed["__v_raw"];
     const rawTarget = toRaw(target);
-    const wrap = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
+    const wrap3 = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
     !isReadonly2 && track(rawTarget, "iterate", ITERATE_KEY);
     return target.forEach((value, key) => {
-      return callback.call(thisArg, wrap(value), wrap(key), observed);
+      return callback.call(thisArg, wrap3(value), wrap3(key), observed);
     });
   };
 }
@@ -575,13 +575,13 @@ function createIterableMethod(method, isReadonly2, isShallow2) {
     const isPair = method === "entries" || method === Symbol.iterator && targetIsMap;
     const isKeyOnly = method === "keys" && targetIsMap;
     const innerIterator = target[method](...args);
-    const wrap = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
+    const wrap3 = isShallow2 ? toShallow : isReadonly2 ? toReadonly : toReactive;
     !isReadonly2 && track(rawTarget, "iterate", isKeyOnly ? MAP_KEY_ITERATE_KEY : ITERATE_KEY);
     return {
       next() {
         const { value, done } = innerIterator.next();
         return done ? { value, done } : {
-          value: isPair ? [wrap(value[0]), wrap(value[1])] : wrap(value),
+          value: isPair ? [wrap3(value[0]), wrap3(value[1])] : wrap3(value),
           done
         };
       },
@@ -927,7 +927,7 @@ function normalizeStyle(value) {
     const res = {};
     for (let i = 0; i < value.length; i++) {
       const item = value[i];
-      const normalized = isString$3(item) ? parseStringStyle(item) : normalizeStyle(item);
+      const normalized = isString$4(item) ? parseStringStyle(item) : normalizeStyle(item);
       if (normalized) {
         for (const key in normalized) {
           res[key] = normalized[key];
@@ -935,7 +935,7 @@ function normalizeStyle(value) {
       }
     }
     return res;
-  } else if (isString$3(value)) {
+  } else if (isString$4(value)) {
     return value;
   } else if (isObject$1(value)) {
     return value;
@@ -955,7 +955,7 @@ function parseStringStyle(cssText) {
 }
 function normalizeClass(value) {
   let res = "";
-  if (isString$3(value)) {
+  if (isString$4(value)) {
     res = value;
   } else if (isArray$2(value)) {
     for (let i = 0; i < value.length; i++) {
@@ -1016,7 +1016,7 @@ const isArray$2 = Array.isArray;
 const isMap = (val) => toTypeString(val) === "[object Map]";
 const isSet = (val) => toTypeString(val) === "[object Set]";
 const isFunction$2 = (val) => typeof val === "function";
-const isString$3 = (val) => typeof val === "string";
+const isString$4 = (val) => typeof val === "string";
 const isObject$1 = (val) => val !== null && typeof val === "object";
 const isPromise = (val) => {
   return isObject$1(val) && isFunction$2(val.then) && isFunction$2(val.catch);
@@ -1654,7 +1654,7 @@ function doWatch(source, cb, { immediate, deep, flush, onTrack, onTrigger } = EM
 }
 function instanceWatch(source, value, options) {
   const publicThis = this.proxy;
-  const getter = isString$3(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
+  const getter = isString$4(source) ? source.includes(".") ? createPathGetter(publicThis, source) : () => publicThis[source] : source.bind(publicThis, publicThis);
   let cb;
   if (isFunction$2(value)) {
     cb = value;
@@ -2321,7 +2321,7 @@ function callHook$1(hook, instance, type) {
 }
 function createWatcher(raw, ctx, publicThis, key) {
   const getter = key.includes(".") ? createPathGetter(publicThis, key) : () => publicThis[key];
-  if (isString$3(raw)) {
+  if (isString$4(raw)) {
     const handler = ctx[raw];
     if (isFunction$2(handler)) {
       watch(getter, handler);
@@ -2921,7 +2921,7 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
   const refs = owner.refs === EMPTY_OBJ ? owner.refs = {} : owner.refs;
   const setupState = owner.setupState;
   if (oldRef != null && oldRef !== ref2) {
-    if (isString$3(oldRef)) {
+    if (isString$4(oldRef)) {
       refs[oldRef] = null;
       if (hasOwn(setupState, oldRef)) {
         setupState[oldRef] = null;
@@ -2933,17 +2933,17 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
   if (isFunction$2(ref2)) {
     callWithErrorHandling(ref2, owner, 12, [value, refs]);
   } else {
-    const _isString = isString$3(ref2);
+    const _isString3 = isString$4(ref2);
     const _isRef = isRef(ref2);
-    if (_isString || _isRef) {
+    if (_isString3 || _isRef) {
       const doSet = () => {
         if (rawRef.f) {
-          const existing = _isString ? refs[ref2] : ref2.value;
+          const existing = _isString3 ? refs[ref2] : ref2.value;
           if (isUnmount) {
             isArray$2(existing) && remove(existing, refValue);
           } else {
             if (!isArray$2(existing)) {
-              if (_isString) {
+              if (_isString3) {
                 refs[ref2] = [refValue];
               } else {
                 ref2.value = [refValue];
@@ -2954,7 +2954,7 @@ function setRef(rawRef, oldRawRef, parentSuspense, vnode, isUnmount = false) {
               existing.push(refValue);
             }
           }
-        } else if (_isString) {
+        } else if (_isString3) {
           refs[ref2] = value;
           if (hasOwn(setupState, ref2)) {
             setupState[ref2] = value;
@@ -4056,7 +4056,7 @@ function resolveComponent(name, maybeSelfReference) {
 }
 const NULL_DYNAMIC_COMPONENT = Symbol();
 function resolveDynamicComponent(component) {
-  if (isString$3(component)) {
+  if (isString$4(component)) {
     return resolveAsset(COMPONENTS, component, false) || component;
   } else {
     return component || NULL_DYNAMIC_COMPONENT;
@@ -4122,7 +4122,7 @@ function isSameVNodeType(n1, n2) {
 const InternalObjectKey = `__vInternal`;
 const normalizeKey = ({ key }) => key != null ? key : null;
 const normalizeRef = ({ ref: ref2, ref_key, ref_for }) => {
-  return ref2 != null ? isString$3(ref2) || isRef(ref2) || isFunction$2(ref2) ? { i: currentRenderingInstance, r: ref2, k: ref_key, f: !!ref_for } : ref2 : null;
+  return ref2 != null ? isString$4(ref2) || isRef(ref2) || isFunction$2(ref2) ? { i: currentRenderingInstance, r: ref2, k: ref_key, f: !!ref_for } : ref2 : null;
 };
 function createBaseVNode(type, props = null, children = null, patchFlag = 0, dynamicProps = null, shapeFlag = type === Fragment ? 0 : 1, isBlockNode = false, needFullChildrenNormalization = false) {
   const vnode = {
@@ -4158,7 +4158,7 @@ function createBaseVNode(type, props = null, children = null, patchFlag = 0, dyn
       type.normalize(vnode);
     }
   } else if (children) {
-    vnode.shapeFlag |= isString$3(children) ? 8 : 16;
+    vnode.shapeFlag |= isString$4(children) ? 8 : 16;
   }
   if (isBlockTreeEnabled > 0 && !isBlockNode && currentBlock && (vnode.patchFlag > 0 || shapeFlag & 6) && vnode.patchFlag !== 32) {
     currentBlock.push(vnode);
@@ -4183,7 +4183,7 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
   if (props) {
     props = guardReactiveProps(props);
     let { class: klass, style } = props;
-    if (klass && !isString$3(klass)) {
+    if (klass && !isString$4(klass)) {
       props.class = normalizeClass(klass);
     }
     if (isObject$1(style)) {
@@ -4193,7 +4193,7 @@ function _createVNode(type, props = null, children = null, patchFlag = 0, dynami
       props.style = normalizeStyle(style);
     }
   }
-  const shapeFlag = isString$3(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$1(type) ? 4 : isFunction$2(type) ? 2 : 0;
+  const shapeFlag = isString$4(type) ? 1 : isSuspense(type) ? 128 : isTeleport(type) ? 64 : isObject$1(type) ? 4 : isFunction$2(type) ? 2 : 0;
   return createBaseVNode(type, props, children, patchFlag, dynamicProps, shapeFlag, isBlockNode, true);
 }
 function guardReactiveProps(props) {
@@ -4336,7 +4336,7 @@ function invokeVNodeHook(hook, instance, vnode, prevVNode = null) {
 function renderList(source, renderItem, cache, index2) {
   let ret;
   const cached = cache && cache[index2];
-  if (isArray$2(source) || isString$3(source)) {
+  if (isArray$2(source) || isString$4(source)) {
     ret = new Array(source.length);
     for (let i = 0, l = source.length; i < l; i++) {
       ret[i] = renderItem(source[i], i, void 0, cached && cached[i]);
@@ -4745,7 +4745,7 @@ const isModelListener = (key) => key.startsWith("onUpdate:");
 const extend = Object.assign;
 const isArray$1 = Array.isArray;
 const isFunction$1 = (val) => typeof val === "function";
-const isString$2 = (val) => typeof val === "string";
+const isString$3 = (val) => typeof val === "string";
 const isObject = (val) => val !== null && typeof val === "object";
 const cacheStringFunction = (fn) => {
   const cache = Object.create(null);
@@ -4791,7 +4791,7 @@ const nodeOps = {
   },
   parentNode: (node) => node.parentNode,
   nextSibling: (node) => node.nextSibling,
-  querySelector: (selector2) => doc.querySelector(selector2),
+  querySelector: (selector3) => doc.querySelector(selector3),
   setScopeId(el, id) {
     el.setAttribute(id, "");
   },
@@ -4843,12 +4843,12 @@ function patchClass(el, value, isSVG) {
 }
 function patchStyle(el, prev, next) {
   const style = el.style;
-  const isCssString = isString$2(next);
+  const isCssString = isString$3(next);
   if (next && !isCssString) {
     for (const key in next) {
       setStyle(style, key, next[key]);
     }
-    if (prev && !isString$2(prev)) {
+    if (prev && !isString$3(prev)) {
       for (const key in prev) {
         if (next[key] == null) {
           setStyle(style, key, "");
@@ -5081,7 +5081,7 @@ function shouldSetAsProp(el, key, value, isSVG) {
   if (key === "type" && el.tagName === "TEXTAREA") {
     return false;
   }
-  if (nativeOnRE.test(key) && isString$2(value)) {
+  if (nativeOnRE.test(key) && isString$3(value)) {
     return false;
   }
   return key in el;
@@ -5392,7 +5392,7 @@ const createSSRApp = (...args) => {
   return app;
 };
 function normalizeContainer(container) {
-  if (isString$2(container)) {
+  if (isString$3(container)) {
     const res = document.querySelector(container);
     return res;
   }
@@ -5423,7 +5423,7 @@ function applyToParams(fn, params) {
   }
   return newParams;
 }
-const noop$1 = () => {
+const noop$2 = () => {
 };
 const TRAILING_SLASH_RE = /\/$/;
 const removeTrailingSlash = (path) => path.replace(TRAILING_SLASH_RE, "");
@@ -6111,7 +6111,7 @@ function createRouterMatcher(routes, globalOptions) {
     }
     return originalMatcher ? () => {
       removeRoute(originalMatcher);
-    } : noop$1;
+    } : noop$2;
   }
   function removeRoute(matcherRef) {
     if (isRouteName(matcherRef)) {
@@ -6240,10 +6240,10 @@ function isAliasRecord(record) {
 function mergeMetaFields(matched) {
   return matched.reduce((meta, record) => assign$1(meta, record.meta), {});
 }
-function mergeOptions(defaults, partialOptions) {
+function mergeOptions(defaults2, partialOptions) {
   const options = {};
-  for (const key in defaults) {
-    options[key] = key in partialOptions ? partialOptions[key] : defaults[key];
+  for (const key in defaults2) {
+    options[key] = key in partialOptions ? partialOptions[key] : defaults2[key];
   }
   return options;
 }
@@ -6440,7 +6440,7 @@ function useLink(props) {
   const isExactActive = computed(() => activeRecordIndex.value > -1 && activeRecordIndex.value === currentRoute.matched.length - 1 && isSameRouteLocationParams(currentRoute.params, route.value.params));
   function navigate(e = {}) {
     if (guardEvent(e)) {
-      return router[unref(props.replace) ? "replace" : "push"](unref(props.to)).catch(noop$1);
+      return router[unref(props.replace) ? "replace" : "push"](unref(props.to)).catch(noop$2);
     }
     return Promise.resolve();
   }
@@ -6829,7 +6829,7 @@ function createRouter(options) {
       const toLocation = resolve2(to);
       const shouldRedirect = handleRedirectRecord(toLocation);
       if (shouldRedirect) {
-        pushWithRedirect(assign$1(shouldRedirect, { replace: true }), toLocation).catch(noop$1);
+        pushWithRedirect(assign$1(shouldRedirect, { replace: true }), toLocation).catch(noop$2);
         return;
       }
       pendingLocation = toLocation;
@@ -6846,7 +6846,7 @@ function createRouter(options) {
             if (isNavigationFailure(failure, 4 | 16) && !info.delta && info.type === NavigationType.pop) {
               routerHistory.go(-1, false);
             }
-          }).catch(noop$1);
+          }).catch(noop$2);
           return Promise.reject();
         }
         if (info.delta)
@@ -6862,7 +6862,7 @@ function createRouter(options) {
           }
         }
         triggerAfterEach(toLocation, from, failure);
-      }).catch(noop$1);
+      }).catch(noop$2);
     });
   }
   let readyHandlers = useCallbacks();
@@ -7038,39 +7038,43 @@ const __vitePreload = function preload(baseModule, deps) {
 const pagesComponents = {
   "v-7446daa2": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-7446daa2" */
-    "./index.html.3e9244c6.js"
+    "./index.html.26bcde20.js"
   ), true ? [] : void 0)),
   "v-98df26d6": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-98df26d6" */
-    "./2020-3-16-vscode-plugin.html.b8223a14.js"
+    "./2020-3-16-vscode-plugin.html.798153de.js"
   ), true ? [] : void 0)),
   "v-0151cd4a": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-0151cd4a" */
-    "./2020-3-16-windows-plugin.html.1a152be1.js"
+    "./2020-3-16-windows-plugin.html.5c9baa44.js"
   ), true ? [] : void 0)),
   "v-ebe80ef8": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-ebe80ef8" */
-    "./2020-3-18-electron-mirror-down.html.a0c07ba5.js"
+    "./2020-3-18-electron-mirror-down.html.3e07d607.js"
   ), true ? [] : void 0)),
   "v-a36afcfe": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-a36afcfe" */
-    "./2021-2-23-proxy.html.7dc96519.js"
+    "./2021-2-23-proxy.html.6063a07b.js"
   ), true ? [] : void 0)),
   "v-810351b2": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-810351b2" */
-    "./2022-1-11md-test.html.9398e8dc.js"
+    "./2022-1-11md-test.html.b690d96f.js"
   ), true ? [] : void 0)),
   "v-71182a26": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-71182a26" */
-    "./2020-3-16-chrome-plugin.html.d53347fa.js"
+    "./2020-3-16-chrome-plugin.html.b1d7583e.js"
   ), true ? [] : void 0)),
   "v-3706649a": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-3706649a" */
-    "./404.html.ebdc484e.js"
+    "./404.html.27609449.js"
   ), true ? [] : void 0)),
   "v-8daa1a0e": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "v-8daa1a0e" */
-    "./index.html.2ca5c6e1.js"
+    "./index.html.ab3340f9.js"
+  ), true ? [] : void 0)),
+  "v-01560935": defineAsyncComponent(() => __vitePreload(() => import(
+    /* webpackChunkName: "v-01560935" */
+    "./index.html.8f3036f8.js"
   ), true ? [] : void 0))
 };
 const pagesData$1 = {
@@ -7088,7 +7092,7 @@ const pagesData$1 = {
   ), true ? [] : void 0).then(({ data }) => data),
   "v-ebe80ef8": () => __vitePreload(() => import(
     /* webpackChunkName: "v-ebe80ef8" */
-    "./2020-3-18-electron-mirror-down.html.fdb441a1.js"
+    "./2020-3-18-electron-mirror-down.html.16bb27bb.js"
   ), true ? [] : void 0).then(({ data }) => data),
   "v-a36afcfe": () => __vitePreload(() => import(
     /* webpackChunkName: "v-a36afcfe" */
@@ -7096,7 +7100,7 @@ const pagesData$1 = {
   ), true ? [] : void 0).then(({ data }) => data),
   "v-810351b2": () => __vitePreload(() => import(
     /* webpackChunkName: "v-810351b2" */
-    "./2022-1-11md-test.html.4a9ddb29.js"
+    "./2022-1-11md-test.html.10a0577f.js"
   ), true ? [] : void 0).then(({ data }) => data),
   "v-71182a26": () => __vitePreload(() => import(
     /* webpackChunkName: "v-71182a26" */
@@ -7109,6 +7113,10 @@ const pagesData$1 = {
   "v-8daa1a0e": () => __vitePreload(() => import(
     /* webpackChunkName: "v-8daa1a0e" */
     "./index.html.97f4289c.js"
+  ), true ? [] : void 0).then(({ data }) => data),
+  "v-01560935": () => __vitePreload(() => import(
+    /* webpackChunkName: "v-01560935" */
+    "./index.html.7c8b0471.js"
   ), true ? [] : void 0).then(({ data }) => data)
 };
 const pagesData = ref(pagesData$1);
@@ -7205,19 +7213,19 @@ Content.props = {
 const layoutComponents = {
   "404": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "layout-404" */
-    "./404.dcaecb15.js"
+    "./404.a4d2a9b8.js"
   ), true ? [] : void 0)),
   "Layout": defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
     return Layout;
   }), true ? void 0 : void 0)),
   "clientAppEnhanceFiles": defineAsyncComponent(() => __vitePreload(() => import(
     /* webpackChunkName: "layout-clientAppEnhanceFiles" */
-    "./clientAppEnhance.4326021b.js"
+    "./clientAppEnhance.da9f7f8f.js"
   ), true ? [] : void 0))
 };
 const isArray = Array.isArray;
 const isFunction = (val) => typeof val === "function";
-const isString$1 = (val) => typeof val === "string";
+const isString$2 = (val) => typeof val === "string";
 const resolveHeadIdentifier = ([tag, attrs, content]) => {
   if (tag === "meta" && attrs.name) {
     return `${tag}.${attrs.name}`;
@@ -7271,7 +7279,7 @@ const Vuepress = defineComponent({
       let layoutName;
       if (page.value.path) {
         const frontmatterLayout = page.value.frontmatter.layout;
-        if (isString$1(frontmatterLayout)) {
+        if (isString$2(frontmatterLayout)) {
           layoutName = frontmatterLayout;
         } else {
           layoutName = "Layout";
@@ -7300,7 +7308,7 @@ const resolvers = reactive({
   },
   resolvePageFrontmatter: (pageData2) => pageData2.frontmatter,
   resolvePageHead: (headTitle, frontmatter, siteLocale) => {
-    const description = isString$1(frontmatter.description) ? frontmatter.description : siteLocale.description;
+    const description = isString$2(frontmatter.description) ? frontmatter.description : siteLocale.description;
     const head = [
       ...isArray(frontmatter.head) ? frontmatter.head : [],
       ...siteLocale.head,
@@ -7380,29 +7388,29 @@ var _extends = Object.assign || function(target) {
 var isSupported = function isSupported2(node) {
   return node.tagName === "IMG";
 };
-var isNodeList = function isNodeList2(selector2) {
-  return NodeList.prototype.isPrototypeOf(selector2);
+var isNodeList = function isNodeList2(selector3) {
+  return NodeList.prototype.isPrototypeOf(selector3);
 };
-var isNode = function isNode2(selector2) {
-  return selector2 && selector2.nodeType === 1;
+var isNode = function isNode2(selector3) {
+  return selector3 && selector3.nodeType === 1;
 };
 var isSvg = function isSvg2(image) {
   var source = image.currentSrc || image.src;
   return source.substr(-4).toLowerCase() === ".svg";
 };
-var getImagesFromSelector = function getImagesFromSelector2(selector2) {
+var getImagesFromSelector = function getImagesFromSelector2(selector3) {
   try {
-    if (Array.isArray(selector2)) {
-      return selector2.filter(isSupported);
+    if (Array.isArray(selector3)) {
+      return selector3.filter(isSupported);
     }
-    if (isNodeList(selector2)) {
-      return [].slice.call(selector2).filter(isSupported);
+    if (isNodeList(selector3)) {
+      return [].slice.call(selector3).filter(isSupported);
     }
-    if (isNode(selector2)) {
-      return [selector2].filter(isSupported);
+    if (isNode(selector3)) {
+      return [selector3].filter(isSupported);
     }
-    if (typeof selector2 === "string") {
-      return [].slice.call(document.querySelectorAll(selector2)).filter(isSupported);
+    if (typeof selector3 === "string") {
+      return [].slice.call(document.querySelectorAll(selector3)).filter(isSupported);
     }
     return [];
   } catch (err) {
@@ -7442,7 +7450,7 @@ var createCustomEvent = function createCustomEvent2(type, params) {
   customEvent.initCustomEvent(type, eventParams.bubbles, eventParams.cancelable, eventParams.detail);
   return customEvent;
 };
-var mediumZoom$1 = function mediumZoom(selector2) {
+var mediumZoom$1 = function mediumZoom(selector3) {
   var options = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : {};
   var Promise2 = window.Promise || function Promise3(fn) {
     function noop2() {
@@ -7760,10 +7768,10 @@ var mediumZoom$1 = function mediumZoom(selector2) {
     zoomedHd: null,
     template: null
   };
-  if (Object.prototype.toString.call(selector2) === "[object Object]") {
-    zoomOptions2 = selector2;
-  } else if (selector2 || typeof selector2 === "string") {
-    attach(selector2);
+  if (Object.prototype.toString.call(selector3) === "[object Object]") {
+    zoomOptions2 = selector3;
+  } else if (selector3 || typeof selector3 === "string") {
+    attach(selector3);
   }
   zoomOptions2 = _extends({
     margin: 0,
@@ -7824,12 +7832,12 @@ var mediumZoom$2 = mediumZoom$1;
 const mediumZoomSymbol = Symbol("mediumZoom");
 var vars$2 = "";
 var mediumZoom2 = "";
-const selector = ".theme-default-content > img, .theme-default-content :not(a) > img";
+const selector$1 = ".theme-default-content > img, .theme-default-content :not(a) > img";
 const zoomOptions = {};
 const delay$1 = 300;
 var clientAppEnhance1 = defineClientAppEnhance(({ app, router }) => {
   const zoom = mediumZoom$2(zoomOptions);
-  zoom.refresh = (sel = selector) => {
+  zoom.refresh = (sel = selector$1) => {
     zoom.detach();
     zoom.attach(sel);
   };
@@ -7849,6 +7857,10 @@ const themeData$1 = {
     {
       "text": "Foo",
       "link": "/foo"
+    },
+    {
+      "text": "Timeline",
+      "link": "/timeline"
     }
   ],
   "locales": {
@@ -7916,7 +7928,7 @@ var clientAppEnhance2 = defineClientAppEnhance(({ app }) => {
     }
   });
 });
-const _sfc_main$h = /* @__PURE__ */ defineComponent({
+const _sfc_main$g = /* @__PURE__ */ defineComponent({
   props: {
     type: {
       type: String,
@@ -8027,11 +8039,11 @@ var CodeGroup = defineComponent({
     };
   }
 });
-const _hoisted_1$e = ["aria-selected"];
+const _hoisted_1$d = ["aria-selected"];
 const __default__$1 = defineComponent({
   name: "CodeGroupItem"
 });
-const _sfc_main$g = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
+const _sfc_main$f = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
   props: {
     title: {
       type: String,
@@ -8050,10 +8062,4362 @@ const _sfc_main$g = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
         "aria-selected": __props.active
       }, [
         renderSlot(_ctx.$slots, "default")
-      ], 10, _hoisted_1$e);
+      ], 10, _hoisted_1$d);
     };
   }
 }));
+function tryOnScopeDispose$1(fn) {
+  if (getCurrentScope()) {
+    onScopeDispose(fn);
+    return true;
+  }
+  return false;
+}
+const isClient$1 = typeof window !== "undefined";
+const isString$1 = (val) => typeof val === "string";
+const noop$1 = () => {
+};
+function createFilterWrapper$1(filter, fn) {
+  function wrapper(...args) {
+    filter(() => fn.apply(this, args), { fn, thisArg: this, args });
+  }
+  return wrapper;
+}
+const bypassFilter$1 = (invoke) => {
+  return invoke();
+};
+var __getOwnPropSymbols$9$1 = Object.getOwnPropertySymbols;
+var __hasOwnProp$9$1 = Object.prototype.hasOwnProperty;
+var __propIsEnum$9$1 = Object.prototype.propertyIsEnumerable;
+var __objRest$5$1 = (source, exclude) => {
+  var target = {};
+  for (var prop in source)
+    if (__hasOwnProp$9$1.call(source, prop) && exclude.indexOf(prop) < 0)
+      target[prop] = source[prop];
+  if (source != null && __getOwnPropSymbols$9$1)
+    for (var prop of __getOwnPropSymbols$9$1(source)) {
+      if (exclude.indexOf(prop) < 0 && __propIsEnum$9$1.call(source, prop))
+        target[prop] = source[prop];
+    }
+  return target;
+};
+function watchWithFilter$1(source, cb, options = {}) {
+  const _a2 = options, {
+    eventFilter = bypassFilter$1
+  } = _a2, watchOptions = __objRest$5$1(_a2, [
+    "eventFilter"
+  ]);
+  return watch(source, createFilterWrapper$1(eventFilter, cb), watchOptions);
+}
+function tryOnMounted(fn, sync = true) {
+  if (getCurrentInstance())
+    onMounted(fn);
+  else if (sync)
+    fn();
+  else
+    nextTick(fn);
+}
+const defaultWindow$1 = isClient$1 ? window : void 0;
+isClient$1 ? window.document : void 0;
+isClient$1 ? window.navigator : void 0;
+isClient$1 ? window.location : void 0;
+function useEventListener$1(...args) {
+  let target;
+  let event;
+  let listener;
+  let options;
+  if (isString$1(args[0])) {
+    [event, listener, options] = args;
+    target = defaultWindow$1;
+  } else {
+    [target, event, listener, options] = args;
+  }
+  if (!target)
+    return noop$1;
+  let cleanup = noop$1;
+  const stopWatch = watch(() => unref(target), (el) => {
+    cleanup();
+    if (!el)
+      return;
+    el.addEventListener(event, listener, options);
+    cleanup = () => {
+      el.removeEventListener(event, listener, options);
+      cleanup = noop$1;
+    };
+  }, { immediate: true, flush: "post" });
+  const stop = () => {
+    stopWatch();
+    cleanup();
+  };
+  tryOnScopeDispose$1(stop);
+  return stop;
+}
+function useMediaQuery(query, options = {}) {
+  const { window: window2 = defaultWindow$1 } = options;
+  let mediaQuery;
+  const matches = ref(false);
+  const update = () => {
+    if (!window2)
+      return;
+    if (!mediaQuery)
+      mediaQuery = window2.matchMedia(query);
+    matches.value = mediaQuery.matches;
+  };
+  tryOnMounted(() => {
+    update();
+    if (!mediaQuery)
+      return;
+    if ("addEventListener" in mediaQuery)
+      mediaQuery.addEventListener("change", update);
+    else
+      mediaQuery.addListener(update);
+    tryOnScopeDispose$1(() => {
+      if ("removeEventListener" in update)
+        mediaQuery.removeEventListener("change", update);
+      else
+        mediaQuery.removeListener(update);
+    });
+  });
+  return matches;
+}
+const _global$1 = globalThis || void 0;
+const globalKey$1 = "__vueuse_ssr_handlers__";
+_global$1[globalKey$1] = _global$1[globalKey$1] || {};
+const handlers$1 = _global$1[globalKey$1];
+function getSSRHandler$1(key, fallback) {
+  return handlers$1[key] || fallback;
+}
+function guessSerializerType$1(rawInit) {
+  return rawInit == null ? "any" : rawInit instanceof Set ? "set" : rawInit instanceof Map ? "map" : typeof rawInit === "boolean" ? "boolean" : typeof rawInit === "string" ? "string" : typeof rawInit === "object" ? "object" : Array.isArray(rawInit) ? "object" : !Number.isNaN(rawInit) ? "number" : "any";
+}
+const StorageSerializers$1 = {
+  boolean: {
+    read: (v) => v === "true",
+    write: (v) => String(v)
+  },
+  object: {
+    read: (v) => JSON.parse(v),
+    write: (v) => JSON.stringify(v)
+  },
+  number: {
+    read: (v) => Number.parseFloat(v),
+    write: (v) => String(v)
+  },
+  any: {
+    read: (v) => v,
+    write: (v) => String(v)
+  },
+  string: {
+    read: (v) => v,
+    write: (v) => String(v)
+  },
+  map: {
+    read: (v) => new Map(JSON.parse(v)),
+    write: (v) => JSON.stringify(Array.from(v.entries()))
+  },
+  set: {
+    read: (v) => new Set(JSON.parse(v)),
+    write: (v) => JSON.stringify(Array.from(v.entries()))
+  }
+};
+function useStorage$1(key, initialValue, storage, options = {}) {
+  var _a2;
+  const {
+    flush = "pre",
+    deep = true,
+    listenToStorageChanges = true,
+    writeDefaults = true,
+    shallow,
+    window: window2 = defaultWindow$1,
+    eventFilter,
+    onError = (e) => {
+      console.error(e);
+    }
+  } = options;
+  const rawInit = unref(initialValue);
+  const type = guessSerializerType$1(rawInit);
+  const data = (shallow ? shallowRef : ref)(initialValue);
+  const serializer = (_a2 = options.serializer) != null ? _a2 : StorageSerializers$1[type];
+  if (!storage) {
+    try {
+      storage = getSSRHandler$1("getDefaultStorage", () => {
+        var _a22;
+        return (_a22 = defaultWindow$1) == null ? void 0 : _a22.localStorage;
+      })();
+    } catch (e) {
+      onError(e);
+    }
+  }
+  function read(event) {
+    if (!storage || event && event.key !== key)
+      return;
+    try {
+      const rawValue = event ? event.newValue : storage.getItem(key);
+      if (rawValue == null) {
+        data.value = rawInit;
+        if (writeDefaults && rawInit !== null)
+          storage.setItem(key, serializer.write(rawInit));
+      } else if (typeof rawValue !== "string") {
+        data.value = rawValue;
+      } else {
+        data.value = serializer.read(rawValue);
+      }
+    } catch (e) {
+      onError(e);
+    }
+  }
+  read();
+  if (window2 && listenToStorageChanges)
+    useEventListener$1(window2, "storage", (e) => setTimeout(() => read(e), 0));
+  if (storage) {
+    watchWithFilter$1(data, () => {
+      try {
+        if (data.value == null)
+          storage.removeItem(key);
+        else
+          storage.setItem(key, serializer.write(data.value));
+      } catch (e) {
+        onError(e);
+      }
+    }, {
+      flush,
+      deep,
+      eventFilter
+    });
+  }
+  return data;
+}
+function usePreferredDark(options) {
+  return useMediaQuery("(prefers-color-scheme: dark)", options);
+}
+var _a$1, _b$1;
+isClient$1 && (window == null ? void 0 : window.navigator) && ((_a$1 = window == null ? void 0 : window.navigator) == null ? void 0 : _a$1.platform) && /iP(ad|hone|od)/.test((_b$1 = window == null ? void 0 : window.navigator) == null ? void 0 : _b$1.platform);
+var __defProp$3$1 = Object.defineProperty;
+var __getOwnPropSymbols$3$1 = Object.getOwnPropertySymbols;
+var __hasOwnProp$3$1 = Object.prototype.hasOwnProperty;
+var __propIsEnum$3$1 = Object.prototype.propertyIsEnumerable;
+var __defNormalProp$3$1 = (obj, key, value) => key in obj ? __defProp$3$1(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues$3$1 = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp$3$1.call(b, prop))
+      __defNormalProp$3$1(a, prop, b[prop]);
+  if (__getOwnPropSymbols$3$1)
+    for (var prop of __getOwnPropSymbols$3$1(b)) {
+      if (__propIsEnum$3$1.call(b, prop))
+        __defNormalProp$3$1(a, prop, b[prop]);
+    }
+  return a;
+};
+const initialRect$1 = {
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+  height: 0,
+  width: 0
+};
+__spreadValues$3$1({
+  text: ""
+}, initialRect$1);
+const darkModeSymbol = Symbol("");
+const setupDarkMode = () => {
+  const themeLocale = useThemeLocaleData();
+  const isDarkPreferred = usePreferredDark();
+  const darkStorage = useStorage$1("vuepress-color-scheme", "auto");
+  const isDarkMode = computed({
+    get() {
+      if (!themeLocale.value.darkMode) {
+        return false;
+      }
+      if (darkStorage.value === "auto") {
+        return isDarkPreferred.value;
+      }
+      return darkStorage.value === "dark";
+    },
+    set(val) {
+      if (val === isDarkPreferred.value) {
+        darkStorage.value = "auto";
+      } else {
+        darkStorage.value = val ? "dark" : "light";
+      }
+    }
+  });
+  provide(darkModeSymbol, isDarkMode);
+  updateHtmlDarkClass(isDarkMode);
+};
+const updateHtmlDarkClass = (isDarkMode) => {
+  const update = (value = isDarkMode.value) => {
+    const htmlEl = window === null || window === void 0 ? void 0 : window.document.querySelector("html");
+    htmlEl === null || htmlEl === void 0 ? void 0 : htmlEl.classList.toggle("dark", value);
+  };
+  onMounted(() => {
+    watch(isDarkMode, update, { immediate: true });
+  });
+  onUnmounted(() => update());
+};
+const useResolveRouteWithRedirect = (...args) => {
+  const router = useRouter();
+  const route = router.resolve(...args);
+  const lastMatched = route.matched[route.matched.length - 1];
+  if (!(lastMatched === null || lastMatched === void 0 ? void 0 : lastMatched.redirect)) {
+    return route;
+  }
+  const { redirect } = lastMatched;
+  const resolvedRedirect = isFunction(redirect) ? redirect(route) : redirect;
+  const resolvedRedirectObj = isString$2(resolvedRedirect) ? { path: resolvedRedirect } : resolvedRedirect;
+  return useResolveRouteWithRedirect(__spreadValues({
+    hash: route.hash,
+    query: route.query,
+    params: route.params
+  }, resolvedRedirectObj));
+};
+const useNavLink = (item) => {
+  const resolved = useResolveRouteWithRedirect(item);
+  return {
+    text: resolved.meta.title || item,
+    link: resolved.name === "404" ? item : resolved.fullPath
+  };
+};
+let promise = null;
+let promiseResolve = null;
+const scrollPromise = {
+  wait: () => promise,
+  pending: () => {
+    promise = new Promise((resolve2) => promiseResolve = resolve2);
+  },
+  resolve: () => {
+    promiseResolve === null || promiseResolve === void 0 ? void 0 : promiseResolve();
+    promise = null;
+    promiseResolve = null;
+  }
+};
+const useScrollPromise = () => scrollPromise;
+const sidebarItemsSymbol = Symbol("sidebarItems");
+const useSidebarItems = () => {
+  const sidebarItems = inject(sidebarItemsSymbol);
+  if (!sidebarItems) {
+    throw new Error("useSidebarItems() is called without provider.");
+  }
+  return sidebarItems;
+};
+const setupSidebarItems = () => {
+  const themeLocale = useThemeLocaleData();
+  const frontmatter = usePageFrontmatter();
+  const sidebarItems = computed(() => resolveSidebarItems(frontmatter.value, themeLocale.value));
+  provide(sidebarItemsSymbol, sidebarItems);
+};
+const resolveSidebarItems = (frontmatter, themeLocale) => {
+  var _a2, _b2, _c, _d;
+  const sidebarConfig = (_b2 = (_a2 = frontmatter.sidebar) !== null && _a2 !== void 0 ? _a2 : themeLocale.sidebar) !== null && _b2 !== void 0 ? _b2 : "auto";
+  const sidebarDepth = (_d = (_c = frontmatter.sidebarDepth) !== null && _c !== void 0 ? _c : themeLocale.sidebarDepth) !== null && _d !== void 0 ? _d : 2;
+  if (frontmatter.home || sidebarConfig === false) {
+    return [];
+  }
+  if (sidebarConfig === "auto") {
+    return resolveAutoSidebarItems(sidebarDepth);
+  }
+  if (isArray(sidebarConfig)) {
+    return resolveArraySidebarItems(sidebarConfig, sidebarDepth);
+  }
+  if (isPlainObject(sidebarConfig)) {
+    return resolveMultiSidebarItems(sidebarConfig, sidebarDepth);
+  }
+  return [];
+};
+const headerToSidebarItem = (header, sidebarDepth) => ({
+  text: header.title,
+  link: `#${header.slug}`,
+  children: headersToSidebarItemChildren(header.children, sidebarDepth)
+});
+const headersToSidebarItemChildren = (headers, sidebarDepth) => sidebarDepth > 0 ? headers.map((header) => headerToSidebarItem(header, sidebarDepth - 1)) : [];
+const resolveAutoSidebarItems = (sidebarDepth) => {
+  const page = usePageData();
+  return [
+    {
+      text: page.value.title,
+      children: headersToSidebarItemChildren(page.value.headers, sidebarDepth)
+    }
+  ];
+};
+const resolveArraySidebarItems = (sidebarConfig, sidebarDepth) => {
+  const route = useRoute();
+  const page = usePageData();
+  const handleChildItem = (item) => {
+    var _a2;
+    let childItem;
+    if (isString$2(item)) {
+      childItem = useNavLink(item);
+    } else {
+      childItem = item;
+    }
+    if (childItem.children) {
+      return __spreadProps(__spreadValues({}, childItem), {
+        children: childItem.children.map((item2) => handleChildItem(item2))
+      });
+    }
+    if (childItem.link === route.path) {
+      const headers = ((_a2 = page.value.headers[0]) === null || _a2 === void 0 ? void 0 : _a2.level) === 1 ? page.value.headers[0].children : page.value.headers;
+      return __spreadProps(__spreadValues({}, childItem), {
+        children: headersToSidebarItemChildren(headers, sidebarDepth)
+      });
+    }
+    return childItem;
+  };
+  return sidebarConfig.map((item) => handleChildItem(item));
+};
+const resolveMultiSidebarItems = (sidebarConfig, sidebarDepth) => {
+  var _a2;
+  const route = useRoute();
+  const sidebarPath = resolveLocalePath(sidebarConfig, route.path);
+  const matchedSidebarConfig = (_a2 = sidebarConfig[sidebarPath]) !== null && _a2 !== void 0 ? _a2 : [];
+  return resolveArraySidebarItems(matchedSidebarConfig, sidebarDepth);
+};
+const useThemeLocaleData = () => useThemeLocaleData$1();
+var index = "";
+var clientAppEnhance3 = defineClientAppEnhance(({ app, router }) => {
+  app.component("Badge", _sfc_main$g);
+  app.component("CodeGroup", CodeGroup);
+  app.component("CodeGroupItem", _sfc_main$f);
+  app.component("NavbarSearch", () => {
+    const SearchComponent = app.component("Docsearch") || app.component("SearchBox");
+    if (SearchComponent) {
+      return h(SearchComponent);
+    }
+    return null;
+  });
+  const scrollBehavior = router.options.scrollBehavior;
+  router.options.scrollBehavior = async (...args) => {
+    await useScrollPromise().wait();
+    return scrollBehavior(...args);
+  };
+});
+var clientAppEnhance4 = ({ app }) => {
+  app.component("404", defineAsyncComponent(() => __vitePreload(() => import("./404.a4d2a9b8.js"), true ? [] : void 0))), app.component("Articles", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Articles$1;
+  }), true ? void 0 : void 0))), app.component("Cover", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Cover$1;
+  }), true ? void 0 : void 0))), app.component("Detail", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Detail;
+  }), true ? void 0 : void 0))), app.component("Footer", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Footer$1;
+  }), true ? void 0 : void 0))), app.component("Home", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Home;
+  }), true ? void 0 : void 0))), app.component("Layout", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Layout;
+  }), true ? void 0 : void 0))), app.component("NavBar", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return NavBar;
+  }), true ? void 0 : void 0))), app.component("Page", defineAsyncComponent(() => __vitePreload(() => import("./Page.9a8cea9e.js"), true ? [] : void 0))), app.component("Sidebar", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return Sidebar;
+  }), true ? void 0 : void 0))), app.component("ThemeMeta", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
+    return ThemeMeta;
+  }), true ? void 0 : void 0))), app.component("Timeline", defineAsyncComponent(() => __vitePreload(() => import("./Timeline.fe82ac6b.js"), true ? [] : void 0)));
+};
+var clientAppEnhance5 = ({ app }) => {
+  app.component("Test", defineAsyncComponent(() => __vitePreload(() => import("./Test.54955f3f.js"), true ? [] : void 0)));
+};
+var _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+const _sfc_main$e = {};
+const _hoisted_1$c = /* @__PURE__ */ createTextVNode("\u8FD9\u662F\u81EA\u5B9A\u4E49\u5E03\u5C40 ");
+function _sfc_render$1(_ctx, _cache) {
+  const _component_Content = resolveComponent("Content");
+  return openBlock(), createElementBlock(Fragment, null, [
+    _hoisted_1$c,
+    createVNode(_component_Content)
+  ], 64);
+}
+var CustomLayout = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$1]]);
+const hexToRgba = (hex, opacity) => {
+  return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")";
+};
+var Cover_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _hoisted_1$b = { class: "img-box" };
+const _hoisted_2$7 = ["src"];
+const _sfc_main$d = {
+  props: {
+    item: Object
+  },
+  setup(__props) {
+    let isLoaded = ref(false);
+    const imgLoaded = () => {
+      console.log("\u52A0\u8F7D\u5B8C\u6BD5");
+      isLoaded.value = true;
+    };
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock(Fragment, null, [
+        createBaseVNode("div", _hoisted_1$b, [
+          createBaseVNode("img", {
+            src: __props.item.frontmatter.cover,
+            onLoad: imgLoaded,
+            loading: "lazy",
+            class: normalizeClass([{ isImgLoaded: unref(isLoaded) }, "cover"]),
+            alt: "cover"
+          }, null, 42, _hoisted_2$7)
+        ]),
+        createBaseVNode("div", {
+          class: normalizeClass(["loading", { isLoaded: unref(isLoaded) }]),
+          style: normalizeStyle({ backgroundColor: unref(hexToRgba)(`#${__props.item.frontmatter.primary}`, 0.1) })
+        }, null, 6)
+      ], 64);
+    };
+  }
+};
+var Cover = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-081be67a"]]);
+var Cover$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Cover
+});
+var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+var dayjs_min = { exports: {} };
+(function(module, exports) {
+  !function(t, e) {
+    module.exports = e();
+  }(commonjsGlobal, function() {
+    var t = 1e3, e = 6e4, n = 36e5, r2 = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h2 = "quarter", c = "year", d = "date", $ = "Invalid Date", l = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_") }, m = function(t2, e2, n2) {
+      var r3 = String(t2);
+      return !r3 || r3.length >= e2 ? t2 : "" + Array(e2 + 1 - r3.length).join(n2) + t2;
+    }, g = { s: m, z: function(t2) {
+      var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r3 = Math.floor(n2 / 60), i2 = n2 % 60;
+      return (e2 <= 0 ? "+" : "-") + m(r3, 2, "0") + ":" + m(i2, 2, "0");
+    }, m: function t2(e2, n2) {
+      if (e2.date() < n2.date())
+        return -t2(n2, e2);
+      var r3 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r3, f), s2 = n2 - i2 < 0, u2 = e2.clone().add(r3 + (s2 ? -1 : 1), f);
+      return +(-(r3 + (n2 - i2) / (s2 ? i2 - u2 : u2 - i2)) || 0);
+    }, a: function(t2) {
+      return t2 < 0 ? Math.ceil(t2) || 0 : Math.floor(t2);
+    }, p: function(t2) {
+      return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r2, Q: h2 }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
+    }, u: function(t2) {
+      return t2 === void 0;
+    } }, D = "en", v = {};
+    v[D] = M;
+    var p2 = function(t2) {
+      return t2 instanceof _;
+    }, S = function(t2, e2, n2) {
+      var r3;
+      if (!t2)
+        return D;
+      if (typeof t2 == "string")
+        v[t2] && (r3 = t2), e2 && (v[t2] = e2, r3 = t2);
+      else {
+        var i2 = t2.name;
+        v[i2] = t2, r3 = i2;
+      }
+      return !n2 && r3 && (D = r3), r3 || !n2 && D;
+    }, w = function(t2, e2) {
+      if (p2(t2))
+        return t2.clone();
+      var n2 = typeof e2 == "object" ? e2 : {};
+      return n2.date = t2, n2.args = arguments, new _(n2);
+    }, O = g;
+    O.l = S, O.i = p2, O.w = function(t2, e2) {
+      return w(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+    };
+    var _ = function() {
+      function M2(t2) {
+        this.$L = S(t2.locale, null, true), this.parse(t2);
+      }
+      var m2 = M2.prototype;
+      return m2.parse = function(t2) {
+        this.$d = function(t3) {
+          var e2 = t3.date, n2 = t3.utc;
+          if (e2 === null)
+            return new Date(NaN);
+          if (O.u(e2))
+            return new Date();
+          if (e2 instanceof Date)
+            return new Date(e2);
+          if (typeof e2 == "string" && !/Z$/i.test(e2)) {
+            var r3 = e2.match(l);
+            if (r3) {
+              var i2 = r3[2] - 1 || 0, s2 = (r3[7] || "0").substring(0, 3);
+              return n2 ? new Date(Date.UTC(r3[1], i2, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s2)) : new Date(r3[1], i2, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s2);
+            }
+          }
+          return new Date(e2);
+        }(t2), this.$x = t2.x || {}, this.init();
+      }, m2.init = function() {
+        var t2 = this.$d;
+        this.$y = t2.getFullYear(), this.$M = t2.getMonth(), this.$D = t2.getDate(), this.$W = t2.getDay(), this.$H = t2.getHours(), this.$m = t2.getMinutes(), this.$s = t2.getSeconds(), this.$ms = t2.getMilliseconds();
+      }, m2.$utils = function() {
+        return O;
+      }, m2.isValid = function() {
+        return !(this.$d.toString() === $);
+      }, m2.isSame = function(t2, e2) {
+        var n2 = w(t2);
+        return this.startOf(e2) <= n2 && n2 <= this.endOf(e2);
+      }, m2.isAfter = function(t2, e2) {
+        return w(t2) < this.startOf(e2);
+      }, m2.isBefore = function(t2, e2) {
+        return this.endOf(e2) < w(t2);
+      }, m2.$g = function(t2, e2, n2) {
+        return O.u(t2) ? this[e2] : this.set(n2, t2);
+      }, m2.unix = function() {
+        return Math.floor(this.valueOf() / 1e3);
+      }, m2.valueOf = function() {
+        return this.$d.getTime();
+      }, m2.startOf = function(t2, e2) {
+        var n2 = this, r3 = !!O.u(e2) || e2, h3 = O.p(t2), $2 = function(t3, e3) {
+          var i2 = O.w(n2.$u ? Date.UTC(n2.$y, e3, t3) : new Date(n2.$y, e3, t3), n2);
+          return r3 ? i2 : i2.endOf(a);
+        }, l2 = function(t3, e3) {
+          return O.w(n2.toDate()[t3].apply(n2.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
+        }, y2 = this.$W, M3 = this.$M, m3 = this.$D, g2 = "set" + (this.$u ? "UTC" : "");
+        switch (h3) {
+          case c:
+            return r3 ? $2(1, 0) : $2(31, 11);
+          case f:
+            return r3 ? $2(1, M3) : $2(0, M3 + 1);
+          case o:
+            var D2 = this.$locale().weekStart || 0, v2 = (y2 < D2 ? y2 + 7 : y2) - D2;
+            return $2(r3 ? m3 - v2 : m3 + (6 - v2), M3);
+          case a:
+          case d:
+            return l2(g2 + "Hours", 0);
+          case u:
+            return l2(g2 + "Minutes", 1);
+          case s:
+            return l2(g2 + "Seconds", 2);
+          case i:
+            return l2(g2 + "Milliseconds", 3);
+          default:
+            return this.clone();
+        }
+      }, m2.endOf = function(t2) {
+        return this.startOf(t2, false);
+      }, m2.$set = function(t2, e2) {
+        var n2, o2 = O.p(t2), h3 = "set" + (this.$u ? "UTC" : ""), $2 = (n2 = {}, n2[a] = h3 + "Date", n2[d] = h3 + "Date", n2[f] = h3 + "Month", n2[c] = h3 + "FullYear", n2[u] = h3 + "Hours", n2[s] = h3 + "Minutes", n2[i] = h3 + "Seconds", n2[r2] = h3 + "Milliseconds", n2)[o2], l2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
+        if (o2 === f || o2 === c) {
+          var y2 = this.clone().set(d, 1);
+          y2.$d[$2](l2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
+        } else
+          $2 && this.$d[$2](l2);
+        return this.init(), this;
+      }, m2.set = function(t2, e2) {
+        return this.clone().$set(t2, e2);
+      }, m2.get = function(t2) {
+        return this[O.p(t2)]();
+      }, m2.add = function(r3, h3) {
+        var d2, $2 = this;
+        r3 = Number(r3);
+        var l2 = O.p(h3), y2 = function(t2) {
+          var e2 = w($2);
+          return O.w(e2.date(e2.date() + Math.round(t2 * r3)), $2);
+        };
+        if (l2 === f)
+          return this.set(f, this.$M + r3);
+        if (l2 === c)
+          return this.set(c, this.$y + r3);
+        if (l2 === a)
+          return y2(1);
+        if (l2 === o)
+          return y2(7);
+        var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[l2] || 1, m3 = this.$d.getTime() + r3 * M3;
+        return O.w(m3, this);
+      }, m2.subtract = function(t2, e2) {
+        return this.add(-1 * t2, e2);
+      }, m2.format = function(t2) {
+        var e2 = this, n2 = this.$locale();
+        if (!this.isValid())
+          return n2.invalidDate || $;
+        var r3 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h3 = function(t3, n3, i3, s3) {
+          return t3 && (t3[n3] || t3(e2, r3)) || i3[n3].substr(0, s3);
+        }, c2 = function(t3) {
+          return O.s(s2 % 12 || 12, t3, "0");
+        }, d2 = n2.meridiem || function(t3, e3, n3) {
+          var r4 = t3 < 12 ? "AM" : "PM";
+          return n3 ? r4.toLowerCase() : r4;
+        }, l2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h3(n2.monthsShort, a2, f2, 3), MMMM: h3(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h3(n2.weekdaysMin, this.$W, o2, 2), ddd: h3(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d2(s2, u2, true), A: d2(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
+        return r3.replace(y, function(t3, e3) {
+          return e3 || l2[t3] || i2.replace(":", "");
+        });
+      }, m2.utcOffset = function() {
+        return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
+      }, m2.diff = function(r3, d2, $2) {
+        var l2, y2 = O.p(d2), M3 = w(r3), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, D2 = O.m(this, M3);
+        return D2 = (l2 = {}, l2[c] = D2 / 12, l2[f] = D2, l2[h2] = D2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? D2 : O.a(D2);
+      }, m2.daysInMonth = function() {
+        return this.endOf(f).$D;
+      }, m2.$locale = function() {
+        return v[this.$L];
+      }, m2.locale = function(t2, e2) {
+        if (!t2)
+          return this.$L;
+        var n2 = this.clone(), r3 = S(t2, e2, true);
+        return r3 && (n2.$L = r3), n2;
+      }, m2.clone = function() {
+        return O.w(this.$d, this);
+      }, m2.toDate = function() {
+        return new Date(this.valueOf());
+      }, m2.toJSON = function() {
+        return this.isValid() ? this.toISOString() : null;
+      }, m2.toISOString = function() {
+        return this.$d.toISOString();
+      }, m2.toString = function() {
+        return this.$d.toUTCString();
+      }, M2;
+    }(), b = _.prototype;
+    return w.prototype = b, [["$ms", r2], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t2) {
+      b[t2[1]] = function(e2) {
+        return this.$g(e2, t2[0], t2[1]);
+      };
+    }), w.extend = function(t2, e2) {
+      return t2.$i || (t2(e2, _, w), t2.$i = true), w;
+    }, w.locale = S, w.isDayjs = p2, w.unix = function(t2) {
+      return w(1e3 * t2);
+    }, w.en = v[D], w.Ls = v, w.p = {}, w;
+  });
+})(dayjs_min);
+var dayjs = dayjs_min.exports;
+function _assertThisInitialized(self2) {
+  if (self2 === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return self2;
+}
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+/*!
+ * GSAP 3.9.1
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+var _config = {
+  autoSleep: 120,
+  force3D: "auto",
+  nullTargetWarn: 1,
+  units: {
+    lineHeight: ""
+  }
+}, _defaults = {
+  duration: 0.5,
+  overwrite: false,
+  delay: 0
+}, _suppressOverwrites, _bigNum$1 = 1e8, _tinyNum = 1 / _bigNum$1, _2PI = Math.PI * 2, _HALF_PI = _2PI / 4, _gsID = 0, _sqrt = Math.sqrt, _cos = Math.cos, _sin = Math.sin, _isString = function _isString2(value) {
+  return typeof value === "string";
+}, _isFunction = function _isFunction2(value) {
+  return typeof value === "function";
+}, _isNumber = function _isNumber2(value) {
+  return typeof value === "number";
+}, _isUndefined = function _isUndefined2(value) {
+  return typeof value === "undefined";
+}, _isObject = function _isObject2(value) {
+  return typeof value === "object";
+}, _isNotFalse = function _isNotFalse2(value) {
+  return value !== false;
+}, _windowExists$1 = function _windowExists() {
+  return typeof window !== "undefined";
+}, _isFuncOrString = function _isFuncOrString2(value) {
+  return _isFunction(value) || _isString(value);
+}, _isTypedArray = typeof ArrayBuffer === "function" && ArrayBuffer.isView || function() {
+}, _isArray = Array.isArray, _strictNumExp = /(?:-?\.?\d|\.)+/gi, _numExp = /[-+=.]*\d+[.e\-+]*\d*[e\-+]*\d*/g, _numWithUnitExp = /[-+=.]*\d+[.e-]*\d*[a-z%]*/g, _complexStringNumExp = /[-+=.]*\d+\.?\d*(?:e-|e\+)?\d*/gi, _relExp = /[+-]=-?[.\d]+/, _delimitedValueExp = /[^,'"\[\]\s]+/gi, _unitExp = /[\d.+\-=]+(?:e[-+]\d*)*/i, _globalTimeline, _win$1, _coreInitted, _doc$1, _globals = {}, _installScope = {}, _coreReady, _install = function _install2(scope) {
+  return (_installScope = _merge(scope, _globals)) && gsap;
+}, _missingPlugin = function _missingPlugin2(property, value) {
+  return console.warn("Invalid property", property, "set to", value, "Missing plugin? gsap.registerPlugin()");
+}, _warn = function _warn2(message, suppress) {
+  return !suppress && console.warn(message);
+}, _addGlobal = function _addGlobal2(name, obj) {
+  return name && (_globals[name] = obj) && _installScope && (_installScope[name] = obj) || _globals;
+}, _emptyFunc = function _emptyFunc2() {
+  return 0;
+}, _reservedProps = {}, _lazyTweens = [], _lazyLookup = {}, _lastRenderedFrame, _plugins = {}, _effects = {}, _nextGCFrame = 30, _harnessPlugins = [], _callbackNames = "", _harness = function _harness2(targets) {
+  var target = targets[0], harnessPlugin, i;
+  _isObject(target) || _isFunction(target) || (targets = [targets]);
+  if (!(harnessPlugin = (target._gsap || {}).harness)) {
+    i = _harnessPlugins.length;
+    while (i-- && !_harnessPlugins[i].targetTest(target)) {
+    }
+    harnessPlugin = _harnessPlugins[i];
+  }
+  i = targets.length;
+  while (i--) {
+    targets[i] && (targets[i]._gsap || (targets[i]._gsap = new GSCache(targets[i], harnessPlugin))) || targets.splice(i, 1);
+  }
+  return targets;
+}, _getCache = function _getCache2(target) {
+  return target._gsap || _harness(toArray(target))[0]._gsap;
+}, _getProperty = function _getProperty2(target, property, v) {
+  return (v = target[property]) && _isFunction(v) ? target[property]() : _isUndefined(v) && target.getAttribute && target.getAttribute(property) || v;
+}, _forEachName = function _forEachName2(names, func) {
+  return (names = names.split(",")).forEach(func) || names;
+}, _round = function _round2(value) {
+  return Math.round(value * 1e5) / 1e5 || 0;
+}, _roundPrecise = function _roundPrecise2(value) {
+  return Math.round(value * 1e7) / 1e7 || 0;
+}, _arrayContainsAny = function _arrayContainsAny2(toSearch, toFind) {
+  var l = toFind.length, i = 0;
+  for (; toSearch.indexOf(toFind[i]) < 0 && ++i < l; ) {
+  }
+  return i < l;
+}, _lazyRender = function _lazyRender2() {
+  var l = _lazyTweens.length, a = _lazyTweens.slice(0), i, tween;
+  _lazyLookup = {};
+  _lazyTweens.length = 0;
+  for (i = 0; i < l; i++) {
+    tween = a[i];
+    tween && tween._lazy && (tween.render(tween._lazy[0], tween._lazy[1], true)._lazy = 0);
+  }
+}, _lazySafeRender = function _lazySafeRender2(animation, time, suppressEvents, force) {
+  _lazyTweens.length && _lazyRender();
+  animation.render(time, suppressEvents, force);
+  _lazyTweens.length && _lazyRender();
+}, _numericIfPossible = function _numericIfPossible2(value) {
+  var n = parseFloat(value);
+  return (n || n === 0) && (value + "").match(_delimitedValueExp).length < 2 ? n : _isString(value) ? value.trim() : value;
+}, _passThrough = function _passThrough2(p2) {
+  return p2;
+}, _setDefaults = function _setDefaults2(obj, defaults2) {
+  for (var p2 in defaults2) {
+    p2 in obj || (obj[p2] = defaults2[p2]);
+  }
+  return obj;
+}, _setKeyframeDefaults = function _setKeyframeDefaults2(excludeDuration) {
+  return function(obj, defaults2) {
+    for (var p2 in defaults2) {
+      p2 in obj || p2 === "duration" && excludeDuration || p2 === "ease" || (obj[p2] = defaults2[p2]);
+    }
+  };
+}, _merge = function _merge2(base2, toMerge) {
+  for (var p2 in toMerge) {
+    base2[p2] = toMerge[p2];
+  }
+  return base2;
+}, _mergeDeep = function _mergeDeep2(base2, toMerge) {
+  for (var p2 in toMerge) {
+    p2 !== "__proto__" && p2 !== "constructor" && p2 !== "prototype" && (base2[p2] = _isObject(toMerge[p2]) ? _mergeDeep2(base2[p2] || (base2[p2] = {}), toMerge[p2]) : toMerge[p2]);
+  }
+  return base2;
+}, _copyExcluding = function _copyExcluding2(obj, excluding) {
+  var copy = {}, p2;
+  for (p2 in obj) {
+    p2 in excluding || (copy[p2] = obj[p2]);
+  }
+  return copy;
+}, _inheritDefaults = function _inheritDefaults2(vars2) {
+  var parent = vars2.parent || _globalTimeline, func = vars2.keyframes ? _setKeyframeDefaults(_isArray(vars2.keyframes)) : _setDefaults;
+  if (_isNotFalse(vars2.inherit)) {
+    while (parent) {
+      func(vars2, parent.vars.defaults);
+      parent = parent.parent || parent._dp;
+    }
+  }
+  return vars2;
+}, _arraysMatch = function _arraysMatch2(a1, a2) {
+  var i = a1.length, match = i === a2.length;
+  while (match && i-- && a1[i] === a2[i]) {
+  }
+  return i < 0;
+}, _addLinkedListItem = function _addLinkedListItem2(parent, child, firstProp, lastProp, sortBy) {
+  if (firstProp === void 0) {
+    firstProp = "_first";
+  }
+  if (lastProp === void 0) {
+    lastProp = "_last";
+  }
+  var prev = parent[lastProp], t;
+  if (sortBy) {
+    t = child[sortBy];
+    while (prev && prev[sortBy] > t) {
+      prev = prev._prev;
+    }
+  }
+  if (prev) {
+    child._next = prev._next;
+    prev._next = child;
+  } else {
+    child._next = parent[firstProp];
+    parent[firstProp] = child;
+  }
+  if (child._next) {
+    child._next._prev = child;
+  } else {
+    parent[lastProp] = child;
+  }
+  child._prev = prev;
+  child.parent = child._dp = parent;
+  return child;
+}, _removeLinkedListItem = function _removeLinkedListItem2(parent, child, firstProp, lastProp) {
+  if (firstProp === void 0) {
+    firstProp = "_first";
+  }
+  if (lastProp === void 0) {
+    lastProp = "_last";
+  }
+  var prev = child._prev, next = child._next;
+  if (prev) {
+    prev._next = next;
+  } else if (parent[firstProp] === child) {
+    parent[firstProp] = next;
+  }
+  if (next) {
+    next._prev = prev;
+  } else if (parent[lastProp] === child) {
+    parent[lastProp] = prev;
+  }
+  child._next = child._prev = child.parent = null;
+}, _removeFromParent = function _removeFromParent2(child, onlyIfParentHasAutoRemove) {
+  child.parent && (!onlyIfParentHasAutoRemove || child.parent.autoRemoveChildren) && child.parent.remove(child);
+  child._act = 0;
+}, _uncache = function _uncache2(animation, child) {
+  if (animation && (!child || child._end > animation._dur || child._start < 0)) {
+    var a = animation;
+    while (a) {
+      a._dirty = 1;
+      a = a.parent;
+    }
+  }
+  return animation;
+}, _recacheAncestors = function _recacheAncestors2(animation) {
+  var parent = animation.parent;
+  while (parent && parent.parent) {
+    parent._dirty = 1;
+    parent.totalDuration();
+    parent = parent.parent;
+  }
+  return animation;
+}, _hasNoPausedAncestors = function _hasNoPausedAncestors2(animation) {
+  return !animation || animation._ts && _hasNoPausedAncestors2(animation.parent);
+}, _elapsedCycleDuration = function _elapsedCycleDuration2(animation) {
+  return animation._repeat ? _animationCycle(animation._tTime, animation = animation.duration() + animation._rDelay) * animation : 0;
+}, _animationCycle = function _animationCycle2(tTime, cycleDuration) {
+  var whole = Math.floor(tTime /= cycleDuration);
+  return tTime && whole === tTime ? whole - 1 : whole;
+}, _parentToChildTotalTime = function _parentToChildTotalTime2(parentTime, child) {
+  return (parentTime - child._start) * child._ts + (child._ts >= 0 ? 0 : child._dirty ? child.totalDuration() : child._tDur);
+}, _setEnd = function _setEnd2(animation) {
+  return animation._end = _roundPrecise(animation._start + (animation._tDur / Math.abs(animation._ts || animation._rts || _tinyNum) || 0));
+}, _alignPlayhead = function _alignPlayhead2(animation, totalTime) {
+  var parent = animation._dp;
+  if (parent && parent.smoothChildTiming && animation._ts) {
+    animation._start = _roundPrecise(parent._time - (animation._ts > 0 ? totalTime / animation._ts : ((animation._dirty ? animation.totalDuration() : animation._tDur) - totalTime) / -animation._ts));
+    _setEnd(animation);
+    parent._dirty || _uncache(parent, animation);
+  }
+  return animation;
+}, _postAddChecks = function _postAddChecks2(timeline2, child) {
+  var t;
+  if (child._time || child._initted && !child._dur) {
+    t = _parentToChildTotalTime(timeline2.rawTime(), child);
+    if (!child._dur || _clamp(0, child.totalDuration(), t) - child._tTime > _tinyNum) {
+      child.render(t, true);
+    }
+  }
+  if (_uncache(timeline2, child)._dp && timeline2._initted && timeline2._time >= timeline2._dur && timeline2._ts) {
+    if (timeline2._dur < timeline2.duration()) {
+      t = timeline2;
+      while (t._dp) {
+        t.rawTime() >= 0 && t.totalTime(t._tTime);
+        t = t._dp;
+      }
+    }
+    timeline2._zTime = -_tinyNum;
+  }
+}, _addToTimeline = function _addToTimeline2(timeline2, child, position, skipChecks) {
+  child.parent && _removeFromParent(child);
+  child._start = _roundPrecise((_isNumber(position) ? position : position || timeline2 !== _globalTimeline ? _parsePosition(timeline2, position, child) : timeline2._time) + child._delay);
+  child._end = _roundPrecise(child._start + (child.totalDuration() / Math.abs(child.timeScale()) || 0));
+  _addLinkedListItem(timeline2, child, "_first", "_last", timeline2._sort ? "_start" : 0);
+  _isFromOrFromStart(child) || (timeline2._recent = child);
+  skipChecks || _postAddChecks(timeline2, child);
+  return timeline2;
+}, _scrollTrigger = function _scrollTrigger2(animation, trigger2) {
+  return (_globals.ScrollTrigger || _missingPlugin("scrollTrigger", trigger2)) && _globals.ScrollTrigger.create(trigger2, animation);
+}, _attemptInitTween = function _attemptInitTween2(tween, totalTime, force, suppressEvents) {
+  _initTween(tween, totalTime);
+  if (!tween._initted) {
+    return 1;
+  }
+  if (!force && tween._pt && (tween._dur && tween.vars.lazy !== false || !tween._dur && tween.vars.lazy) && _lastRenderedFrame !== _ticker.frame) {
+    _lazyTweens.push(tween);
+    tween._lazy = [totalTime, suppressEvents];
+    return 1;
+  }
+}, _parentPlayheadIsBeforeStart = function _parentPlayheadIsBeforeStart2(_ref) {
+  var parent = _ref.parent;
+  return parent && parent._ts && parent._initted && !parent._lock && (parent.rawTime() < 0 || _parentPlayheadIsBeforeStart2(parent));
+}, _isFromOrFromStart = function _isFromOrFromStart2(_ref2) {
+  var data = _ref2.data;
+  return data === "isFromStart" || data === "isStart";
+}, _renderZeroDurationTween = function _renderZeroDurationTween2(tween, totalTime, suppressEvents, force) {
+  var prevRatio = tween.ratio, ratio = totalTime < 0 || !totalTime && (!tween._start && _parentPlayheadIsBeforeStart(tween) && !(!tween._initted && _isFromOrFromStart(tween)) || (tween._ts < 0 || tween._dp._ts < 0) && !_isFromOrFromStart(tween)) ? 0 : 1, repeatDelay = tween._rDelay, tTime = 0, pt, iteration, prevIteration;
+  if (repeatDelay && tween._repeat) {
+    tTime = _clamp(0, tween._tDur, totalTime);
+    iteration = _animationCycle(tTime, repeatDelay);
+    tween._yoyo && iteration & 1 && (ratio = 1 - ratio);
+    if (iteration !== _animationCycle(tween._tTime, repeatDelay)) {
+      prevRatio = 1 - ratio;
+      tween.vars.repeatRefresh && tween._initted && tween.invalidate();
+    }
+  }
+  if (ratio !== prevRatio || force || tween._zTime === _tinyNum || !totalTime && tween._zTime) {
+    if (!tween._initted && _attemptInitTween(tween, totalTime, force, suppressEvents)) {
+      return;
+    }
+    prevIteration = tween._zTime;
+    tween._zTime = totalTime || (suppressEvents ? _tinyNum : 0);
+    suppressEvents || (suppressEvents = totalTime && !prevIteration);
+    tween.ratio = ratio;
+    tween._from && (ratio = 1 - ratio);
+    tween._time = 0;
+    tween._tTime = tTime;
+    pt = tween._pt;
+    while (pt) {
+      pt.r(ratio, pt.d);
+      pt = pt._next;
+    }
+    tween._startAt && totalTime < 0 && tween._startAt.render(totalTime, true, true);
+    tween._onUpdate && !suppressEvents && _callback(tween, "onUpdate");
+    tTime && tween._repeat && !suppressEvents && tween.parent && _callback(tween, "onRepeat");
+    if ((totalTime >= tween._tDur || totalTime < 0) && tween.ratio === ratio) {
+      ratio && _removeFromParent(tween, 1);
+      if (!suppressEvents) {
+        _callback(tween, ratio ? "onComplete" : "onReverseComplete", true);
+        tween._prom && tween._prom();
+      }
+    }
+  } else if (!tween._zTime) {
+    tween._zTime = totalTime;
+  }
+}, _findNextPauseTween = function _findNextPauseTween2(animation, prevTime, time) {
+  var child;
+  if (time > prevTime) {
+    child = animation._first;
+    while (child && child._start <= time) {
+      if (child.data === "isPause" && child._start > prevTime) {
+        return child;
+      }
+      child = child._next;
+    }
+  } else {
+    child = animation._last;
+    while (child && child._start >= time) {
+      if (child.data === "isPause" && child._start < prevTime) {
+        return child;
+      }
+      child = child._prev;
+    }
+  }
+}, _setDuration = function _setDuration2(animation, duration, skipUncache, leavePlayhead) {
+  var repeat = animation._repeat, dur = _roundPrecise(duration) || 0, totalProgress = animation._tTime / animation._tDur;
+  totalProgress && !leavePlayhead && (animation._time *= dur / animation._dur);
+  animation._dur = dur;
+  animation._tDur = !repeat ? dur : repeat < 0 ? 1e10 : _roundPrecise(dur * (repeat + 1) + animation._rDelay * repeat);
+  totalProgress > 0 && !leavePlayhead ? _alignPlayhead(animation, animation._tTime = animation._tDur * totalProgress) : animation.parent && _setEnd(animation);
+  skipUncache || _uncache(animation.parent, animation);
+  return animation;
+}, _onUpdateTotalDuration = function _onUpdateTotalDuration2(animation) {
+  return animation instanceof Timeline ? _uncache(animation) : _setDuration(animation, animation._dur);
+}, _zeroPosition = {
+  _start: 0,
+  endTime: _emptyFunc,
+  totalDuration: _emptyFunc
+}, _parsePosition = function _parsePosition2(animation, position, percentAnimation) {
+  var labels = animation.labels, recent = animation._recent || _zeroPosition, clippedDuration = animation.duration() >= _bigNum$1 ? recent.endTime(false) : animation._dur, i, offset2, isPercent;
+  if (_isString(position) && (isNaN(position) || position in labels)) {
+    offset2 = position.charAt(0);
+    isPercent = position.substr(-1) === "%";
+    i = position.indexOf("=");
+    if (offset2 === "<" || offset2 === ">") {
+      i >= 0 && (position = position.replace(/=/, ""));
+      return (offset2 === "<" ? recent._start : recent.endTime(recent._repeat >= 0)) + (parseFloat(position.substr(1)) || 0) * (isPercent ? (i < 0 ? recent : percentAnimation).totalDuration() / 100 : 1);
+    }
+    if (i < 0) {
+      position in labels || (labels[position] = clippedDuration);
+      return labels[position];
+    }
+    offset2 = parseFloat(position.charAt(i - 1) + position.substr(i + 1));
+    if (isPercent && percentAnimation) {
+      offset2 = offset2 / 100 * (_isArray(percentAnimation) ? percentAnimation[0] : percentAnimation).totalDuration();
+    }
+    return i > 1 ? _parsePosition2(animation, position.substr(0, i - 1), percentAnimation) + offset2 : clippedDuration + offset2;
+  }
+  return position == null ? clippedDuration : +position;
+}, _createTweenType = function _createTweenType2(type, params, timeline2) {
+  var isLegacy = _isNumber(params[1]), varsIndex = (isLegacy ? 2 : 1) + (type < 2 ? 0 : 1), vars2 = params[varsIndex], irVars, parent;
+  isLegacy && (vars2.duration = params[1]);
+  vars2.parent = timeline2;
+  if (type) {
+    irVars = vars2;
+    parent = timeline2;
+    while (parent && !("immediateRender" in irVars)) {
+      irVars = parent.vars.defaults || {};
+      parent = _isNotFalse(parent.vars.inherit) && parent.parent;
+    }
+    vars2.immediateRender = _isNotFalse(irVars.immediateRender);
+    type < 2 ? vars2.runBackwards = 1 : vars2.startAt = params[varsIndex - 1];
+  }
+  return new Tween(params[0], vars2, params[varsIndex + 1]);
+}, _conditionalReturn = function _conditionalReturn2(value, func) {
+  return value || value === 0 ? func(value) : func;
+}, _clamp = function _clamp2(min, max, value) {
+  return value < min ? min : value > max ? max : value;
+}, getUnit = function getUnit2(value, v) {
+  return !_isString(value) || !(v = _unitExp.exec(value)) ? "" : value.substr(v.index + v[0].length);
+}, clamp = function clamp2(min, max, value) {
+  return _conditionalReturn(value, function(v) {
+    return _clamp(min, max, v);
+  });
+}, _slice = [].slice, _isArrayLike = function _isArrayLike2(value, nonEmpty) {
+  return value && _isObject(value) && "length" in value && (!nonEmpty && !value.length || value.length - 1 in value && _isObject(value[0])) && !value.nodeType && value !== _win$1;
+}, _flatten = function _flatten2(ar, leaveStrings, accumulator) {
+  if (accumulator === void 0) {
+    accumulator = [];
+  }
+  return ar.forEach(function(value) {
+    var _accumulator;
+    return _isString(value) && !leaveStrings || _isArrayLike(value, 1) ? (_accumulator = accumulator).push.apply(_accumulator, toArray(value)) : accumulator.push(value);
+  }) || accumulator;
+}, toArray = function toArray2(value, scope, leaveStrings) {
+  return _isString(value) && !leaveStrings && (_coreInitted || !_wake()) ? _slice.call((scope || _doc$1).querySelectorAll(value), 0) : _isArray(value) ? _flatten(value, leaveStrings) : _isArrayLike(value) ? _slice.call(value, 0) : value ? [value] : [];
+}, selector = function selector2(value) {
+  value = toArray(value)[0] || _warn("Invalid scope") || {};
+  return function(v) {
+    var el = value.current || value.nativeElement || value;
+    return toArray(v, el.querySelectorAll ? el : el === value ? _warn("Invalid scope") || _doc$1.createElement("div") : value);
+  };
+}, shuffle = function shuffle2(a) {
+  return a.sort(function() {
+    return 0.5 - Math.random();
+  });
+}, distribute = function distribute2(v) {
+  if (_isFunction(v)) {
+    return v;
+  }
+  var vars2 = _isObject(v) ? v : {
+    each: v
+  }, ease = _parseEase(vars2.ease), from = vars2.from || 0, base2 = parseFloat(vars2.base) || 0, cache = {}, isDecimal = from > 0 && from < 1, ratios = isNaN(from) || isDecimal, axis = vars2.axis, ratioX = from, ratioY = from;
+  if (_isString(from)) {
+    ratioX = ratioY = {
+      center: 0.5,
+      edges: 0.5,
+      end: 1
+    }[from] || 0;
+  } else if (!isDecimal && ratios) {
+    ratioX = from[0];
+    ratioY = from[1];
+  }
+  return function(i, target, a) {
+    var l = (a || vars2).length, distances = cache[l], originX, originY, x, y, d, j, max, min, wrapAt;
+    if (!distances) {
+      wrapAt = vars2.grid === "auto" ? 0 : (vars2.grid || [1, _bigNum$1])[1];
+      if (!wrapAt) {
+        max = -_bigNum$1;
+        while (max < (max = a[wrapAt++].getBoundingClientRect().left) && wrapAt < l) {
+        }
+        wrapAt--;
+      }
+      distances = cache[l] = [];
+      originX = ratios ? Math.min(wrapAt, l) * ratioX - 0.5 : from % wrapAt;
+      originY = wrapAt === _bigNum$1 ? 0 : ratios ? l * ratioY / wrapAt - 0.5 : from / wrapAt | 0;
+      max = 0;
+      min = _bigNum$1;
+      for (j = 0; j < l; j++) {
+        x = j % wrapAt - originX;
+        y = originY - (j / wrapAt | 0);
+        distances[j] = d = !axis ? _sqrt(x * x + y * y) : Math.abs(axis === "y" ? y : x);
+        d > max && (max = d);
+        d < min && (min = d);
+      }
+      from === "random" && shuffle(distances);
+      distances.max = max - min;
+      distances.min = min;
+      distances.v = l = (parseFloat(vars2.amount) || parseFloat(vars2.each) * (wrapAt > l ? l - 1 : !axis ? Math.max(wrapAt, l / wrapAt) : axis === "y" ? l / wrapAt : wrapAt) || 0) * (from === "edges" ? -1 : 1);
+      distances.b = l < 0 ? base2 - l : base2;
+      distances.u = getUnit(vars2.amount || vars2.each) || 0;
+      ease = ease && l < 0 ? _invertEase(ease) : ease;
+    }
+    l = (distances[i] - distances.min) / distances.max || 0;
+    return _roundPrecise(distances.b + (ease ? ease(l) : l) * distances.v) + distances.u;
+  };
+}, _roundModifier = function _roundModifier2(v) {
+  var p2 = Math.pow(10, ((v + "").split(".")[1] || "").length);
+  return function(raw) {
+    var n = Math.round(parseFloat(raw) / v) * v * p2;
+    return (n - n % 1) / p2 + (_isNumber(raw) ? 0 : getUnit(raw));
+  };
+}, snap = function snap2(snapTo, value) {
+  var isArray2 = _isArray(snapTo), radius, is2D;
+  if (!isArray2 && _isObject(snapTo)) {
+    radius = isArray2 = snapTo.radius || _bigNum$1;
+    if (snapTo.values) {
+      snapTo = toArray(snapTo.values);
+      if (is2D = !_isNumber(snapTo[0])) {
+        radius *= radius;
+      }
+    } else {
+      snapTo = _roundModifier(snapTo.increment);
+    }
+  }
+  return _conditionalReturn(value, !isArray2 ? _roundModifier(snapTo) : _isFunction(snapTo) ? function(raw) {
+    is2D = snapTo(raw);
+    return Math.abs(is2D - raw) <= radius ? is2D : raw;
+  } : function(raw) {
+    var x = parseFloat(is2D ? raw.x : raw), y = parseFloat(is2D ? raw.y : 0), min = _bigNum$1, closest = 0, i = snapTo.length, dx, dy;
+    while (i--) {
+      if (is2D) {
+        dx = snapTo[i].x - x;
+        dy = snapTo[i].y - y;
+        dx = dx * dx + dy * dy;
+      } else {
+        dx = Math.abs(snapTo[i] - x);
+      }
+      if (dx < min) {
+        min = dx;
+        closest = i;
+      }
+    }
+    closest = !radius || min <= radius ? snapTo[closest] : raw;
+    return is2D || closest === raw || _isNumber(raw) ? closest : closest + getUnit(raw);
+  });
+}, random = function random2(min, max, roundingIncrement, returnFunction) {
+  return _conditionalReturn(_isArray(min) ? !max : roundingIncrement === true ? !!(roundingIncrement = 0) : !returnFunction, function() {
+    return _isArray(min) ? min[~~(Math.random() * min.length)] : (roundingIncrement = roundingIncrement || 1e-5) && (returnFunction = roundingIncrement < 1 ? Math.pow(10, (roundingIncrement + "").length - 2) : 1) && Math.floor(Math.round((min - roundingIncrement / 2 + Math.random() * (max - min + roundingIncrement * 0.99)) / roundingIncrement) * roundingIncrement * returnFunction) / returnFunction;
+  });
+}, pipe = function pipe2() {
+  for (var _len = arguments.length, functions = new Array(_len), _key = 0; _key < _len; _key++) {
+    functions[_key] = arguments[_key];
+  }
+  return function(value) {
+    return functions.reduce(function(v, f) {
+      return f(v);
+    }, value);
+  };
+}, unitize = function unitize2(func, unit) {
+  return function(value) {
+    return func(parseFloat(value)) + (unit || getUnit(value));
+  };
+}, normalize = function normalize2(min, max, value) {
+  return mapRange(min, max, 0, 1, value);
+}, _wrapArray = function _wrapArray2(a, wrapper, value) {
+  return _conditionalReturn(value, function(index2) {
+    return a[~~wrapper(index2)];
+  });
+}, wrap = function wrap2(min, max, value) {
+  var range = max - min;
+  return _isArray(min) ? _wrapArray(min, wrap2(0, min.length), max) : _conditionalReturn(value, function(value2) {
+    return (range + (value2 - min) % range) % range + min;
+  });
+}, wrapYoyo = function wrapYoyo2(min, max, value) {
+  var range = max - min, total = range * 2;
+  return _isArray(min) ? _wrapArray(min, wrapYoyo2(0, min.length - 1), max) : _conditionalReturn(value, function(value2) {
+    value2 = (total + (value2 - min) % total) % total || 0;
+    return min + (value2 > range ? total - value2 : value2);
+  });
+}, _replaceRandom = function _replaceRandom2(value) {
+  var prev = 0, s = "", i, nums, end, isArray2;
+  while (~(i = value.indexOf("random(", prev))) {
+    end = value.indexOf(")", i);
+    isArray2 = value.charAt(i + 7) === "[";
+    nums = value.substr(i + 7, end - i - 7).match(isArray2 ? _delimitedValueExp : _strictNumExp);
+    s += value.substr(prev, i - prev) + random(isArray2 ? nums : +nums[0], isArray2 ? 0 : +nums[1], +nums[2] || 1e-5);
+    prev = end + 1;
+  }
+  return s + value.substr(prev, value.length - prev);
+}, mapRange = function mapRange2(inMin, inMax, outMin, outMax, value) {
+  var inRange = inMax - inMin, outRange = outMax - outMin;
+  return _conditionalReturn(value, function(value2) {
+    return outMin + ((value2 - inMin) / inRange * outRange || 0);
+  });
+}, interpolate = function interpolate2(start, end, progress, mutate) {
+  var func = isNaN(start + end) ? 0 : function(p3) {
+    return (1 - p3) * start + p3 * end;
+  };
+  if (!func) {
+    var isString2 = _isString(start), master = {}, p2, i, interpolators, l, il;
+    progress === true && (mutate = 1) && (progress = null);
+    if (isString2) {
+      start = {
+        p: start
+      };
+      end = {
+        p: end
+      };
+    } else if (_isArray(start) && !_isArray(end)) {
+      interpolators = [];
+      l = start.length;
+      il = l - 2;
+      for (i = 1; i < l; i++) {
+        interpolators.push(interpolate2(start[i - 1], start[i]));
+      }
+      l--;
+      func = function func2(p3) {
+        p3 *= l;
+        var i2 = Math.min(il, ~~p3);
+        return interpolators[i2](p3 - i2);
+      };
+      progress = end;
+    } else if (!mutate) {
+      start = _merge(_isArray(start) ? [] : {}, start);
+    }
+    if (!interpolators) {
+      for (p2 in end) {
+        _addPropTween.call(master, start, p2, "get", end[p2]);
+      }
+      func = function func2(p3) {
+        return _renderPropTweens(p3, master) || (isString2 ? start.p : start);
+      };
+    }
+  }
+  return _conditionalReturn(progress, func);
+}, _getLabelInDirection = function _getLabelInDirection2(timeline2, fromTime, backward) {
+  var labels = timeline2.labels, min = _bigNum$1, p2, distance, label;
+  for (p2 in labels) {
+    distance = labels[p2] - fromTime;
+    if (distance < 0 === !!backward && distance && min > (distance = Math.abs(distance))) {
+      label = p2;
+      min = distance;
+    }
+  }
+  return label;
+}, _callback = function _callback2(animation, type, executeLazyFirst) {
+  var v = animation.vars, callback = v[type], params, scope;
+  if (!callback) {
+    return;
+  }
+  params = v[type + "Params"];
+  scope = v.callbackScope || animation;
+  executeLazyFirst && _lazyTweens.length && _lazyRender();
+  return params ? callback.apply(scope, params) : callback.call(scope);
+}, _interrupt = function _interrupt2(animation) {
+  _removeFromParent(animation);
+  animation.scrollTrigger && animation.scrollTrigger.kill(false);
+  animation.progress() < 1 && _callback(animation, "onInterrupt");
+  return animation;
+}, _quickTween, _createPlugin = function _createPlugin2(config3) {
+  config3 = !config3.name && config3["default"] || config3;
+  var name = config3.name, isFunc = _isFunction(config3), Plugin = name && !isFunc && config3.init ? function() {
+    this._props = [];
+  } : config3, instanceDefaults = {
+    init: _emptyFunc,
+    render: _renderPropTweens,
+    add: _addPropTween,
+    kill: _killPropTweensOf,
+    modifier: _addPluginModifier,
+    rawVars: 0
+  }, statics = {
+    targetTest: 0,
+    get: 0,
+    getSetter: _getSetter,
+    aliases: {},
+    register: 0
+  };
+  _wake();
+  if (config3 !== Plugin) {
+    if (_plugins[name]) {
+      return;
+    }
+    _setDefaults(Plugin, _setDefaults(_copyExcluding(config3, instanceDefaults), statics));
+    _merge(Plugin.prototype, _merge(instanceDefaults, _copyExcluding(config3, statics)));
+    _plugins[Plugin.prop = name] = Plugin;
+    if (config3.targetTest) {
+      _harnessPlugins.push(Plugin);
+      _reservedProps[name] = 1;
+    }
+    name = (name === "css" ? "CSS" : name.charAt(0).toUpperCase() + name.substr(1)) + "Plugin";
+  }
+  _addGlobal(name, Plugin);
+  config3.register && config3.register(gsap, Plugin, PropTween);
+}, _255 = 255, _colorLookup = {
+  aqua: [0, _255, _255],
+  lime: [0, _255, 0],
+  silver: [192, 192, 192],
+  black: [0, 0, 0],
+  maroon: [128, 0, 0],
+  teal: [0, 128, 128],
+  blue: [0, 0, _255],
+  navy: [0, 0, 128],
+  white: [_255, _255, _255],
+  olive: [128, 128, 0],
+  yellow: [_255, _255, 0],
+  orange: [_255, 165, 0],
+  gray: [128, 128, 128],
+  purple: [128, 0, 128],
+  green: [0, 128, 0],
+  red: [_255, 0, 0],
+  pink: [_255, 192, 203],
+  cyan: [0, _255, _255],
+  transparent: [_255, _255, _255, 0]
+}, _hue = function _hue2(h2, m1, m2) {
+  h2 += h2 < 0 ? 1 : h2 > 1 ? -1 : 0;
+  return (h2 * 6 < 1 ? m1 + (m2 - m1) * h2 * 6 : h2 < 0.5 ? m2 : h2 * 3 < 2 ? m1 + (m2 - m1) * (2 / 3 - h2) * 6 : m1) * _255 + 0.5 | 0;
+}, splitColor = function splitColor2(v, toHSL, forceAlpha) {
+  var a = !v ? _colorLookup.black : _isNumber(v) ? [v >> 16, v >> 8 & _255, v & _255] : 0, r2, g, b, h2, s, l, max, min, d, wasHSL;
+  if (!a) {
+    if (v.substr(-1) === ",") {
+      v = v.substr(0, v.length - 1);
+    }
+    if (_colorLookup[v]) {
+      a = _colorLookup[v];
+    } else if (v.charAt(0) === "#") {
+      if (v.length < 6) {
+        r2 = v.charAt(1);
+        g = v.charAt(2);
+        b = v.charAt(3);
+        v = "#" + r2 + r2 + g + g + b + b + (v.length === 5 ? v.charAt(4) + v.charAt(4) : "");
+      }
+      if (v.length === 9) {
+        a = parseInt(v.substr(1, 6), 16);
+        return [a >> 16, a >> 8 & _255, a & _255, parseInt(v.substr(7), 16) / 255];
+      }
+      v = parseInt(v.substr(1), 16);
+      a = [v >> 16, v >> 8 & _255, v & _255];
+    } else if (v.substr(0, 3) === "hsl") {
+      a = wasHSL = v.match(_strictNumExp);
+      if (!toHSL) {
+        h2 = +a[0] % 360 / 360;
+        s = +a[1] / 100;
+        l = +a[2] / 100;
+        g = l <= 0.5 ? l * (s + 1) : l + s - l * s;
+        r2 = l * 2 - g;
+        a.length > 3 && (a[3] *= 1);
+        a[0] = _hue(h2 + 1 / 3, r2, g);
+        a[1] = _hue(h2, r2, g);
+        a[2] = _hue(h2 - 1 / 3, r2, g);
+      } else if (~v.indexOf("=")) {
+        a = v.match(_numExp);
+        forceAlpha && a.length < 4 && (a[3] = 1);
+        return a;
+      }
+    } else {
+      a = v.match(_strictNumExp) || _colorLookup.transparent;
+    }
+    a = a.map(Number);
+  }
+  if (toHSL && !wasHSL) {
+    r2 = a[0] / _255;
+    g = a[1] / _255;
+    b = a[2] / _255;
+    max = Math.max(r2, g, b);
+    min = Math.min(r2, g, b);
+    l = (max + min) / 2;
+    if (max === min) {
+      h2 = s = 0;
+    } else {
+      d = max - min;
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      h2 = max === r2 ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r2) / d + 2 : (r2 - g) / d + 4;
+      h2 *= 60;
+    }
+    a[0] = ~~(h2 + 0.5);
+    a[1] = ~~(s * 100 + 0.5);
+    a[2] = ~~(l * 100 + 0.5);
+  }
+  forceAlpha && a.length < 4 && (a[3] = 1);
+  return a;
+}, _colorOrderData = function _colorOrderData2(v) {
+  var values = [], c = [], i = -1;
+  v.split(_colorExp).forEach(function(v2) {
+    var a = v2.match(_numWithUnitExp) || [];
+    values.push.apply(values, a);
+    c.push(i += a.length + 1);
+  });
+  values.c = c;
+  return values;
+}, _formatColors = function _formatColors2(s, toHSL, orderMatchData) {
+  var result = "", colors = (s + result).match(_colorExp), type = toHSL ? "hsla(" : "rgba(", i = 0, c, shell, d, l;
+  if (!colors) {
+    return s;
+  }
+  colors = colors.map(function(color) {
+    return (color = splitColor(color, toHSL, 1)) && type + (toHSL ? color[0] + "," + color[1] + "%," + color[2] + "%," + color[3] : color.join(",")) + ")";
+  });
+  if (orderMatchData) {
+    d = _colorOrderData(s);
+    c = orderMatchData.c;
+    if (c.join(result) !== d.c.join(result)) {
+      shell = s.replace(_colorExp, "1").split(_numWithUnitExp);
+      l = shell.length - 1;
+      for (; i < l; i++) {
+        result += shell[i] + (~c.indexOf(i) ? colors.shift() || type + "0,0,0,0)" : (d.length ? d : colors.length ? colors : orderMatchData).shift());
+      }
+    }
+  }
+  if (!shell) {
+    shell = s.split(_colorExp);
+    l = shell.length - 1;
+    for (; i < l; i++) {
+      result += shell[i] + colors[i];
+    }
+  }
+  return result + shell[l];
+}, _colorExp = function() {
+  var s = "(?:\\b(?:(?:rgb|rgba|hsl|hsla)\\(.+?\\))|\\B#(?:[0-9a-f]{3,4}){1,2}\\b", p2;
+  for (p2 in _colorLookup) {
+    s += "|" + p2 + "\\b";
+  }
+  return new RegExp(s + ")", "gi");
+}(), _hslExp = /hsl[a]?\(/, _colorStringFilter = function _colorStringFilter2(a) {
+  var combined = a.join(" "), toHSL;
+  _colorExp.lastIndex = 0;
+  if (_colorExp.test(combined)) {
+    toHSL = _hslExp.test(combined);
+    a[1] = _formatColors(a[1], toHSL);
+    a[0] = _formatColors(a[0], toHSL, _colorOrderData(a[1]));
+    return true;
+  }
+}, _tickerActive, _ticker = function() {
+  var _getTime = Date.now, _lagThreshold = 500, _adjustedLag = 33, _startTime = _getTime(), _lastUpdate = _startTime, _gap = 1e3 / 240, _nextTime = _gap, _listeners = [], _id, _req, _raf, _self, _delta, _i, _tick = function _tick2(v) {
+    var elapsed = _getTime() - _lastUpdate, manual = v === true, overlap, dispatch, time, frame;
+    elapsed > _lagThreshold && (_startTime += elapsed - _adjustedLag);
+    _lastUpdate += elapsed;
+    time = _lastUpdate - _startTime;
+    overlap = time - _nextTime;
+    if (overlap > 0 || manual) {
+      frame = ++_self.frame;
+      _delta = time - _self.time * 1e3;
+      _self.time = time = time / 1e3;
+      _nextTime += overlap + (overlap >= _gap ? 4 : _gap - overlap);
+      dispatch = 1;
+    }
+    manual || (_id = _req(_tick2));
+    if (dispatch) {
+      for (_i = 0; _i < _listeners.length; _i++) {
+        _listeners[_i](time, _delta, frame, v);
+      }
+    }
+  };
+  _self = {
+    time: 0,
+    frame: 0,
+    tick: function tick() {
+      _tick(true);
+    },
+    deltaRatio: function deltaRatio(fps) {
+      return _delta / (1e3 / (fps || 60));
+    },
+    wake: function wake() {
+      if (_coreReady) {
+        if (!_coreInitted && _windowExists$1()) {
+          _win$1 = _coreInitted = window;
+          _doc$1 = _win$1.document || {};
+          _globals.gsap = gsap;
+          (_win$1.gsapVersions || (_win$1.gsapVersions = [])).push(gsap.version);
+          _install(_installScope || _win$1.GreenSockGlobals || !_win$1.gsap && _win$1 || {});
+          _raf = _win$1.requestAnimationFrame;
+        }
+        _id && _self.sleep();
+        _req = _raf || function(f) {
+          return setTimeout(f, _nextTime - _self.time * 1e3 + 1 | 0);
+        };
+        _tickerActive = 1;
+        _tick(2);
+      }
+    },
+    sleep: function sleep() {
+      (_raf ? _win$1.cancelAnimationFrame : clearTimeout)(_id);
+      _tickerActive = 0;
+      _req = _emptyFunc;
+    },
+    lagSmoothing: function lagSmoothing(threshold, adjustedLag) {
+      _lagThreshold = threshold || 1 / _tinyNum;
+      _adjustedLag = Math.min(adjustedLag, _lagThreshold, 0);
+    },
+    fps: function fps(_fps) {
+      _gap = 1e3 / (_fps || 240);
+      _nextTime = _self.time * 1e3 + _gap;
+    },
+    add: function add2(callback) {
+      _listeners.indexOf(callback) < 0 && _listeners.push(callback);
+      _wake();
+    },
+    remove: function remove2(callback, i) {
+      ~(i = _listeners.indexOf(callback)) && _listeners.splice(i, 1) && _i >= i && _i--;
+    },
+    _listeners
+  };
+  return _self;
+}(), _wake = function _wake2() {
+  return !_tickerActive && _ticker.wake();
+}, _easeMap = {}, _customEaseExp = /^[\d.\-M][\d.\-,\s]/, _quotesExp = /["']/g, _parseObjectInString = function _parseObjectInString2(value) {
+  var obj = {}, split = value.substr(1, value.length - 3).split(":"), key = split[0], i = 1, l = split.length, index2, val, parsedVal;
+  for (; i < l; i++) {
+    val = split[i];
+    index2 = i !== l - 1 ? val.lastIndexOf(",") : val.length;
+    parsedVal = val.substr(0, index2);
+    obj[key] = isNaN(parsedVal) ? parsedVal.replace(_quotesExp, "").trim() : +parsedVal;
+    key = val.substr(index2 + 1).trim();
+  }
+  return obj;
+}, _valueInParentheses = function _valueInParentheses2(value) {
+  var open = value.indexOf("(") + 1, close = value.indexOf(")"), nested = value.indexOf("(", open);
+  return value.substring(open, ~nested && nested < close ? value.indexOf(")", close + 1) : close);
+}, _configEaseFromString = function _configEaseFromString2(name) {
+  var split = (name + "").split("("), ease = _easeMap[split[0]];
+  return ease && split.length > 1 && ease.config ? ease.config.apply(null, ~name.indexOf("{") ? [_parseObjectInString(split[1])] : _valueInParentheses(name).split(",").map(_numericIfPossible)) : _easeMap._CE && _customEaseExp.test(name) ? _easeMap._CE("", name) : ease;
+}, _invertEase = function _invertEase2(ease) {
+  return function(p2) {
+    return 1 - ease(1 - p2);
+  };
+}, _propagateYoyoEase = function _propagateYoyoEase2(timeline2, isYoyo) {
+  var child = timeline2._first, ease;
+  while (child) {
+    if (child instanceof Timeline) {
+      _propagateYoyoEase2(child, isYoyo);
+    } else if (child.vars.yoyoEase && (!child._yoyo || !child._repeat) && child._yoyo !== isYoyo) {
+      if (child.timeline) {
+        _propagateYoyoEase2(child.timeline, isYoyo);
+      } else {
+        ease = child._ease;
+        child._ease = child._yEase;
+        child._yEase = ease;
+        child._yoyo = isYoyo;
+      }
+    }
+    child = child._next;
+  }
+}, _parseEase = function _parseEase2(ease, defaultEase) {
+  return !ease ? defaultEase : (_isFunction(ease) ? ease : _easeMap[ease] || _configEaseFromString(ease)) || defaultEase;
+}, _insertEase = function _insertEase2(names, easeIn, easeOut, easeInOut) {
+  if (easeOut === void 0) {
+    easeOut = function easeOut2(p2) {
+      return 1 - easeIn(1 - p2);
+    };
+  }
+  if (easeInOut === void 0) {
+    easeInOut = function easeInOut2(p2) {
+      return p2 < 0.5 ? easeIn(p2 * 2) / 2 : 1 - easeIn((1 - p2) * 2) / 2;
+    };
+  }
+  var ease = {
+    easeIn,
+    easeOut,
+    easeInOut
+  }, lowercaseName;
+  _forEachName(names, function(name) {
+    _easeMap[name] = _globals[name] = ease;
+    _easeMap[lowercaseName = name.toLowerCase()] = easeOut;
+    for (var p2 in ease) {
+      _easeMap[lowercaseName + (p2 === "easeIn" ? ".in" : p2 === "easeOut" ? ".out" : ".inOut")] = _easeMap[name + "." + p2] = ease[p2];
+    }
+  });
+  return ease;
+}, _easeInOutFromOut = function _easeInOutFromOut2(easeOut) {
+  return function(p2) {
+    return p2 < 0.5 ? (1 - easeOut(1 - p2 * 2)) / 2 : 0.5 + easeOut((p2 - 0.5) * 2) / 2;
+  };
+}, _configElastic = function _configElastic2(type, amplitude, period) {
+  var p1 = amplitude >= 1 ? amplitude : 1, p2 = (period || (type ? 0.3 : 0.45)) / (amplitude < 1 ? amplitude : 1), p3 = p2 / _2PI * (Math.asin(1 / p1) || 0), easeOut = function easeOut2(p4) {
+    return p4 === 1 ? 1 : p1 * Math.pow(2, -10 * p4) * _sin((p4 - p3) * p2) + 1;
+  }, ease = type === "out" ? easeOut : type === "in" ? function(p4) {
+    return 1 - easeOut(1 - p4);
+  } : _easeInOutFromOut(easeOut);
+  p2 = _2PI / p2;
+  ease.config = function(amplitude2, period2) {
+    return _configElastic2(type, amplitude2, period2);
+  };
+  return ease;
+}, _configBack = function _configBack2(type, overshoot) {
+  if (overshoot === void 0) {
+    overshoot = 1.70158;
+  }
+  var easeOut = function easeOut2(p2) {
+    return p2 ? --p2 * p2 * ((overshoot + 1) * p2 + overshoot) + 1 : 0;
+  }, ease = type === "out" ? easeOut : type === "in" ? function(p2) {
+    return 1 - easeOut(1 - p2);
+  } : _easeInOutFromOut(easeOut);
+  ease.config = function(overshoot2) {
+    return _configBack2(type, overshoot2);
+  };
+  return ease;
+};
+_forEachName("Linear,Quad,Cubic,Quart,Quint,Strong", function(name, i) {
+  var power = i < 5 ? i + 1 : i;
+  _insertEase(name + ",Power" + (power - 1), i ? function(p2) {
+    return Math.pow(p2, power);
+  } : function(p2) {
+    return p2;
+  }, function(p2) {
+    return 1 - Math.pow(1 - p2, power);
+  }, function(p2) {
+    return p2 < 0.5 ? Math.pow(p2 * 2, power) / 2 : 1 - Math.pow((1 - p2) * 2, power) / 2;
+  });
+});
+_easeMap.Linear.easeNone = _easeMap.none = _easeMap.Linear.easeIn;
+_insertEase("Elastic", _configElastic("in"), _configElastic("out"), _configElastic());
+(function(n, c) {
+  var n1 = 1 / c, n2 = 2 * n1, n3 = 2.5 * n1, easeOut = function easeOut2(p2) {
+    return p2 < n1 ? n * p2 * p2 : p2 < n2 ? n * Math.pow(p2 - 1.5 / c, 2) + 0.75 : p2 < n3 ? n * (p2 -= 2.25 / c) * p2 + 0.9375 : n * Math.pow(p2 - 2.625 / c, 2) + 0.984375;
+  };
+  _insertEase("Bounce", function(p2) {
+    return 1 - easeOut(1 - p2);
+  }, easeOut);
+})(7.5625, 2.75);
+_insertEase("Expo", function(p2) {
+  return p2 ? Math.pow(2, 10 * (p2 - 1)) : 0;
+});
+_insertEase("Circ", function(p2) {
+  return -(_sqrt(1 - p2 * p2) - 1);
+});
+_insertEase("Sine", function(p2) {
+  return p2 === 1 ? 1 : -_cos(p2 * _HALF_PI) + 1;
+});
+_insertEase("Back", _configBack("in"), _configBack("out"), _configBack());
+_easeMap.SteppedEase = _easeMap.steps = _globals.SteppedEase = {
+  config: function config(steps, immediateStart) {
+    if (steps === void 0) {
+      steps = 1;
+    }
+    var p1 = 1 / steps, p2 = steps + (immediateStart ? 0 : 1), p3 = immediateStart ? 1 : 0, max = 1 - _tinyNum;
+    return function(p4) {
+      return ((p2 * _clamp(0, max, p4) | 0) + p3) * p1;
+    };
+  }
+};
+_defaults.ease = _easeMap["quad.out"];
+_forEachName("onComplete,onUpdate,onStart,onRepeat,onReverseComplete,onInterrupt", function(name) {
+  return _callbackNames += name + "," + name + "Params,";
+});
+var GSCache = function GSCache2(target, harness) {
+  this.id = _gsID++;
+  target._gsap = this;
+  this.target = target;
+  this.harness = harness;
+  this.get = harness ? harness.get : _getProperty;
+  this.set = harness ? harness.getSetter : _getSetter;
+};
+var Animation = /* @__PURE__ */ function() {
+  function Animation2(vars2) {
+    this.vars = vars2;
+    this._delay = +vars2.delay || 0;
+    if (this._repeat = vars2.repeat === Infinity ? -2 : vars2.repeat || 0) {
+      this._rDelay = vars2.repeatDelay || 0;
+      this._yoyo = !!vars2.yoyo || !!vars2.yoyoEase;
+    }
+    this._ts = 1;
+    _setDuration(this, +vars2.duration, 1, 1);
+    this.data = vars2.data;
+    _tickerActive || _ticker.wake();
+  }
+  var _proto = Animation2.prototype;
+  _proto.delay = function delay2(value) {
+    if (value || value === 0) {
+      this.parent && this.parent.smoothChildTiming && this.startTime(this._start + value - this._delay);
+      this._delay = value;
+      return this;
+    }
+    return this._delay;
+  };
+  _proto.duration = function duration(value) {
+    return arguments.length ? this.totalDuration(this._repeat > 0 ? value + (value + this._rDelay) * this._repeat : value) : this.totalDuration() && this._dur;
+  };
+  _proto.totalDuration = function totalDuration(value) {
+    if (!arguments.length) {
+      return this._tDur;
+    }
+    this._dirty = 0;
+    return _setDuration(this, this._repeat < 0 ? value : (value - this._repeat * this._rDelay) / (this._repeat + 1));
+  };
+  _proto.totalTime = function totalTime(_totalTime, suppressEvents) {
+    _wake();
+    if (!arguments.length) {
+      return this._tTime;
+    }
+    var parent = this._dp;
+    if (parent && parent.smoothChildTiming && this._ts) {
+      _alignPlayhead(this, _totalTime);
+      !parent._dp || parent.parent || _postAddChecks(parent, this);
+      while (parent && parent.parent) {
+        if (parent.parent._time !== parent._start + (parent._ts >= 0 ? parent._tTime / parent._ts : (parent.totalDuration() - parent._tTime) / -parent._ts)) {
+          parent.totalTime(parent._tTime, true);
+        }
+        parent = parent.parent;
+      }
+      if (!this.parent && this._dp.autoRemoveChildren && (this._ts > 0 && _totalTime < this._tDur || this._ts < 0 && _totalTime > 0 || !this._tDur && !_totalTime)) {
+        _addToTimeline(this._dp, this, this._start - this._delay);
+      }
+    }
+    if (this._tTime !== _totalTime || !this._dur && !suppressEvents || this._initted && Math.abs(this._zTime) === _tinyNum || !_totalTime && !this._initted && (this.add || this._ptLookup)) {
+      this._ts || (this._pTime = _totalTime);
+      _lazySafeRender(this, _totalTime, suppressEvents);
+    }
+    return this;
+  };
+  _proto.time = function time(value, suppressEvents) {
+    return arguments.length ? this.totalTime(Math.min(this.totalDuration(), value + _elapsedCycleDuration(this)) % (this._dur + this._rDelay) || (value ? this._dur : 0), suppressEvents) : this._time;
+  };
+  _proto.totalProgress = function totalProgress(value, suppressEvents) {
+    return arguments.length ? this.totalTime(this.totalDuration() * value, suppressEvents) : this.totalDuration() ? Math.min(1, this._tTime / this._tDur) : this.ratio;
+  };
+  _proto.progress = function progress(value, suppressEvents) {
+    return arguments.length ? this.totalTime(this.duration() * (this._yoyo && !(this.iteration() & 1) ? 1 - value : value) + _elapsedCycleDuration(this), suppressEvents) : this.duration() ? Math.min(1, this._time / this._dur) : this.ratio;
+  };
+  _proto.iteration = function iteration(value, suppressEvents) {
+    var cycleDuration = this.duration() + this._rDelay;
+    return arguments.length ? this.totalTime(this._time + (value - 1) * cycleDuration, suppressEvents) : this._repeat ? _animationCycle(this._tTime, cycleDuration) + 1 : 1;
+  };
+  _proto.timeScale = function timeScale(value) {
+    if (!arguments.length) {
+      return this._rts === -_tinyNum ? 0 : this._rts;
+    }
+    if (this._rts === value) {
+      return this;
+    }
+    var tTime = this.parent && this._ts ? _parentToChildTotalTime(this.parent._time, this) : this._tTime;
+    this._rts = +value || 0;
+    this._ts = this._ps || value === -_tinyNum ? 0 : this._rts;
+    _recacheAncestors(this.totalTime(_clamp(-this._delay, this._tDur, tTime), true));
+    _setEnd(this);
+    return this;
+  };
+  _proto.paused = function paused(value) {
+    if (!arguments.length) {
+      return this._ps;
+    }
+    if (this._ps !== value) {
+      this._ps = value;
+      if (value) {
+        this._pTime = this._tTime || Math.max(-this._delay, this.rawTime());
+        this._ts = this._act = 0;
+      } else {
+        _wake();
+        this._ts = this._rts;
+        this.totalTime(this.parent && !this.parent.smoothChildTiming ? this.rawTime() : this._tTime || this._pTime, this.progress() === 1 && Math.abs(this._zTime) !== _tinyNum && (this._tTime -= _tinyNum));
+      }
+    }
+    return this;
+  };
+  _proto.startTime = function startTime(value) {
+    if (arguments.length) {
+      this._start = value;
+      var parent = this.parent || this._dp;
+      parent && (parent._sort || !this.parent) && _addToTimeline(parent, this, value - this._delay);
+      return this;
+    }
+    return this._start;
+  };
+  _proto.endTime = function endTime(includeRepeats) {
+    return this._start + (_isNotFalse(includeRepeats) ? this.totalDuration() : this.duration()) / Math.abs(this._ts || 1);
+  };
+  _proto.rawTime = function rawTime(wrapRepeats) {
+    var parent = this.parent || this._dp;
+    return !parent ? this._tTime : wrapRepeats && (!this._ts || this._repeat && this._time && this.totalProgress() < 1) ? this._tTime % (this._dur + this._rDelay) : !this._ts ? this._tTime : _parentToChildTotalTime(parent.rawTime(wrapRepeats), this);
+  };
+  _proto.globalTime = function globalTime(rawTime) {
+    var animation = this, time = arguments.length ? rawTime : animation.rawTime();
+    while (animation) {
+      time = animation._start + time / (animation._ts || 1);
+      animation = animation._dp;
+    }
+    return time;
+  };
+  _proto.repeat = function repeat(value) {
+    if (arguments.length) {
+      this._repeat = value === Infinity ? -2 : value;
+      return _onUpdateTotalDuration(this);
+    }
+    return this._repeat === -2 ? Infinity : this._repeat;
+  };
+  _proto.repeatDelay = function repeatDelay(value) {
+    if (arguments.length) {
+      var time = this._time;
+      this._rDelay = value;
+      _onUpdateTotalDuration(this);
+      return time ? this.time(time) : this;
+    }
+    return this._rDelay;
+  };
+  _proto.yoyo = function yoyo(value) {
+    if (arguments.length) {
+      this._yoyo = value;
+      return this;
+    }
+    return this._yoyo;
+  };
+  _proto.seek = function seek(position, suppressEvents) {
+    return this.totalTime(_parsePosition(this, position), _isNotFalse(suppressEvents));
+  };
+  _proto.restart = function restart(includeDelay, suppressEvents) {
+    return this.play().totalTime(includeDelay ? -this._delay : 0, _isNotFalse(suppressEvents));
+  };
+  _proto.play = function play(from, suppressEvents) {
+    from != null && this.seek(from, suppressEvents);
+    return this.reversed(false).paused(false);
+  };
+  _proto.reverse = function reverse(from, suppressEvents) {
+    from != null && this.seek(from || this.totalDuration(), suppressEvents);
+    return this.reversed(true).paused(false);
+  };
+  _proto.pause = function pause(atTime, suppressEvents) {
+    atTime != null && this.seek(atTime, suppressEvents);
+    return this.paused(true);
+  };
+  _proto.resume = function resume() {
+    return this.paused(false);
+  };
+  _proto.reversed = function reversed(value) {
+    if (arguments.length) {
+      !!value !== this.reversed() && this.timeScale(-this._rts || (value ? -_tinyNum : 0));
+      return this;
+    }
+    return this._rts < 0;
+  };
+  _proto.invalidate = function invalidate() {
+    this._initted = this._act = 0;
+    this._zTime = -_tinyNum;
+    return this;
+  };
+  _proto.isActive = function isActive() {
+    var parent = this.parent || this._dp, start = this._start, rawTime;
+    return !!(!parent || this._ts && this._initted && parent.isActive() && (rawTime = parent.rawTime(true)) >= start && rawTime < this.endTime(true) - _tinyNum);
+  };
+  _proto.eventCallback = function eventCallback(type, callback, params) {
+    var vars2 = this.vars;
+    if (arguments.length > 1) {
+      if (!callback) {
+        delete vars2[type];
+      } else {
+        vars2[type] = callback;
+        params && (vars2[type + "Params"] = params);
+        type === "onUpdate" && (this._onUpdate = callback);
+      }
+      return this;
+    }
+    return vars2[type];
+  };
+  _proto.then = function then(onFulfilled) {
+    var self2 = this;
+    return new Promise(function(resolve2) {
+      var f = _isFunction(onFulfilled) ? onFulfilled : _passThrough, _resolve = function _resolve2() {
+        var _then = self2.then;
+        self2.then = null;
+        _isFunction(f) && (f = f(self2)) && (f.then || f === self2) && (self2.then = _then);
+        resolve2(f);
+        self2.then = _then;
+      };
+      if (self2._initted && self2.totalProgress() === 1 && self2._ts >= 0 || !self2._tTime && self2._ts < 0) {
+        _resolve();
+      } else {
+        self2._prom = _resolve;
+      }
+    });
+  };
+  _proto.kill = function kill() {
+    _interrupt(this);
+  };
+  return Animation2;
+}();
+_setDefaults(Animation.prototype, {
+  _time: 0,
+  _start: 0,
+  _end: 0,
+  _tTime: 0,
+  _tDur: 0,
+  _dirty: 0,
+  _repeat: 0,
+  _yoyo: false,
+  parent: null,
+  _initted: false,
+  _rDelay: 0,
+  _ts: 1,
+  _dp: 0,
+  ratio: 0,
+  _zTime: -_tinyNum,
+  _prom: 0,
+  _ps: false,
+  _rts: 1
+});
+var Timeline = /* @__PURE__ */ function(_Animation) {
+  _inheritsLoose(Timeline2, _Animation);
+  function Timeline2(vars2, position) {
+    var _this;
+    if (vars2 === void 0) {
+      vars2 = {};
+    }
+    _this = _Animation.call(this, vars2) || this;
+    _this.labels = {};
+    _this.smoothChildTiming = !!vars2.smoothChildTiming;
+    _this.autoRemoveChildren = !!vars2.autoRemoveChildren;
+    _this._sort = _isNotFalse(vars2.sortChildren);
+    _globalTimeline && _addToTimeline(vars2.parent || _globalTimeline, _assertThisInitialized(_this), position);
+    vars2.reversed && _this.reverse();
+    vars2.paused && _this.paused(true);
+    vars2.scrollTrigger && _scrollTrigger(_assertThisInitialized(_this), vars2.scrollTrigger);
+    return _this;
+  }
+  var _proto2 = Timeline2.prototype;
+  _proto2.to = function to(targets, vars2, position) {
+    _createTweenType(0, arguments, this);
+    return this;
+  };
+  _proto2.from = function from(targets, vars2, position) {
+    _createTweenType(1, arguments, this);
+    return this;
+  };
+  _proto2.fromTo = function fromTo(targets, fromVars, toVars, position) {
+    _createTweenType(2, arguments, this);
+    return this;
+  };
+  _proto2.set = function set2(targets, vars2, position) {
+    vars2.duration = 0;
+    vars2.parent = this;
+    _inheritDefaults(vars2).repeatDelay || (vars2.repeat = 0);
+    vars2.immediateRender = !!vars2.immediateRender;
+    new Tween(targets, vars2, _parsePosition(this, position), 1);
+    return this;
+  };
+  _proto2.call = function call(callback, params, position) {
+    return _addToTimeline(this, Tween.delayedCall(0, callback, params), position);
+  };
+  _proto2.staggerTo = function staggerTo(targets, duration, vars2, stagger, position, onCompleteAll, onCompleteAllParams) {
+    vars2.duration = duration;
+    vars2.stagger = vars2.stagger || stagger;
+    vars2.onComplete = onCompleteAll;
+    vars2.onCompleteParams = onCompleteAllParams;
+    vars2.parent = this;
+    new Tween(targets, vars2, _parsePosition(this, position));
+    return this;
+  };
+  _proto2.staggerFrom = function staggerFrom(targets, duration, vars2, stagger, position, onCompleteAll, onCompleteAllParams) {
+    vars2.runBackwards = 1;
+    _inheritDefaults(vars2).immediateRender = _isNotFalse(vars2.immediateRender);
+    return this.staggerTo(targets, duration, vars2, stagger, position, onCompleteAll, onCompleteAllParams);
+  };
+  _proto2.staggerFromTo = function staggerFromTo(targets, duration, fromVars, toVars, stagger, position, onCompleteAll, onCompleteAllParams) {
+    toVars.startAt = fromVars;
+    _inheritDefaults(toVars).immediateRender = _isNotFalse(toVars.immediateRender);
+    return this.staggerTo(targets, duration, toVars, stagger, position, onCompleteAll, onCompleteAllParams);
+  };
+  _proto2.render = function render(totalTime, suppressEvents, force) {
+    var prevTime = this._time, tDur = this._dirty ? this.totalDuration() : this._tDur, dur = this._dur, tTime = totalTime <= 0 ? 0 : _roundPrecise(totalTime), crossingStart = this._zTime < 0 !== totalTime < 0 && (this._initted || !dur), time, child, next, iteration, cycleDuration, prevPaused, pauseTween, timeScale, prevStart, prevIteration, yoyo, isYoyo;
+    this !== _globalTimeline && tTime > tDur && totalTime >= 0 && (tTime = tDur);
+    if (tTime !== this._tTime || force || crossingStart) {
+      if (prevTime !== this._time && dur) {
+        tTime += this._time - prevTime;
+        totalTime += this._time - prevTime;
+      }
+      time = tTime;
+      prevStart = this._start;
+      timeScale = this._ts;
+      prevPaused = !timeScale;
+      if (crossingStart) {
+        dur || (prevTime = this._zTime);
+        (totalTime || !suppressEvents) && (this._zTime = totalTime);
+      }
+      if (this._repeat) {
+        yoyo = this._yoyo;
+        cycleDuration = dur + this._rDelay;
+        if (this._repeat < -1 && totalTime < 0) {
+          return this.totalTime(cycleDuration * 100 + totalTime, suppressEvents, force);
+        }
+        time = _roundPrecise(tTime % cycleDuration);
+        if (tTime === tDur) {
+          iteration = this._repeat;
+          time = dur;
+        } else {
+          iteration = ~~(tTime / cycleDuration);
+          if (iteration && iteration === tTime / cycleDuration) {
+            time = dur;
+            iteration--;
+          }
+          time > dur && (time = dur);
+        }
+        prevIteration = _animationCycle(this._tTime, cycleDuration);
+        !prevTime && this._tTime && prevIteration !== iteration && (prevIteration = iteration);
+        if (yoyo && iteration & 1) {
+          time = dur - time;
+          isYoyo = 1;
+        }
+        if (iteration !== prevIteration && !this._lock) {
+          var rewinding = yoyo && prevIteration & 1, doesWrap = rewinding === (yoyo && iteration & 1);
+          iteration < prevIteration && (rewinding = !rewinding);
+          prevTime = rewinding ? 0 : dur;
+          this._lock = 1;
+          this.render(prevTime || (isYoyo ? 0 : _roundPrecise(iteration * cycleDuration)), suppressEvents, !dur)._lock = 0;
+          this._tTime = tTime;
+          !suppressEvents && this.parent && _callback(this, "onRepeat");
+          this.vars.repeatRefresh && !isYoyo && (this.invalidate()._lock = 1);
+          if (prevTime && prevTime !== this._time || prevPaused !== !this._ts || this.vars.onRepeat && !this.parent && !this._act) {
+            return this;
+          }
+          dur = this._dur;
+          tDur = this._tDur;
+          if (doesWrap) {
+            this._lock = 2;
+            prevTime = rewinding ? dur : -1e-4;
+            this.render(prevTime, true);
+            this.vars.repeatRefresh && !isYoyo && this.invalidate();
+          }
+          this._lock = 0;
+          if (!this._ts && !prevPaused) {
+            return this;
+          }
+          _propagateYoyoEase(this, isYoyo);
+        }
+      }
+      if (this._hasPause && !this._forcing && this._lock < 2) {
+        pauseTween = _findNextPauseTween(this, _roundPrecise(prevTime), _roundPrecise(time));
+        if (pauseTween) {
+          tTime -= time - (time = pauseTween._start);
+        }
+      }
+      this._tTime = tTime;
+      this._time = time;
+      this._act = !timeScale;
+      if (!this._initted) {
+        this._onUpdate = this.vars.onUpdate;
+        this._initted = 1;
+        this._zTime = totalTime;
+        prevTime = 0;
+      }
+      if (!prevTime && time && !suppressEvents) {
+        _callback(this, "onStart");
+        if (this._tTime !== tTime) {
+          return this;
+        }
+      }
+      if (time >= prevTime && totalTime >= 0) {
+        child = this._first;
+        while (child) {
+          next = child._next;
+          if ((child._act || time >= child._start) && child._ts && pauseTween !== child) {
+            if (child.parent !== this) {
+              return this.render(totalTime, suppressEvents, force);
+            }
+            child.render(child._ts > 0 ? (time - child._start) * child._ts : (child._dirty ? child.totalDuration() : child._tDur) + (time - child._start) * child._ts, suppressEvents, force);
+            if (time !== this._time || !this._ts && !prevPaused) {
+              pauseTween = 0;
+              next && (tTime += this._zTime = -_tinyNum);
+              break;
+            }
+          }
+          child = next;
+        }
+      } else {
+        child = this._last;
+        var adjustedTime = totalTime < 0 ? totalTime : time;
+        while (child) {
+          next = child._prev;
+          if ((child._act || adjustedTime <= child._end) && child._ts && pauseTween !== child) {
+            if (child.parent !== this) {
+              return this.render(totalTime, suppressEvents, force);
+            }
+            child.render(child._ts > 0 ? (adjustedTime - child._start) * child._ts : (child._dirty ? child.totalDuration() : child._tDur) + (adjustedTime - child._start) * child._ts, suppressEvents, force);
+            if (time !== this._time || !this._ts && !prevPaused) {
+              pauseTween = 0;
+              next && (tTime += this._zTime = adjustedTime ? -_tinyNum : _tinyNum);
+              break;
+            }
+          }
+          child = next;
+        }
+      }
+      if (pauseTween && !suppressEvents) {
+        this.pause();
+        pauseTween.render(time >= prevTime ? 0 : -_tinyNum)._zTime = time >= prevTime ? 1 : -1;
+        if (this._ts) {
+          this._start = prevStart;
+          _setEnd(this);
+          return this.render(totalTime, suppressEvents, force);
+        }
+      }
+      this._onUpdate && !suppressEvents && _callback(this, "onUpdate", true);
+      if (tTime === tDur && tDur >= this.totalDuration() || !tTime && prevTime) {
+        if (prevStart === this._start || Math.abs(timeScale) !== Math.abs(this._ts)) {
+          if (!this._lock) {
+            (totalTime || !dur) && (tTime === tDur && this._ts > 0 || !tTime && this._ts < 0) && _removeFromParent(this, 1);
+            if (!suppressEvents && !(totalTime < 0 && !prevTime) && (tTime || prevTime || !tDur)) {
+              _callback(this, tTime === tDur && totalTime >= 0 ? "onComplete" : "onReverseComplete", true);
+              this._prom && !(tTime < tDur && this.timeScale() > 0) && this._prom();
+            }
+          }
+        }
+      }
+    }
+    return this;
+  };
+  _proto2.add = function add2(child, position) {
+    var _this2 = this;
+    _isNumber(position) || (position = _parsePosition(this, position, child));
+    if (!(child instanceof Animation)) {
+      if (_isArray(child)) {
+        child.forEach(function(obj) {
+          return _this2.add(obj, position);
+        });
+        return this;
+      }
+      if (_isString(child)) {
+        return this.addLabel(child, position);
+      }
+      if (_isFunction(child)) {
+        child = Tween.delayedCall(0, child);
+      } else {
+        return this;
+      }
+    }
+    return this !== child ? _addToTimeline(this, child, position) : this;
+  };
+  _proto2.getChildren = function getChildren(nested, tweens, timelines, ignoreBeforeTime) {
+    if (nested === void 0) {
+      nested = true;
+    }
+    if (tweens === void 0) {
+      tweens = true;
+    }
+    if (timelines === void 0) {
+      timelines = true;
+    }
+    if (ignoreBeforeTime === void 0) {
+      ignoreBeforeTime = -_bigNum$1;
+    }
+    var a = [], child = this._first;
+    while (child) {
+      if (child._start >= ignoreBeforeTime) {
+        if (child instanceof Tween) {
+          tweens && a.push(child);
+        } else {
+          timelines && a.push(child);
+          nested && a.push.apply(a, child.getChildren(true, tweens, timelines));
+        }
+      }
+      child = child._next;
+    }
+    return a;
+  };
+  _proto2.getById = function getById2(id) {
+    var animations = this.getChildren(1, 1, 1), i = animations.length;
+    while (i--) {
+      if (animations[i].vars.id === id) {
+        return animations[i];
+      }
+    }
+  };
+  _proto2.remove = function remove2(child) {
+    if (_isString(child)) {
+      return this.removeLabel(child);
+    }
+    if (_isFunction(child)) {
+      return this.killTweensOf(child);
+    }
+    _removeLinkedListItem(this, child);
+    if (child === this._recent) {
+      this._recent = this._last;
+    }
+    return _uncache(this);
+  };
+  _proto2.totalTime = function totalTime(_totalTime2, suppressEvents) {
+    if (!arguments.length) {
+      return this._tTime;
+    }
+    this._forcing = 1;
+    if (!this._dp && this._ts) {
+      this._start = _roundPrecise(_ticker.time - (this._ts > 0 ? _totalTime2 / this._ts : (this.totalDuration() - _totalTime2) / -this._ts));
+    }
+    _Animation.prototype.totalTime.call(this, _totalTime2, suppressEvents);
+    this._forcing = 0;
+    return this;
+  };
+  _proto2.addLabel = function addLabel(label, position) {
+    this.labels[label] = _parsePosition(this, position);
+    return this;
+  };
+  _proto2.removeLabel = function removeLabel(label) {
+    delete this.labels[label];
+    return this;
+  };
+  _proto2.addPause = function addPause(position, callback, params) {
+    var t = Tween.delayedCall(0, callback || _emptyFunc, params);
+    t.data = "isPause";
+    this._hasPause = 1;
+    return _addToTimeline(this, t, _parsePosition(this, position));
+  };
+  _proto2.removePause = function removePause(position) {
+    var child = this._first;
+    position = _parsePosition(this, position);
+    while (child) {
+      if (child._start === position && child.data === "isPause") {
+        _removeFromParent(child);
+      }
+      child = child._next;
+    }
+  };
+  _proto2.killTweensOf = function killTweensOf(targets, props, onlyActive) {
+    var tweens = this.getTweensOf(targets, onlyActive), i = tweens.length;
+    while (i--) {
+      _overwritingTween !== tweens[i] && tweens[i].kill(targets, props);
+    }
+    return this;
+  };
+  _proto2.getTweensOf = function getTweensOf2(targets, onlyActive) {
+    var a = [], parsedTargets = toArray(targets), child = this._first, isGlobalTime = _isNumber(onlyActive), children;
+    while (child) {
+      if (child instanceof Tween) {
+        if (_arrayContainsAny(child._targets, parsedTargets) && (isGlobalTime ? (!_overwritingTween || child._initted && child._ts) && child.globalTime(0) <= onlyActive && child.globalTime(child.totalDuration()) > onlyActive : !onlyActive || child.isActive())) {
+          a.push(child);
+        }
+      } else if ((children = child.getTweensOf(parsedTargets, onlyActive)).length) {
+        a.push.apply(a, children);
+      }
+      child = child._next;
+    }
+    return a;
+  };
+  _proto2.tweenTo = function tweenTo(position, vars2) {
+    vars2 = vars2 || {};
+    var tl = this, endTime = _parsePosition(tl, position), _vars = vars2, startAt = _vars.startAt, _onStart = _vars.onStart, onStartParams = _vars.onStartParams, immediateRender = _vars.immediateRender, initted, tween = Tween.to(tl, _setDefaults({
+      ease: vars2.ease || "none",
+      lazy: false,
+      immediateRender: false,
+      time: endTime,
+      overwrite: "auto",
+      duration: vars2.duration || Math.abs((endTime - (startAt && "time" in startAt ? startAt.time : tl._time)) / tl.timeScale()) || _tinyNum,
+      onStart: function onStart() {
+        tl.pause();
+        if (!initted) {
+          var duration = vars2.duration || Math.abs((endTime - (startAt && "time" in startAt ? startAt.time : tl._time)) / tl.timeScale());
+          tween._dur !== duration && _setDuration(tween, duration, 0, 1).render(tween._time, true, true);
+          initted = 1;
+        }
+        _onStart && _onStart.apply(tween, onStartParams || []);
+      }
+    }, vars2));
+    return immediateRender ? tween.render(0) : tween;
+  };
+  _proto2.tweenFromTo = function tweenFromTo(fromPosition, toPosition, vars2) {
+    return this.tweenTo(toPosition, _setDefaults({
+      startAt: {
+        time: _parsePosition(this, fromPosition)
+      }
+    }, vars2));
+  };
+  _proto2.recent = function recent() {
+    return this._recent;
+  };
+  _proto2.nextLabel = function nextLabel(afterTime) {
+    if (afterTime === void 0) {
+      afterTime = this._time;
+    }
+    return _getLabelInDirection(this, _parsePosition(this, afterTime));
+  };
+  _proto2.previousLabel = function previousLabel(beforeTime) {
+    if (beforeTime === void 0) {
+      beforeTime = this._time;
+    }
+    return _getLabelInDirection(this, _parsePosition(this, beforeTime), 1);
+  };
+  _proto2.currentLabel = function currentLabel(value) {
+    return arguments.length ? this.seek(value, true) : this.previousLabel(this._time + _tinyNum);
+  };
+  _proto2.shiftChildren = function shiftChildren(amount, adjustLabels, ignoreBeforeTime) {
+    if (ignoreBeforeTime === void 0) {
+      ignoreBeforeTime = 0;
+    }
+    var child = this._first, labels = this.labels, p2;
+    while (child) {
+      if (child._start >= ignoreBeforeTime) {
+        child._start += amount;
+        child._end += amount;
+      }
+      child = child._next;
+    }
+    if (adjustLabels) {
+      for (p2 in labels) {
+        if (labels[p2] >= ignoreBeforeTime) {
+          labels[p2] += amount;
+        }
+      }
+    }
+    return _uncache(this);
+  };
+  _proto2.invalidate = function invalidate() {
+    var child = this._first;
+    this._lock = 0;
+    while (child) {
+      child.invalidate();
+      child = child._next;
+    }
+    return _Animation.prototype.invalidate.call(this);
+  };
+  _proto2.clear = function clear2(includeLabels) {
+    if (includeLabels === void 0) {
+      includeLabels = true;
+    }
+    var child = this._first, next;
+    while (child) {
+      next = child._next;
+      this.remove(child);
+      child = next;
+    }
+    this._dp && (this._time = this._tTime = this._pTime = 0);
+    includeLabels && (this.labels = {});
+    return _uncache(this);
+  };
+  _proto2.totalDuration = function totalDuration(value) {
+    var max = 0, self2 = this, child = self2._last, prevStart = _bigNum$1, prev, start, parent;
+    if (arguments.length) {
+      return self2.timeScale((self2._repeat < 0 ? self2.duration() : self2.totalDuration()) / (self2.reversed() ? -value : value));
+    }
+    if (self2._dirty) {
+      parent = self2.parent;
+      while (child) {
+        prev = child._prev;
+        child._dirty && child.totalDuration();
+        start = child._start;
+        if (start > prevStart && self2._sort && child._ts && !self2._lock) {
+          self2._lock = 1;
+          _addToTimeline(self2, child, start - child._delay, 1)._lock = 0;
+        } else {
+          prevStart = start;
+        }
+        if (start < 0 && child._ts) {
+          max -= start;
+          if (!parent && !self2._dp || parent && parent.smoothChildTiming) {
+            self2._start += start / self2._ts;
+            self2._time -= start;
+            self2._tTime -= start;
+          }
+          self2.shiftChildren(-start, false, -Infinity);
+          prevStart = 0;
+        }
+        child._end > max && child._ts && (max = child._end);
+        child = prev;
+      }
+      _setDuration(self2, self2 === _globalTimeline && self2._time > max ? self2._time : max, 1, 1);
+      self2._dirty = 0;
+    }
+    return self2._tDur;
+  };
+  Timeline2.updateRoot = function updateRoot(time) {
+    if (_globalTimeline._ts) {
+      _lazySafeRender(_globalTimeline, _parentToChildTotalTime(time, _globalTimeline));
+      _lastRenderedFrame = _ticker.frame;
+    }
+    if (_ticker.frame >= _nextGCFrame) {
+      _nextGCFrame += _config.autoSleep || 120;
+      var child = _globalTimeline._first;
+      if (!child || !child._ts) {
+        if (_config.autoSleep && _ticker._listeners.length < 2) {
+          while (child && !child._ts) {
+            child = child._next;
+          }
+          child || _ticker.sleep();
+        }
+      }
+    }
+  };
+  return Timeline2;
+}(Animation);
+_setDefaults(Timeline.prototype, {
+  _lock: 0,
+  _hasPause: 0,
+  _forcing: 0
+});
+var _addComplexStringPropTween = function _addComplexStringPropTween2(target, prop, start, end, setter, stringFilter, funcParam) {
+  var pt = new PropTween(this._pt, target, prop, 0, 1, _renderComplexString, null, setter), index2 = 0, matchIndex = 0, result, startNums, color, endNum, chunk, startNum, hasRandom, a;
+  pt.b = start;
+  pt.e = end;
+  start += "";
+  end += "";
+  if (hasRandom = ~end.indexOf("random(")) {
+    end = _replaceRandom(end);
+  }
+  if (stringFilter) {
+    a = [start, end];
+    stringFilter(a, target, prop);
+    start = a[0];
+    end = a[1];
+  }
+  startNums = start.match(_complexStringNumExp) || [];
+  while (result = _complexStringNumExp.exec(end)) {
+    endNum = result[0];
+    chunk = end.substring(index2, result.index);
+    if (color) {
+      color = (color + 1) % 5;
+    } else if (chunk.substr(-5) === "rgba(") {
+      color = 1;
+    }
+    if (endNum !== startNums[matchIndex++]) {
+      startNum = parseFloat(startNums[matchIndex - 1]) || 0;
+      pt._pt = {
+        _next: pt._pt,
+        p: chunk || matchIndex === 1 ? chunk : ",",
+        s: startNum,
+        c: endNum.charAt(1) === "=" ? parseFloat(endNum.substr(2)) * (endNum.charAt(0) === "-" ? -1 : 1) : parseFloat(endNum) - startNum,
+        m: color && color < 4 ? Math.round : 0
+      };
+      index2 = _complexStringNumExp.lastIndex;
+    }
+  }
+  pt.c = index2 < end.length ? end.substring(index2, end.length) : "";
+  pt.fp = funcParam;
+  if (_relExp.test(end) || hasRandom) {
+    pt.e = 0;
+  }
+  this._pt = pt;
+  return pt;
+}, _addPropTween = function _addPropTween2(target, prop, start, end, index2, targets, modifier, stringFilter, funcParam) {
+  _isFunction(end) && (end = end(index2 || 0, target, targets));
+  var currentValue = target[prop], parsedStart = start !== "get" ? start : !_isFunction(currentValue) ? currentValue : funcParam ? target[prop.indexOf("set") || !_isFunction(target["get" + prop.substr(3)]) ? prop : "get" + prop.substr(3)](funcParam) : target[prop](), setter = !_isFunction(currentValue) ? _setterPlain : funcParam ? _setterFuncWithParam : _setterFunc, pt;
+  if (_isString(end)) {
+    if (~end.indexOf("random(")) {
+      end = _replaceRandom(end);
+    }
+    if (end.charAt(1) === "=") {
+      pt = parseFloat(parsedStart) + parseFloat(end.substr(2)) * (end.charAt(0) === "-" ? -1 : 1) + (getUnit(parsedStart) || 0);
+      if (pt || pt === 0) {
+        end = pt;
+      }
+    }
+  }
+  if (parsedStart !== end) {
+    if (!isNaN(parsedStart * end) && end !== "") {
+      pt = new PropTween(this._pt, target, prop, +parsedStart || 0, end - (parsedStart || 0), typeof currentValue === "boolean" ? _renderBoolean : _renderPlain, 0, setter);
+      funcParam && (pt.fp = funcParam);
+      modifier && pt.modifier(modifier, this, target);
+      return this._pt = pt;
+    }
+    !currentValue && !(prop in target) && _missingPlugin(prop, end);
+    return _addComplexStringPropTween.call(this, target, prop, parsedStart, end, setter, stringFilter || _config.stringFilter, funcParam);
+  }
+}, _processVars = function _processVars2(vars2, index2, target, targets, tween) {
+  _isFunction(vars2) && (vars2 = _parseFuncOrString(vars2, tween, index2, target, targets));
+  if (!_isObject(vars2) || vars2.style && vars2.nodeType || _isArray(vars2) || _isTypedArray(vars2)) {
+    return _isString(vars2) ? _parseFuncOrString(vars2, tween, index2, target, targets) : vars2;
+  }
+  var copy = {}, p2;
+  for (p2 in vars2) {
+    copy[p2] = _parseFuncOrString(vars2[p2], tween, index2, target, targets);
+  }
+  return copy;
+}, _checkPlugin = function _checkPlugin2(property, vars2, tween, index2, target, targets) {
+  var plugin, pt, ptLookup, i;
+  if (_plugins[property] && (plugin = new _plugins[property]()).init(target, plugin.rawVars ? vars2[property] : _processVars(vars2[property], index2, target, targets, tween), tween, index2, targets) !== false) {
+    tween._pt = pt = new PropTween(tween._pt, target, property, 0, 1, plugin.render, plugin, 0, plugin.priority);
+    if (tween !== _quickTween) {
+      ptLookup = tween._ptLookup[tween._targets.indexOf(target)];
+      i = plugin._props.length;
+      while (i--) {
+        ptLookup[plugin._props[i]] = pt;
+      }
+    }
+  }
+  return plugin;
+}, _overwritingTween, _initTween = function _initTween2(tween, time) {
+  var vars2 = tween.vars, ease = vars2.ease, startAt = vars2.startAt, immediateRender = vars2.immediateRender, lazy = vars2.lazy, onUpdate = vars2.onUpdate, onUpdateParams = vars2.onUpdateParams, callbackScope = vars2.callbackScope, runBackwards = vars2.runBackwards, yoyoEase = vars2.yoyoEase, keyframes = vars2.keyframes, autoRevert = vars2.autoRevert, dur = tween._dur, prevStartAt = tween._startAt, targets = tween._targets, parent = tween.parent, fullTargets = parent && parent.data === "nested" ? parent.parent._targets : targets, autoOverwrite = tween._overwrite === "auto" && !_suppressOverwrites, tl = tween.timeline, cleanVars, i, p2, pt, target, hasPriority, gsData, harness, plugin, ptLookup, index2, harnessVars, overwritten;
+  tl && (!keyframes || !ease) && (ease = "none");
+  tween._ease = _parseEase(ease, _defaults.ease);
+  tween._yEase = yoyoEase ? _invertEase(_parseEase(yoyoEase === true ? ease : yoyoEase, _defaults.ease)) : 0;
+  if (yoyoEase && tween._yoyo && !tween._repeat) {
+    yoyoEase = tween._yEase;
+    tween._yEase = tween._ease;
+    tween._ease = yoyoEase;
+  }
+  tween._from = !tl && !!vars2.runBackwards;
+  if (!tl || keyframes && !vars2.stagger) {
+    harness = targets[0] ? _getCache(targets[0]).harness : 0;
+    harnessVars = harness && vars2[harness.prop];
+    cleanVars = _copyExcluding(vars2, _reservedProps);
+    prevStartAt && _removeFromParent(prevStartAt.render(-1, true));
+    if (startAt) {
+      _removeFromParent(tween._startAt = Tween.set(targets, _setDefaults({
+        data: "isStart",
+        overwrite: false,
+        parent,
+        immediateRender: true,
+        lazy: _isNotFalse(lazy),
+        startAt: null,
+        delay: 0,
+        onUpdate,
+        onUpdateParams,
+        callbackScope,
+        stagger: 0
+      }, startAt)));
+      time < 0 && !immediateRender && !autoRevert && tween._startAt.render(-1, true);
+      if (immediateRender) {
+        time > 0 && !autoRevert && (tween._startAt = 0);
+        if (dur && time <= 0) {
+          time && (tween._zTime = time);
+          return;
+        }
+      } else if (autoRevert === false) {
+        tween._startAt = 0;
+      }
+    } else if (runBackwards && dur) {
+      if (prevStartAt) {
+        !autoRevert && (tween._startAt = 0);
+      } else {
+        time && (immediateRender = false);
+        p2 = _setDefaults({
+          overwrite: false,
+          data: "isFromStart",
+          lazy: immediateRender && _isNotFalse(lazy),
+          immediateRender,
+          stagger: 0,
+          parent
+        }, cleanVars);
+        harnessVars && (p2[harness.prop] = harnessVars);
+        _removeFromParent(tween._startAt = Tween.set(targets, p2));
+        time < 0 && tween._startAt.render(-1, true);
+        tween._zTime = time;
+        if (!immediateRender) {
+          _initTween2(tween._startAt, _tinyNum);
+        } else if (!time) {
+          return;
+        }
+      }
+    }
+    tween._pt = 0;
+    lazy = dur && _isNotFalse(lazy) || lazy && !dur;
+    for (i = 0; i < targets.length; i++) {
+      target = targets[i];
+      gsData = target._gsap || _harness(targets)[i]._gsap;
+      tween._ptLookup[i] = ptLookup = {};
+      _lazyLookup[gsData.id] && _lazyTweens.length && _lazyRender();
+      index2 = fullTargets === targets ? i : fullTargets.indexOf(target);
+      if (harness && (plugin = new harness()).init(target, harnessVars || cleanVars, tween, index2, fullTargets) !== false) {
+        tween._pt = pt = new PropTween(tween._pt, target, plugin.name, 0, 1, plugin.render, plugin, 0, plugin.priority);
+        plugin._props.forEach(function(name) {
+          ptLookup[name] = pt;
+        });
+        plugin.priority && (hasPriority = 1);
+      }
+      if (!harness || harnessVars) {
+        for (p2 in cleanVars) {
+          if (_plugins[p2] && (plugin = _checkPlugin(p2, cleanVars, tween, index2, target, fullTargets))) {
+            plugin.priority && (hasPriority = 1);
+          } else {
+            ptLookup[p2] = pt = _addPropTween.call(tween, target, p2, "get", cleanVars[p2], index2, fullTargets, 0, vars2.stringFilter);
+          }
+        }
+      }
+      tween._op && tween._op[i] && tween.kill(target, tween._op[i]);
+      if (autoOverwrite && tween._pt) {
+        _overwritingTween = tween;
+        _globalTimeline.killTweensOf(target, ptLookup, tween.globalTime(time));
+        overwritten = !tween.parent;
+        _overwritingTween = 0;
+      }
+      tween._pt && lazy && (_lazyLookup[gsData.id] = 1);
+    }
+    hasPriority && _sortPropTweensByPriority(tween);
+    tween._onInit && tween._onInit(tween);
+  }
+  tween._onUpdate = onUpdate;
+  tween._initted = (!tween._op || tween._pt) && !overwritten;
+  keyframes && time <= 0 && tl.render(_bigNum$1, true, true);
+}, _addAliasesToVars = function _addAliasesToVars2(targets, vars2) {
+  var harness = targets[0] ? _getCache(targets[0]).harness : 0, propertyAliases = harness && harness.aliases, copy, p2, i, aliases;
+  if (!propertyAliases) {
+    return vars2;
+  }
+  copy = _merge({}, vars2);
+  for (p2 in propertyAliases) {
+    if (p2 in copy) {
+      aliases = propertyAliases[p2].split(",");
+      i = aliases.length;
+      while (i--) {
+        copy[aliases[i]] = copy[p2];
+      }
+    }
+  }
+  return copy;
+}, _parseKeyframe = function _parseKeyframe2(prop, obj, allProps, easeEach) {
+  var ease = obj.ease || easeEach || "power1.inOut", p2, a;
+  if (_isArray(obj)) {
+    a = allProps[prop] || (allProps[prop] = []);
+    obj.forEach(function(value, i) {
+      return a.push({
+        t: i / (obj.length - 1) * 100,
+        v: value,
+        e: ease
+      });
+    });
+  } else {
+    for (p2 in obj) {
+      a = allProps[p2] || (allProps[p2] = []);
+      p2 === "ease" || a.push({
+        t: parseFloat(prop),
+        v: obj[p2],
+        e: ease
+      });
+    }
+  }
+}, _parseFuncOrString = function _parseFuncOrString2(value, tween, i, target, targets) {
+  return _isFunction(value) ? value.call(tween, i, target, targets) : _isString(value) && ~value.indexOf("random(") ? _replaceRandom(value) : value;
+}, _staggerTweenProps = _callbackNames + "repeat,repeatDelay,yoyo,repeatRefresh,yoyoEase", _staggerPropsToSkip = {};
+_forEachName(_staggerTweenProps + ",id,stagger,delay,duration,paused,scrollTrigger", function(name) {
+  return _staggerPropsToSkip[name] = 1;
+});
+var Tween = /* @__PURE__ */ function(_Animation2) {
+  _inheritsLoose(Tween2, _Animation2);
+  function Tween2(targets, vars2, position, skipInherit) {
+    var _this3;
+    if (typeof vars2 === "number") {
+      position.duration = vars2;
+      vars2 = position;
+      position = null;
+    }
+    _this3 = _Animation2.call(this, skipInherit ? vars2 : _inheritDefaults(vars2)) || this;
+    var _this3$vars = _this3.vars, duration = _this3$vars.duration, delay2 = _this3$vars.delay, immediateRender = _this3$vars.immediateRender, stagger = _this3$vars.stagger, overwrite = _this3$vars.overwrite, keyframes = _this3$vars.keyframes, defaults2 = _this3$vars.defaults, scrollTrigger = _this3$vars.scrollTrigger, yoyoEase = _this3$vars.yoyoEase, parent = vars2.parent || _globalTimeline, parsedTargets = (_isArray(targets) || _isTypedArray(targets) ? _isNumber(targets[0]) : "length" in vars2) ? [targets] : toArray(targets), tl, i, copy, l, p2, curTarget, staggerFunc, staggerVarsToMerge;
+    _this3._targets = parsedTargets.length ? _harness(parsedTargets) : _warn("GSAP target " + targets + " not found. https://greensock.com", !_config.nullTargetWarn) || [];
+    _this3._ptLookup = [];
+    _this3._overwrite = overwrite;
+    if (keyframes || stagger || _isFuncOrString(duration) || _isFuncOrString(delay2)) {
+      vars2 = _this3.vars;
+      tl = _this3.timeline = new Timeline({
+        data: "nested",
+        defaults: defaults2 || {}
+      });
+      tl.kill();
+      tl.parent = tl._dp = _assertThisInitialized(_this3);
+      tl._start = 0;
+      if (stagger || _isFuncOrString(duration) || _isFuncOrString(delay2)) {
+        l = parsedTargets.length;
+        staggerFunc = stagger && distribute(stagger);
+        if (_isObject(stagger)) {
+          for (p2 in stagger) {
+            if (~_staggerTweenProps.indexOf(p2)) {
+              staggerVarsToMerge || (staggerVarsToMerge = {});
+              staggerVarsToMerge[p2] = stagger[p2];
+            }
+          }
+        }
+        for (i = 0; i < l; i++) {
+          copy = _copyExcluding(vars2, _staggerPropsToSkip);
+          copy.stagger = 0;
+          yoyoEase && (copy.yoyoEase = yoyoEase);
+          staggerVarsToMerge && _merge(copy, staggerVarsToMerge);
+          curTarget = parsedTargets[i];
+          copy.duration = +_parseFuncOrString(duration, _assertThisInitialized(_this3), i, curTarget, parsedTargets);
+          copy.delay = (+_parseFuncOrString(delay2, _assertThisInitialized(_this3), i, curTarget, parsedTargets) || 0) - _this3._delay;
+          if (!stagger && l === 1 && copy.delay) {
+            _this3._delay = delay2 = copy.delay;
+            _this3._start += delay2;
+            copy.delay = 0;
+          }
+          tl.to(curTarget, copy, staggerFunc ? staggerFunc(i, curTarget, parsedTargets) : 0);
+          tl._ease = _easeMap.none;
+        }
+        tl.duration() ? duration = delay2 = 0 : _this3.timeline = 0;
+      } else if (keyframes) {
+        _inheritDefaults(_setDefaults(tl.vars.defaults, {
+          ease: "none"
+        }));
+        tl._ease = _parseEase(keyframes.ease || vars2.ease || "none");
+        var time = 0, a, kf, v;
+        if (_isArray(keyframes)) {
+          keyframes.forEach(function(frame) {
+            return tl.to(parsedTargets, frame, ">");
+          });
+        } else {
+          copy = {};
+          for (p2 in keyframes) {
+            p2 === "ease" || p2 === "easeEach" || _parseKeyframe(p2, keyframes[p2], copy, keyframes.easeEach);
+          }
+          for (p2 in copy) {
+            a = copy[p2].sort(function(a2, b) {
+              return a2.t - b.t;
+            });
+            time = 0;
+            for (i = 0; i < a.length; i++) {
+              kf = a[i];
+              v = {
+                ease: kf.e,
+                duration: (kf.t - (i ? a[i - 1].t : 0)) / 100 * duration
+              };
+              v[p2] = kf.v;
+              tl.to(parsedTargets, v, time);
+              time += v.duration;
+            }
+          }
+          tl.duration() < duration && tl.to({}, {
+            duration: duration - tl.duration()
+          });
+        }
+      }
+      duration || _this3.duration(duration = tl.duration());
+    } else {
+      _this3.timeline = 0;
+    }
+    if (overwrite === true && !_suppressOverwrites) {
+      _overwritingTween = _assertThisInitialized(_this3);
+      _globalTimeline.killTweensOf(parsedTargets);
+      _overwritingTween = 0;
+    }
+    _addToTimeline(parent, _assertThisInitialized(_this3), position);
+    vars2.reversed && _this3.reverse();
+    vars2.paused && _this3.paused(true);
+    if (immediateRender || !duration && !keyframes && _this3._start === _roundPrecise(parent._time) && _isNotFalse(immediateRender) && _hasNoPausedAncestors(_assertThisInitialized(_this3)) && parent.data !== "nested") {
+      _this3._tTime = -_tinyNum;
+      _this3.render(Math.max(0, -delay2));
+    }
+    scrollTrigger && _scrollTrigger(_assertThisInitialized(_this3), scrollTrigger);
+    return _this3;
+  }
+  var _proto3 = Tween2.prototype;
+  _proto3.render = function render(totalTime, suppressEvents, force) {
+    var prevTime = this._time, tDur = this._tDur, dur = this._dur, tTime = totalTime > tDur - _tinyNum && totalTime >= 0 ? tDur : totalTime < _tinyNum ? 0 : totalTime, time, pt, iteration, cycleDuration, prevIteration, isYoyo, ratio, timeline2, yoyoEase;
+    if (!dur) {
+      _renderZeroDurationTween(this, totalTime, suppressEvents, force);
+    } else if (tTime !== this._tTime || !totalTime || force || !this._initted && this._tTime || this._startAt && this._zTime < 0 !== totalTime < 0) {
+      time = tTime;
+      timeline2 = this.timeline;
+      if (this._repeat) {
+        cycleDuration = dur + this._rDelay;
+        if (this._repeat < -1 && totalTime < 0) {
+          return this.totalTime(cycleDuration * 100 + totalTime, suppressEvents, force);
+        }
+        time = _roundPrecise(tTime % cycleDuration);
+        if (tTime === tDur) {
+          iteration = this._repeat;
+          time = dur;
+        } else {
+          iteration = ~~(tTime / cycleDuration);
+          if (iteration && iteration === tTime / cycleDuration) {
+            time = dur;
+            iteration--;
+          }
+          time > dur && (time = dur);
+        }
+        isYoyo = this._yoyo && iteration & 1;
+        if (isYoyo) {
+          yoyoEase = this._yEase;
+          time = dur - time;
+        }
+        prevIteration = _animationCycle(this._tTime, cycleDuration);
+        if (time === prevTime && !force && this._initted) {
+          return this;
+        }
+        if (iteration !== prevIteration) {
+          timeline2 && this._yEase && _propagateYoyoEase(timeline2, isYoyo);
+          if (this.vars.repeatRefresh && !isYoyo && !this._lock) {
+            this._lock = force = 1;
+            this.render(_roundPrecise(cycleDuration * iteration), true).invalidate()._lock = 0;
+          }
+        }
+      }
+      if (!this._initted) {
+        if (_attemptInitTween(this, totalTime < 0 ? totalTime : time, force, suppressEvents)) {
+          this._tTime = 0;
+          return this;
+        }
+        if (dur !== this._dur) {
+          return this.render(totalTime, suppressEvents, force);
+        }
+      }
+      this._tTime = tTime;
+      this._time = time;
+      if (!this._act && this._ts) {
+        this._act = 1;
+        this._lazy = 0;
+      }
+      this.ratio = ratio = (yoyoEase || this._ease)(time / dur);
+      if (this._from) {
+        this.ratio = ratio = 1 - ratio;
+      }
+      if (time && !prevTime && !suppressEvents) {
+        _callback(this, "onStart");
+        if (this._tTime !== tTime) {
+          return this;
+        }
+      }
+      pt = this._pt;
+      while (pt) {
+        pt.r(ratio, pt.d);
+        pt = pt._next;
+      }
+      timeline2 && timeline2.render(totalTime < 0 ? totalTime : !time && isYoyo ? -_tinyNum : timeline2._dur * timeline2._ease(time / this._dur), suppressEvents, force) || this._startAt && (this._zTime = totalTime);
+      if (this._onUpdate && !suppressEvents) {
+        totalTime < 0 && this._startAt && this._startAt.render(totalTime, true, force);
+        _callback(this, "onUpdate");
+      }
+      this._repeat && iteration !== prevIteration && this.vars.onRepeat && !suppressEvents && this.parent && _callback(this, "onRepeat");
+      if ((tTime === this._tDur || !tTime) && this._tTime === tTime) {
+        totalTime < 0 && this._startAt && !this._onUpdate && this._startAt.render(totalTime, true, true);
+        (totalTime || !dur) && (tTime === this._tDur && this._ts > 0 || !tTime && this._ts < 0) && _removeFromParent(this, 1);
+        if (!suppressEvents && !(totalTime < 0 && !prevTime) && (tTime || prevTime)) {
+          _callback(this, tTime === tDur ? "onComplete" : "onReverseComplete", true);
+          this._prom && !(tTime < tDur && this.timeScale() > 0) && this._prom();
+        }
+      }
+    }
+    return this;
+  };
+  _proto3.targets = function targets() {
+    return this._targets;
+  };
+  _proto3.invalidate = function invalidate() {
+    this._pt = this._op = this._startAt = this._onUpdate = this._lazy = this.ratio = 0;
+    this._ptLookup = [];
+    this.timeline && this.timeline.invalidate();
+    return _Animation2.prototype.invalidate.call(this);
+  };
+  _proto3.kill = function kill(targets, vars2) {
+    if (vars2 === void 0) {
+      vars2 = "all";
+    }
+    if (!targets && (!vars2 || vars2 === "all")) {
+      this._lazy = this._pt = 0;
+      return this.parent ? _interrupt(this) : this;
+    }
+    if (this.timeline) {
+      var tDur = this.timeline.totalDuration();
+      this.timeline.killTweensOf(targets, vars2, _overwritingTween && _overwritingTween.vars.overwrite !== true)._first || _interrupt(this);
+      this.parent && tDur !== this.timeline.totalDuration() && _setDuration(this, this._dur * this.timeline._tDur / tDur, 0, 1);
+      return this;
+    }
+    var parsedTargets = this._targets, killingTargets = targets ? toArray(targets) : parsedTargets, propTweenLookup = this._ptLookup, firstPT = this._pt, overwrittenProps, curLookup, curOverwriteProps, props, p2, pt, i;
+    if ((!vars2 || vars2 === "all") && _arraysMatch(parsedTargets, killingTargets)) {
+      vars2 === "all" && (this._pt = 0);
+      return _interrupt(this);
+    }
+    overwrittenProps = this._op = this._op || [];
+    if (vars2 !== "all") {
+      if (_isString(vars2)) {
+        p2 = {};
+        _forEachName(vars2, function(name) {
+          return p2[name] = 1;
+        });
+        vars2 = p2;
+      }
+      vars2 = _addAliasesToVars(parsedTargets, vars2);
+    }
+    i = parsedTargets.length;
+    while (i--) {
+      if (~killingTargets.indexOf(parsedTargets[i])) {
+        curLookup = propTweenLookup[i];
+        if (vars2 === "all") {
+          overwrittenProps[i] = vars2;
+          props = curLookup;
+          curOverwriteProps = {};
+        } else {
+          curOverwriteProps = overwrittenProps[i] = overwrittenProps[i] || {};
+          props = vars2;
+        }
+        for (p2 in props) {
+          pt = curLookup && curLookup[p2];
+          if (pt) {
+            if (!("kill" in pt.d) || pt.d.kill(p2) === true) {
+              _removeLinkedListItem(this, pt, "_pt");
+            }
+            delete curLookup[p2];
+          }
+          if (curOverwriteProps !== "all") {
+            curOverwriteProps[p2] = 1;
+          }
+        }
+      }
+    }
+    this._initted && !this._pt && firstPT && _interrupt(this);
+    return this;
+  };
+  Tween2.to = function to(targets, vars2) {
+    return new Tween2(targets, vars2, arguments[2]);
+  };
+  Tween2.from = function from(targets, vars2) {
+    return _createTweenType(1, arguments);
+  };
+  Tween2.delayedCall = function delayedCall(delay2, callback, params, scope) {
+    return new Tween2(callback, 0, {
+      immediateRender: false,
+      lazy: false,
+      overwrite: false,
+      delay: delay2,
+      onComplete: callback,
+      onReverseComplete: callback,
+      onCompleteParams: params,
+      onReverseCompleteParams: params,
+      callbackScope: scope
+    });
+  };
+  Tween2.fromTo = function fromTo(targets, fromVars, toVars) {
+    return _createTweenType(2, arguments);
+  };
+  Tween2.set = function set2(targets, vars2) {
+    vars2.duration = 0;
+    vars2.repeatDelay || (vars2.repeat = 0);
+    return new Tween2(targets, vars2);
+  };
+  Tween2.killTweensOf = function killTweensOf(targets, props, onlyActive) {
+    return _globalTimeline.killTweensOf(targets, props, onlyActive);
+  };
+  return Tween2;
+}(Animation);
+_setDefaults(Tween.prototype, {
+  _targets: [],
+  _lazy: 0,
+  _startAt: 0,
+  _op: 0,
+  _onInit: 0
+});
+_forEachName("staggerTo,staggerFrom,staggerFromTo", function(name) {
+  Tween[name] = function() {
+    var tl = new Timeline(), params = _slice.call(arguments, 0);
+    params.splice(name === "staggerFromTo" ? 5 : 4, 0, 0);
+    return tl[name].apply(tl, params);
+  };
+});
+var _setterPlain = function _setterPlain2(target, property, value) {
+  return target[property] = value;
+}, _setterFunc = function _setterFunc2(target, property, value) {
+  return target[property](value);
+}, _setterFuncWithParam = function _setterFuncWithParam2(target, property, value, data) {
+  return target[property](data.fp, value);
+}, _setterAttribute = function _setterAttribute2(target, property, value) {
+  return target.setAttribute(property, value);
+}, _getSetter = function _getSetter2(target, property) {
+  return _isFunction(target[property]) ? _setterFunc : _isUndefined(target[property]) && target.setAttribute ? _setterAttribute : _setterPlain;
+}, _renderPlain = function _renderPlain2(ratio, data) {
+  return data.set(data.t, data.p, Math.round((data.s + data.c * ratio) * 1e6) / 1e6, data);
+}, _renderBoolean = function _renderBoolean2(ratio, data) {
+  return data.set(data.t, data.p, !!(data.s + data.c * ratio), data);
+}, _renderComplexString = function _renderComplexString2(ratio, data) {
+  var pt = data._pt, s = "";
+  if (!ratio && data.b) {
+    s = data.b;
+  } else if (ratio === 1 && data.e) {
+    s = data.e;
+  } else {
+    while (pt) {
+      s = pt.p + (pt.m ? pt.m(pt.s + pt.c * ratio) : Math.round((pt.s + pt.c * ratio) * 1e4) / 1e4) + s;
+      pt = pt._next;
+    }
+    s += data.c;
+  }
+  data.set(data.t, data.p, s, data);
+}, _renderPropTweens = function _renderPropTweens2(ratio, data) {
+  var pt = data._pt;
+  while (pt) {
+    pt.r(ratio, pt.d);
+    pt = pt._next;
+  }
+}, _addPluginModifier = function _addPluginModifier2(modifier, tween, target, property) {
+  var pt = this._pt, next;
+  while (pt) {
+    next = pt._next;
+    pt.p === property && pt.modifier(modifier, tween, target);
+    pt = next;
+  }
+}, _killPropTweensOf = function _killPropTweensOf2(property) {
+  var pt = this._pt, hasNonDependentRemaining, next;
+  while (pt) {
+    next = pt._next;
+    if (pt.p === property && !pt.op || pt.op === property) {
+      _removeLinkedListItem(this, pt, "_pt");
+    } else if (!pt.dep) {
+      hasNonDependentRemaining = 1;
+    }
+    pt = next;
+  }
+  return !hasNonDependentRemaining;
+}, _setterWithModifier = function _setterWithModifier2(target, property, value, data) {
+  data.mSet(target, property, data.m.call(data.tween, value, data.mt), data);
+}, _sortPropTweensByPriority = function _sortPropTweensByPriority2(parent) {
+  var pt = parent._pt, next, pt2, first, last;
+  while (pt) {
+    next = pt._next;
+    pt2 = first;
+    while (pt2 && pt2.pr > pt.pr) {
+      pt2 = pt2._next;
+    }
+    if (pt._prev = pt2 ? pt2._prev : last) {
+      pt._prev._next = pt;
+    } else {
+      first = pt;
+    }
+    if (pt._next = pt2) {
+      pt2._prev = pt;
+    } else {
+      last = pt;
+    }
+    pt = next;
+  }
+  parent._pt = first;
+};
+var PropTween = /* @__PURE__ */ function() {
+  function PropTween2(next, target, prop, start, change, renderer2, data, setter, priority) {
+    this.t = target;
+    this.s = start;
+    this.c = change;
+    this.p = prop;
+    this.r = renderer2 || _renderPlain;
+    this.d = data || this;
+    this.set = setter || _setterPlain;
+    this.pr = priority || 0;
+    this._next = next;
+    if (next) {
+      next._prev = this;
+    }
+  }
+  var _proto4 = PropTween2.prototype;
+  _proto4.modifier = function modifier(func, tween, target) {
+    this.mSet = this.mSet || this.set;
+    this.set = _setterWithModifier;
+    this.m = func;
+    this.mt = target;
+    this.tween = tween;
+  };
+  return PropTween2;
+}();
+_forEachName(_callbackNames + "parent,duration,ease,delay,overwrite,runBackwards,startAt,yoyo,immediateRender,repeat,repeatDelay,data,paused,reversed,lazy,callbackScope,stringFilter,id,yoyoEase,stagger,inherit,repeatRefresh,keyframes,autoRevert,scrollTrigger", function(name) {
+  return _reservedProps[name] = 1;
+});
+_globals.TweenMax = _globals.TweenLite = Tween;
+_globals.TimelineLite = _globals.TimelineMax = Timeline;
+_globalTimeline = new Timeline({
+  sortChildren: false,
+  defaults: _defaults,
+  autoRemoveChildren: true,
+  id: "root",
+  smoothChildTiming: true
+});
+_config.stringFilter = _colorStringFilter;
+var _gsap = {
+  registerPlugin: function registerPlugin() {
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+    args.forEach(function(config3) {
+      return _createPlugin(config3);
+    });
+  },
+  timeline: function timeline(vars2) {
+    return new Timeline(vars2);
+  },
+  getTweensOf: function getTweensOf(targets, onlyActive) {
+    return _globalTimeline.getTweensOf(targets, onlyActive);
+  },
+  getProperty: function getProperty(target, property, unit, uncache) {
+    _isString(target) && (target = toArray(target)[0]);
+    var getter = _getCache(target || {}).get, format = unit ? _passThrough : _numericIfPossible;
+    unit === "native" && (unit = "");
+    return !target ? target : !property ? function(property2, unit2, uncache2) {
+      return format((_plugins[property2] && _plugins[property2].get || getter)(target, property2, unit2, uncache2));
+    } : format((_plugins[property] && _plugins[property].get || getter)(target, property, unit, uncache));
+  },
+  quickSetter: function quickSetter(target, property, unit) {
+    target = toArray(target);
+    if (target.length > 1) {
+      var setters = target.map(function(t) {
+        return gsap.quickSetter(t, property, unit);
+      }), l = setters.length;
+      return function(value) {
+        var i = l;
+        while (i--) {
+          setters[i](value);
+        }
+      };
+    }
+    target = target[0] || {};
+    var Plugin = _plugins[property], cache = _getCache(target), p2 = cache.harness && (cache.harness.aliases || {})[property] || property, setter = Plugin ? function(value) {
+      var p3 = new Plugin();
+      _quickTween._pt = 0;
+      p3.init(target, unit ? value + unit : value, _quickTween, 0, [target]);
+      p3.render(1, p3);
+      _quickTween._pt && _renderPropTweens(1, _quickTween);
+    } : cache.set(target, p2);
+    return Plugin ? setter : function(value) {
+      return setter(target, p2, unit ? value + unit : value, cache, 1);
+    };
+  },
+  isTweening: function isTweening(targets) {
+    return _globalTimeline.getTweensOf(targets, true).length > 0;
+  },
+  defaults: function defaults(value) {
+    value && value.ease && (value.ease = _parseEase(value.ease, _defaults.ease));
+    return _mergeDeep(_defaults, value || {});
+  },
+  config: function config2(value) {
+    return _mergeDeep(_config, value || {});
+  },
+  registerEffect: function registerEffect(_ref3) {
+    var name = _ref3.name, effect = _ref3.effect, plugins = _ref3.plugins, defaults2 = _ref3.defaults, extendTimeline = _ref3.extendTimeline;
+    (plugins || "").split(",").forEach(function(pluginName) {
+      return pluginName && !_plugins[pluginName] && !_globals[pluginName] && _warn(name + " effect requires " + pluginName + " plugin.");
+    });
+    _effects[name] = function(targets, vars2, tl) {
+      return effect(toArray(targets), _setDefaults(vars2 || {}, defaults2), tl);
+    };
+    if (extendTimeline) {
+      Timeline.prototype[name] = function(targets, vars2, position) {
+        return this.add(_effects[name](targets, _isObject(vars2) ? vars2 : (position = vars2) && {}, this), position);
+      };
+    }
+  },
+  registerEase: function registerEase(name, ease) {
+    _easeMap[name] = _parseEase(ease);
+  },
+  parseEase: function parseEase(ease, defaultEase) {
+    return arguments.length ? _parseEase(ease, defaultEase) : _easeMap;
+  },
+  getById: function getById(id) {
+    return _globalTimeline.getById(id);
+  },
+  exportRoot: function exportRoot(vars2, includeDelayedCalls) {
+    if (vars2 === void 0) {
+      vars2 = {};
+    }
+    var tl = new Timeline(vars2), child, next;
+    tl.smoothChildTiming = _isNotFalse(vars2.smoothChildTiming);
+    _globalTimeline.remove(tl);
+    tl._dp = 0;
+    tl._time = tl._tTime = _globalTimeline._time;
+    child = _globalTimeline._first;
+    while (child) {
+      next = child._next;
+      if (includeDelayedCalls || !(!child._dur && child instanceof Tween && child.vars.onComplete === child._targets[0])) {
+        _addToTimeline(tl, child, child._start - child._delay);
+      }
+      child = next;
+    }
+    _addToTimeline(_globalTimeline, tl, 0);
+    return tl;
+  },
+  utils: {
+    wrap,
+    wrapYoyo,
+    distribute,
+    random,
+    snap,
+    normalize,
+    getUnit,
+    clamp,
+    splitColor,
+    toArray,
+    selector,
+    mapRange,
+    pipe,
+    unitize,
+    interpolate,
+    shuffle
+  },
+  install: _install,
+  effects: _effects,
+  ticker: _ticker,
+  updateRoot: Timeline.updateRoot,
+  plugins: _plugins,
+  globalTimeline: _globalTimeline,
+  core: {
+    PropTween,
+    globals: _addGlobal,
+    Tween,
+    Timeline,
+    Animation,
+    getCache: _getCache,
+    _removeLinkedListItem,
+    suppressOverwrites: function suppressOverwrites(value) {
+      return _suppressOverwrites = value;
+    }
+  }
+};
+_forEachName("to,from,fromTo,delayedCall,set,killTweensOf", function(name) {
+  return _gsap[name] = Tween[name];
+});
+_ticker.add(Timeline.updateRoot);
+_quickTween = _gsap.to({}, {
+  duration: 0
+});
+var _getPluginPropTween = function _getPluginPropTween2(plugin, prop) {
+  var pt = plugin._pt;
+  while (pt && pt.p !== prop && pt.op !== prop && pt.fp !== prop) {
+    pt = pt._next;
+  }
+  return pt;
+}, _addModifiers = function _addModifiers2(tween, modifiers) {
+  var targets = tween._targets, p2, i, pt;
+  for (p2 in modifiers) {
+    i = targets.length;
+    while (i--) {
+      pt = tween._ptLookup[i][p2];
+      if (pt && (pt = pt.d)) {
+        if (pt._pt) {
+          pt = _getPluginPropTween(pt, p2);
+        }
+        pt && pt.modifier && pt.modifier(modifiers[p2], tween, targets[i], p2);
+      }
+    }
+  }
+}, _buildModifierPlugin = function _buildModifierPlugin2(name, modifier) {
+  return {
+    name,
+    rawVars: 1,
+    init: function init4(target, vars2, tween) {
+      tween._onInit = function(tween2) {
+        var temp, p2;
+        if (_isString(vars2)) {
+          temp = {};
+          _forEachName(vars2, function(name2) {
+            return temp[name2] = 1;
+          });
+          vars2 = temp;
+        }
+        if (modifier) {
+          temp = {};
+          for (p2 in vars2) {
+            temp[p2] = modifier(vars2[p2]);
+          }
+          vars2 = temp;
+        }
+        _addModifiers(tween2, vars2);
+      };
+    }
+  };
+};
+var gsap = _gsap.registerPlugin({
+  name: "attr",
+  init: function init(target, vars2, tween, index2, targets) {
+    var p2, pt;
+    for (p2 in vars2) {
+      pt = this.add(target, "setAttribute", (target.getAttribute(p2) || 0) + "", vars2[p2], index2, targets, 0, 0, p2);
+      pt && (pt.op = p2);
+      this._props.push(p2);
+    }
+  }
+}, {
+  name: "endArray",
+  init: function init2(target, value) {
+    var i = value.length;
+    while (i--) {
+      this.add(target, i, target[i] || 0, value[i]);
+    }
+  }
+}, _buildModifierPlugin("roundProps", _roundModifier), _buildModifierPlugin("modifiers"), _buildModifierPlugin("snap", snap)) || _gsap;
+Tween.version = Timeline.version = gsap.version = "3.9.1";
+_coreReady = 1;
+_windowExists$1() && _wake();
+_easeMap.Power0;
+_easeMap.Power1;
+_easeMap.Power2;
+_easeMap.Power3;
+_easeMap.Power4;
+_easeMap.Linear;
+_easeMap.Quad;
+_easeMap.Cubic;
+_easeMap.Quart;
+_easeMap.Quint;
+_easeMap.Strong;
+_easeMap.Elastic;
+_easeMap.Back;
+_easeMap.SteppedEase;
+_easeMap.Bounce;
+_easeMap.Sine;
+_easeMap.Expo;
+_easeMap.Circ;
+/*!
+ * CSSPlugin 3.9.1
+ * https://greensock.com
+ *
+ * Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+var _win, _doc, _docElement, _pluginInitted, _tempDiv, _recentSetterPlugin, _windowExists2 = function _windowExists3() {
+  return typeof window !== "undefined";
+}, _transformProps = {}, _RAD2DEG = 180 / Math.PI, _DEG2RAD = Math.PI / 180, _atan2 = Math.atan2, _bigNum = 1e8, _capsExp = /([A-Z])/g, _horizontalExp = /(?:left|right|width|margin|padding|x)/i, _complexExp = /[\s,\(]\S/, _propertyAliases = {
+  autoAlpha: "opacity,visibility",
+  scale: "scaleX,scaleY",
+  alpha: "opacity"
+}, _renderCSSProp = function _renderCSSProp2(ratio, data) {
+  return data.set(data.t, data.p, Math.round((data.s + data.c * ratio) * 1e4) / 1e4 + data.u, data);
+}, _renderPropWithEnd = function _renderPropWithEnd2(ratio, data) {
+  return data.set(data.t, data.p, ratio === 1 ? data.e : Math.round((data.s + data.c * ratio) * 1e4) / 1e4 + data.u, data);
+}, _renderCSSPropWithBeginning = function _renderCSSPropWithBeginning2(ratio, data) {
+  return data.set(data.t, data.p, ratio ? Math.round((data.s + data.c * ratio) * 1e4) / 1e4 + data.u : data.b, data);
+}, _renderRoundedCSSProp = function _renderRoundedCSSProp2(ratio, data) {
+  var value = data.s + data.c * ratio;
+  data.set(data.t, data.p, ~~(value + (value < 0 ? -0.5 : 0.5)) + data.u, data);
+}, _renderNonTweeningValue = function _renderNonTweeningValue2(ratio, data) {
+  return data.set(data.t, data.p, ratio ? data.e : data.b, data);
+}, _renderNonTweeningValueOnlyAtEnd = function _renderNonTweeningValueOnlyAtEnd2(ratio, data) {
+  return data.set(data.t, data.p, ratio !== 1 ? data.b : data.e, data);
+}, _setterCSSStyle = function _setterCSSStyle2(target, property, value) {
+  return target.style[property] = value;
+}, _setterCSSProp = function _setterCSSProp2(target, property, value) {
+  return target.style.setProperty(property, value);
+}, _setterTransform = function _setterTransform2(target, property, value) {
+  return target._gsap[property] = value;
+}, _setterScale = function _setterScale2(target, property, value) {
+  return target._gsap.scaleX = target._gsap.scaleY = value;
+}, _setterScaleWithRender = function _setterScaleWithRender2(target, property, value, data, ratio) {
+  var cache = target._gsap;
+  cache.scaleX = cache.scaleY = value;
+  cache.renderTransform(ratio, cache);
+}, _setterTransformWithRender = function _setterTransformWithRender2(target, property, value, data, ratio) {
+  var cache = target._gsap;
+  cache[property] = value;
+  cache.renderTransform(ratio, cache);
+}, _transformProp = "transform", _transformOriginProp = _transformProp + "Origin", _supports3D, _createElement = function _createElement2(type, ns) {
+  var e = _doc.createElementNS ? _doc.createElementNS((ns || "http://www.w3.org/1999/xhtml").replace(/^https/, "http"), type) : _doc.createElement(type);
+  return e.style ? e : _doc.createElement(type);
+}, _getComputedProperty = function _getComputedProperty2(target, property, skipPrefixFallback) {
+  var cs = getComputedStyle(target);
+  return cs[property] || cs.getPropertyValue(property.replace(_capsExp, "-$1").toLowerCase()) || cs.getPropertyValue(property) || !skipPrefixFallback && _getComputedProperty2(target, _checkPropPrefix(property) || property, 1) || "";
+}, _prefixes = "O,Moz,ms,Ms,Webkit".split(","), _checkPropPrefix = function _checkPropPrefix2(property, element, preferPrefix) {
+  var e = element || _tempDiv, s = e.style, i = 5;
+  if (property in s && !preferPrefix) {
+    return property;
+  }
+  property = property.charAt(0).toUpperCase() + property.substr(1);
+  while (i-- && !(_prefixes[i] + property in s)) {
+  }
+  return i < 0 ? null : (i === 3 ? "ms" : i >= 0 ? _prefixes[i] : "") + property;
+}, _initCore = function _initCore2() {
+  if (_windowExists2() && window.document) {
+    _win = window;
+    _doc = _win.document;
+    _docElement = _doc.documentElement;
+    _tempDiv = _createElement("div") || {
+      style: {}
+    };
+    _createElement("div");
+    _transformProp = _checkPropPrefix(_transformProp);
+    _transformOriginProp = _transformProp + "Origin";
+    _tempDiv.style.cssText = "border-width:0;line-height:0;position:absolute;padding:0";
+    _supports3D = !!_checkPropPrefix("perspective");
+    _pluginInitted = 1;
+  }
+}, _getBBoxHack = function _getBBoxHack2(swapIfPossible) {
+  var svg2 = _createElement("svg", this.ownerSVGElement && this.ownerSVGElement.getAttribute("xmlns") || "http://www.w3.org/2000/svg"), oldParent = this.parentNode, oldSibling = this.nextSibling, oldCSS = this.style.cssText, bbox;
+  _docElement.appendChild(svg2);
+  svg2.appendChild(this);
+  this.style.display = "block";
+  if (swapIfPossible) {
+    try {
+      bbox = this.getBBox();
+      this._gsapBBox = this.getBBox;
+      this.getBBox = _getBBoxHack2;
+    } catch (e) {
+    }
+  } else if (this._gsapBBox) {
+    bbox = this._gsapBBox();
+  }
+  if (oldParent) {
+    if (oldSibling) {
+      oldParent.insertBefore(this, oldSibling);
+    } else {
+      oldParent.appendChild(this);
+    }
+  }
+  _docElement.removeChild(svg2);
+  this.style.cssText = oldCSS;
+  return bbox;
+}, _getAttributeFallbacks = function _getAttributeFallbacks2(target, attributesArray) {
+  var i = attributesArray.length;
+  while (i--) {
+    if (target.hasAttribute(attributesArray[i])) {
+      return target.getAttribute(attributesArray[i]);
+    }
+  }
+}, _getBBox = function _getBBox2(target) {
+  var bounds;
+  try {
+    bounds = target.getBBox();
+  } catch (error) {
+    bounds = _getBBoxHack.call(target, true);
+  }
+  bounds && (bounds.width || bounds.height) || target.getBBox === _getBBoxHack || (bounds = _getBBoxHack.call(target, true));
+  return bounds && !bounds.width && !bounds.x && !bounds.y ? {
+    x: +_getAttributeFallbacks(target, ["x", "cx", "x1"]) || 0,
+    y: +_getAttributeFallbacks(target, ["y", "cy", "y1"]) || 0,
+    width: 0,
+    height: 0
+  } : bounds;
+}, _isSVG = function _isSVG2(e) {
+  return !!(e.getCTM && (!e.parentNode || e.ownerSVGElement) && _getBBox(e));
+}, _removeProperty = function _removeProperty2(target, property) {
+  if (property) {
+    var style = target.style;
+    if (property in _transformProps && property !== _transformOriginProp) {
+      property = _transformProp;
+    }
+    if (style.removeProperty) {
+      if (property.substr(0, 2) === "ms" || property.substr(0, 6) === "webkit") {
+        property = "-" + property;
+      }
+      style.removeProperty(property.replace(_capsExp, "-$1").toLowerCase());
+    } else {
+      style.removeAttribute(property);
+    }
+  }
+}, _addNonTweeningPT = function _addNonTweeningPT2(plugin, target, property, beginning, end, onlySetAtEnd) {
+  var pt = new PropTween(plugin._pt, target, property, 0, 1, onlySetAtEnd ? _renderNonTweeningValueOnlyAtEnd : _renderNonTweeningValue);
+  plugin._pt = pt;
+  pt.b = beginning;
+  pt.e = end;
+  plugin._props.push(property);
+  return pt;
+}, _nonConvertibleUnits = {
+  deg: 1,
+  rad: 1,
+  turn: 1
+}, _convertToUnit = function _convertToUnit2(target, property, value, unit) {
+  var curValue = parseFloat(value) || 0, curUnit = (value + "").trim().substr((curValue + "").length) || "px", style = _tempDiv.style, horizontal = _horizontalExp.test(property), isRootSVG = target.tagName.toLowerCase() === "svg", measureProperty = (isRootSVG ? "client" : "offset") + (horizontal ? "Width" : "Height"), amount = 100, toPixels = unit === "px", toPercent = unit === "%", px, parent, cache, isSVG;
+  if (unit === curUnit || !curValue || _nonConvertibleUnits[unit] || _nonConvertibleUnits[curUnit]) {
+    return curValue;
+  }
+  curUnit !== "px" && !toPixels && (curValue = _convertToUnit2(target, property, value, "px"));
+  isSVG = target.getCTM && _isSVG(target);
+  if ((toPercent || curUnit === "%") && (_transformProps[property] || ~property.indexOf("adius"))) {
+    px = isSVG ? target.getBBox()[horizontal ? "width" : "height"] : target[measureProperty];
+    return _round(toPercent ? curValue / px * amount : curValue / 100 * px);
+  }
+  style[horizontal ? "width" : "height"] = amount + (toPixels ? curUnit : unit);
+  parent = ~property.indexOf("adius") || unit === "em" && target.appendChild && !isRootSVG ? target : target.parentNode;
+  if (isSVG) {
+    parent = (target.ownerSVGElement || {}).parentNode;
+  }
+  if (!parent || parent === _doc || !parent.appendChild) {
+    parent = _doc.body;
+  }
+  cache = parent._gsap;
+  if (cache && toPercent && cache.width && horizontal && cache.time === _ticker.time) {
+    return _round(curValue / cache.width * amount);
+  } else {
+    (toPercent || curUnit === "%") && (style.position = _getComputedProperty(target, "position"));
+    parent === target && (style.position = "static");
+    parent.appendChild(_tempDiv);
+    px = _tempDiv[measureProperty];
+    parent.removeChild(_tempDiv);
+    style.position = "absolute";
+    if (horizontal && toPercent) {
+      cache = _getCache(parent);
+      cache.time = _ticker.time;
+      cache.width = parent[measureProperty];
+    }
+  }
+  return _round(toPixels ? px * curValue / amount : px && curValue ? amount / px * curValue : 0);
+}, _get = function _get2(target, property, unit, uncache) {
+  var value;
+  _pluginInitted || _initCore();
+  if (property in _propertyAliases && property !== "transform") {
+    property = _propertyAliases[property];
+    if (~property.indexOf(",")) {
+      property = property.split(",")[0];
+    }
+  }
+  if (_transformProps[property] && property !== "transform") {
+    value = _parseTransform(target, uncache);
+    value = property !== "transformOrigin" ? value[property] : value.svg ? value.origin : _firstTwoOnly(_getComputedProperty(target, _transformOriginProp)) + " " + value.zOrigin + "px";
+  } else {
+    value = target.style[property];
+    if (!value || value === "auto" || uncache || ~(value + "").indexOf("calc(")) {
+      value = _specialProps[property] && _specialProps[property](target, property, unit) || _getComputedProperty(target, property) || _getProperty(target, property) || (property === "opacity" ? 1 : 0);
+    }
+  }
+  return unit && !~(value + "").trim().indexOf(" ") ? _convertToUnit(target, property, value, unit) + unit : value;
+}, _tweenComplexCSSString = function _tweenComplexCSSString2(target, prop, start, end) {
+  if (!start || start === "none") {
+    var p2 = _checkPropPrefix(prop, target, 1), s = p2 && _getComputedProperty(target, p2, 1);
+    if (s && s !== start) {
+      prop = p2;
+      start = s;
+    } else if (prop === "borderColor") {
+      start = _getComputedProperty(target, "borderTopColor");
+    }
+  }
+  var pt = new PropTween(this._pt, target.style, prop, 0, 1, _renderComplexString), index2 = 0, matchIndex = 0, a, result, startValues, startNum, color, startValue, endValue, endNum, chunk, endUnit, startUnit, relative, endValues;
+  pt.b = start;
+  pt.e = end;
+  start += "";
+  end += "";
+  if (end === "auto") {
+    target.style[prop] = end;
+    end = _getComputedProperty(target, prop) || end;
+    target.style[prop] = start;
+  }
+  a = [start, end];
+  _colorStringFilter(a);
+  start = a[0];
+  end = a[1];
+  startValues = start.match(_numWithUnitExp) || [];
+  endValues = end.match(_numWithUnitExp) || [];
+  if (endValues.length) {
+    while (result = _numWithUnitExp.exec(end)) {
+      endValue = result[0];
+      chunk = end.substring(index2, result.index);
+      if (color) {
+        color = (color + 1) % 5;
+      } else if (chunk.substr(-5) === "rgba(" || chunk.substr(-5) === "hsla(") {
+        color = 1;
+      }
+      if (endValue !== (startValue = startValues[matchIndex++] || "")) {
+        startNum = parseFloat(startValue) || 0;
+        startUnit = startValue.substr((startNum + "").length);
+        relative = endValue.charAt(1) === "=" ? +(endValue.charAt(0) + "1") : 0;
+        if (relative) {
+          endValue = endValue.substr(2);
+        }
+        endNum = parseFloat(endValue);
+        endUnit = endValue.substr((endNum + "").length);
+        index2 = _numWithUnitExp.lastIndex - endUnit.length;
+        if (!endUnit) {
+          endUnit = endUnit || _config.units[prop] || startUnit;
+          if (index2 === end.length) {
+            end += endUnit;
+            pt.e += endUnit;
+          }
+        }
+        if (startUnit !== endUnit) {
+          startNum = _convertToUnit(target, prop, startValue, endUnit) || 0;
+        }
+        pt._pt = {
+          _next: pt._pt,
+          p: chunk || matchIndex === 1 ? chunk : ",",
+          s: startNum,
+          c: relative ? relative * endNum : endNum - startNum,
+          m: color && color < 4 || prop === "zIndex" ? Math.round : 0
+        };
+      }
+    }
+    pt.c = index2 < end.length ? end.substring(index2, end.length) : "";
+  } else {
+    pt.r = prop === "display" && end === "none" ? _renderNonTweeningValueOnlyAtEnd : _renderNonTweeningValue;
+  }
+  _relExp.test(end) && (pt.e = 0);
+  this._pt = pt;
+  return pt;
+}, _keywordToPercent = {
+  top: "0%",
+  bottom: "100%",
+  left: "0%",
+  right: "100%",
+  center: "50%"
+}, _convertKeywordsToPercentages = function _convertKeywordsToPercentages2(value) {
+  var split = value.split(" "), x = split[0], y = split[1] || "50%";
+  if (x === "top" || x === "bottom" || y === "left" || y === "right") {
+    value = x;
+    x = y;
+    y = value;
+  }
+  split[0] = _keywordToPercent[x] || x;
+  split[1] = _keywordToPercent[y] || y;
+  return split.join(" ");
+}, _renderClearProps = function _renderClearProps2(ratio, data) {
+  if (data.tween && data.tween._time === data.tween._dur) {
+    var target = data.t, style = target.style, props = data.u, cache = target._gsap, prop, clearTransforms, i;
+    if (props === "all" || props === true) {
+      style.cssText = "";
+      clearTransforms = 1;
+    } else {
+      props = props.split(",");
+      i = props.length;
+      while (--i > -1) {
+        prop = props[i];
+        if (_transformProps[prop]) {
+          clearTransforms = 1;
+          prop = prop === "transformOrigin" ? _transformOriginProp : _transformProp;
+        }
+        _removeProperty(target, prop);
+      }
+    }
+    if (clearTransforms) {
+      _removeProperty(target, _transformProp);
+      if (cache) {
+        cache.svg && target.removeAttribute("transform");
+        _parseTransform(target, 1);
+        cache.uncache = 1;
+      }
+    }
+  }
+}, _specialProps = {
+  clearProps: function clearProps(plugin, target, property, endValue, tween) {
+    if (tween.data !== "isFromStart") {
+      var pt = plugin._pt = new PropTween(plugin._pt, target, property, 0, 0, _renderClearProps);
+      pt.u = endValue;
+      pt.pr = -10;
+      pt.tween = tween;
+      plugin._props.push(property);
+      return 1;
+    }
+  }
+}, _identity2DMatrix = [1, 0, 0, 1, 0, 0], _rotationalProperties = {}, _isNullTransform = function _isNullTransform2(value) {
+  return value === "matrix(1, 0, 0, 1, 0, 0)" || value === "none" || !value;
+}, _getComputedTransformMatrixAsArray = function _getComputedTransformMatrixAsArray2(target) {
+  var matrixString = _getComputedProperty(target, _transformProp);
+  return _isNullTransform(matrixString) ? _identity2DMatrix : matrixString.substr(7).match(_numExp).map(_round);
+}, _getMatrix = function _getMatrix2(target, force2D) {
+  var cache = target._gsap || _getCache(target), style = target.style, matrix = _getComputedTransformMatrixAsArray(target), parent, nextSibling, temp, addedToDOM;
+  if (cache.svg && target.getAttribute("transform")) {
+    temp = target.transform.baseVal.consolidate().matrix;
+    matrix = [temp.a, temp.b, temp.c, temp.d, temp.e, temp.f];
+    return matrix.join(",") === "1,0,0,1,0,0" ? _identity2DMatrix : matrix;
+  } else if (matrix === _identity2DMatrix && !target.offsetParent && target !== _docElement && !cache.svg) {
+    temp = style.display;
+    style.display = "block";
+    parent = target.parentNode;
+    if (!parent || !target.offsetParent) {
+      addedToDOM = 1;
+      nextSibling = target.nextSibling;
+      _docElement.appendChild(target);
+    }
+    matrix = _getComputedTransformMatrixAsArray(target);
+    temp ? style.display = temp : _removeProperty(target, "display");
+    if (addedToDOM) {
+      nextSibling ? parent.insertBefore(target, nextSibling) : parent ? parent.appendChild(target) : _docElement.removeChild(target);
+    }
+  }
+  return force2D && matrix.length > 6 ? [matrix[0], matrix[1], matrix[4], matrix[5], matrix[12], matrix[13]] : matrix;
+}, _applySVGOrigin = function _applySVGOrigin2(target, origin, originIsAbsolute, smooth, matrixArray, pluginToAddPropTweensTo) {
+  var cache = target._gsap, matrix = matrixArray || _getMatrix(target, true), xOriginOld = cache.xOrigin || 0, yOriginOld = cache.yOrigin || 0, xOffsetOld = cache.xOffset || 0, yOffsetOld = cache.yOffset || 0, a = matrix[0], b = matrix[1], c = matrix[2], d = matrix[3], tx = matrix[4], ty = matrix[5], originSplit = origin.split(" "), xOrigin = parseFloat(originSplit[0]) || 0, yOrigin = parseFloat(originSplit[1]) || 0, bounds, determinant, x, y;
+  if (!originIsAbsolute) {
+    bounds = _getBBox(target);
+    xOrigin = bounds.x + (~originSplit[0].indexOf("%") ? xOrigin / 100 * bounds.width : xOrigin);
+    yOrigin = bounds.y + (~(originSplit[1] || originSplit[0]).indexOf("%") ? yOrigin / 100 * bounds.height : yOrigin);
+  } else if (matrix !== _identity2DMatrix && (determinant = a * d - b * c)) {
+    x = xOrigin * (d / determinant) + yOrigin * (-c / determinant) + (c * ty - d * tx) / determinant;
+    y = xOrigin * (-b / determinant) + yOrigin * (a / determinant) - (a * ty - b * tx) / determinant;
+    xOrigin = x;
+    yOrigin = y;
+  }
+  if (smooth || smooth !== false && cache.smooth) {
+    tx = xOrigin - xOriginOld;
+    ty = yOrigin - yOriginOld;
+    cache.xOffset = xOffsetOld + (tx * a + ty * c) - tx;
+    cache.yOffset = yOffsetOld + (tx * b + ty * d) - ty;
+  } else {
+    cache.xOffset = cache.yOffset = 0;
+  }
+  cache.xOrigin = xOrigin;
+  cache.yOrigin = yOrigin;
+  cache.smooth = !!smooth;
+  cache.origin = origin;
+  cache.originIsAbsolute = !!originIsAbsolute;
+  target.style[_transformOriginProp] = "0px 0px";
+  if (pluginToAddPropTweensTo) {
+    _addNonTweeningPT(pluginToAddPropTweensTo, cache, "xOrigin", xOriginOld, xOrigin);
+    _addNonTweeningPT(pluginToAddPropTweensTo, cache, "yOrigin", yOriginOld, yOrigin);
+    _addNonTweeningPT(pluginToAddPropTweensTo, cache, "xOffset", xOffsetOld, cache.xOffset);
+    _addNonTweeningPT(pluginToAddPropTweensTo, cache, "yOffset", yOffsetOld, cache.yOffset);
+  }
+  target.setAttribute("data-svg-origin", xOrigin + " " + yOrigin);
+}, _parseTransform = function _parseTransform2(target, uncache) {
+  var cache = target._gsap || new GSCache(target);
+  if ("x" in cache && !uncache && !cache.uncache) {
+    return cache;
+  }
+  var style = target.style, invertedScaleX = cache.scaleX < 0, px = "px", deg = "deg", origin = _getComputedProperty(target, _transformOriginProp) || "0", x, y, z, scaleX, scaleY, rotation, rotationX, rotationY, skewX, skewY, perspective, xOrigin, yOrigin, matrix, angle, cos, sin, a, b, c, d, a12, a22, t1, t2, t3, a13, a23, a33, a42, a43, a32;
+  x = y = z = rotation = rotationX = rotationY = skewX = skewY = perspective = 0;
+  scaleX = scaleY = 1;
+  cache.svg = !!(target.getCTM && _isSVG(target));
+  matrix = _getMatrix(target, cache.svg);
+  if (cache.svg) {
+    t1 = (!cache.uncache || origin === "0px 0px") && !uncache && target.getAttribute("data-svg-origin");
+    _applySVGOrigin(target, t1 || origin, !!t1 || cache.originIsAbsolute, cache.smooth !== false, matrix);
+  }
+  xOrigin = cache.xOrigin || 0;
+  yOrigin = cache.yOrigin || 0;
+  if (matrix !== _identity2DMatrix) {
+    a = matrix[0];
+    b = matrix[1];
+    c = matrix[2];
+    d = matrix[3];
+    x = a12 = matrix[4];
+    y = a22 = matrix[5];
+    if (matrix.length === 6) {
+      scaleX = Math.sqrt(a * a + b * b);
+      scaleY = Math.sqrt(d * d + c * c);
+      rotation = a || b ? _atan2(b, a) * _RAD2DEG : 0;
+      skewX = c || d ? _atan2(c, d) * _RAD2DEG + rotation : 0;
+      skewX && (scaleY *= Math.abs(Math.cos(skewX * _DEG2RAD)));
+      if (cache.svg) {
+        x -= xOrigin - (xOrigin * a + yOrigin * c);
+        y -= yOrigin - (xOrigin * b + yOrigin * d);
+      }
+    } else {
+      a32 = matrix[6];
+      a42 = matrix[7];
+      a13 = matrix[8];
+      a23 = matrix[9];
+      a33 = matrix[10];
+      a43 = matrix[11];
+      x = matrix[12];
+      y = matrix[13];
+      z = matrix[14];
+      angle = _atan2(a32, a33);
+      rotationX = angle * _RAD2DEG;
+      if (angle) {
+        cos = Math.cos(-angle);
+        sin = Math.sin(-angle);
+        t1 = a12 * cos + a13 * sin;
+        t2 = a22 * cos + a23 * sin;
+        t3 = a32 * cos + a33 * sin;
+        a13 = a12 * -sin + a13 * cos;
+        a23 = a22 * -sin + a23 * cos;
+        a33 = a32 * -sin + a33 * cos;
+        a43 = a42 * -sin + a43 * cos;
+        a12 = t1;
+        a22 = t2;
+        a32 = t3;
+      }
+      angle = _atan2(-c, a33);
+      rotationY = angle * _RAD2DEG;
+      if (angle) {
+        cos = Math.cos(-angle);
+        sin = Math.sin(-angle);
+        t1 = a * cos - a13 * sin;
+        t2 = b * cos - a23 * sin;
+        t3 = c * cos - a33 * sin;
+        a43 = d * sin + a43 * cos;
+        a = t1;
+        b = t2;
+        c = t3;
+      }
+      angle = _atan2(b, a);
+      rotation = angle * _RAD2DEG;
+      if (angle) {
+        cos = Math.cos(angle);
+        sin = Math.sin(angle);
+        t1 = a * cos + b * sin;
+        t2 = a12 * cos + a22 * sin;
+        b = b * cos - a * sin;
+        a22 = a22 * cos - a12 * sin;
+        a = t1;
+        a12 = t2;
+      }
+      if (rotationX && Math.abs(rotationX) + Math.abs(rotation) > 359.9) {
+        rotationX = rotation = 0;
+        rotationY = 180 - rotationY;
+      }
+      scaleX = _round(Math.sqrt(a * a + b * b + c * c));
+      scaleY = _round(Math.sqrt(a22 * a22 + a32 * a32));
+      angle = _atan2(a12, a22);
+      skewX = Math.abs(angle) > 2e-4 ? angle * _RAD2DEG : 0;
+      perspective = a43 ? 1 / (a43 < 0 ? -a43 : a43) : 0;
+    }
+    if (cache.svg) {
+      t1 = target.getAttribute("transform");
+      cache.forceCSS = target.setAttribute("transform", "") || !_isNullTransform(_getComputedProperty(target, _transformProp));
+      t1 && target.setAttribute("transform", t1);
+    }
+  }
+  if (Math.abs(skewX) > 90 && Math.abs(skewX) < 270) {
+    if (invertedScaleX) {
+      scaleX *= -1;
+      skewX += rotation <= 0 ? 180 : -180;
+      rotation += rotation <= 0 ? 180 : -180;
+    } else {
+      scaleY *= -1;
+      skewX += skewX <= 0 ? 180 : -180;
+    }
+  }
+  cache.x = x - ((cache.xPercent = x && (cache.xPercent || (Math.round(target.offsetWidth / 2) === Math.round(-x) ? -50 : 0))) ? target.offsetWidth * cache.xPercent / 100 : 0) + px;
+  cache.y = y - ((cache.yPercent = y && (cache.yPercent || (Math.round(target.offsetHeight / 2) === Math.round(-y) ? -50 : 0))) ? target.offsetHeight * cache.yPercent / 100 : 0) + px;
+  cache.z = z + px;
+  cache.scaleX = _round(scaleX);
+  cache.scaleY = _round(scaleY);
+  cache.rotation = _round(rotation) + deg;
+  cache.rotationX = _round(rotationX) + deg;
+  cache.rotationY = _round(rotationY) + deg;
+  cache.skewX = skewX + deg;
+  cache.skewY = skewY + deg;
+  cache.transformPerspective = perspective + px;
+  if (cache.zOrigin = parseFloat(origin.split(" ")[2]) || 0) {
+    style[_transformOriginProp] = _firstTwoOnly(origin);
+  }
+  cache.xOffset = cache.yOffset = 0;
+  cache.force3D = _config.force3D;
+  cache.renderTransform = cache.svg ? _renderSVGTransforms : _supports3D ? _renderCSSTransforms : _renderNon3DTransforms;
+  cache.uncache = 0;
+  return cache;
+}, _firstTwoOnly = function _firstTwoOnly2(value) {
+  return (value = value.split(" "))[0] + " " + value[1];
+}, _addPxTranslate = function _addPxTranslate2(target, start, value) {
+  var unit = getUnit(start);
+  return _round(parseFloat(start) + parseFloat(_convertToUnit(target, "x", value + "px", unit))) + unit;
+}, _renderNon3DTransforms = function _renderNon3DTransforms2(ratio, cache) {
+  cache.z = "0px";
+  cache.rotationY = cache.rotationX = "0deg";
+  cache.force3D = 0;
+  _renderCSSTransforms(ratio, cache);
+}, _zeroDeg = "0deg", _zeroPx = "0px", _endParenthesis = ") ", _renderCSSTransforms = function _renderCSSTransforms2(ratio, cache) {
+  var _ref = cache || this, xPercent = _ref.xPercent, yPercent = _ref.yPercent, x = _ref.x, y = _ref.y, z = _ref.z, rotation = _ref.rotation, rotationY = _ref.rotationY, rotationX = _ref.rotationX, skewX = _ref.skewX, skewY = _ref.skewY, scaleX = _ref.scaleX, scaleY = _ref.scaleY, transformPerspective = _ref.transformPerspective, force3D = _ref.force3D, target = _ref.target, zOrigin = _ref.zOrigin, transforms = "", use3D = force3D === "auto" && ratio && ratio !== 1 || force3D === true;
+  if (zOrigin && (rotationX !== _zeroDeg || rotationY !== _zeroDeg)) {
+    var angle = parseFloat(rotationY) * _DEG2RAD, a13 = Math.sin(angle), a33 = Math.cos(angle), cos;
+    angle = parseFloat(rotationX) * _DEG2RAD;
+    cos = Math.cos(angle);
+    x = _addPxTranslate(target, x, a13 * cos * -zOrigin);
+    y = _addPxTranslate(target, y, -Math.sin(angle) * -zOrigin);
+    z = _addPxTranslate(target, z, a33 * cos * -zOrigin + zOrigin);
+  }
+  if (transformPerspective !== _zeroPx) {
+    transforms += "perspective(" + transformPerspective + _endParenthesis;
+  }
+  if (xPercent || yPercent) {
+    transforms += "translate(" + xPercent + "%, " + yPercent + "%) ";
+  }
+  if (use3D || x !== _zeroPx || y !== _zeroPx || z !== _zeroPx) {
+    transforms += z !== _zeroPx || use3D ? "translate3d(" + x + ", " + y + ", " + z + ") " : "translate(" + x + ", " + y + _endParenthesis;
+  }
+  if (rotation !== _zeroDeg) {
+    transforms += "rotate(" + rotation + _endParenthesis;
+  }
+  if (rotationY !== _zeroDeg) {
+    transforms += "rotateY(" + rotationY + _endParenthesis;
+  }
+  if (rotationX !== _zeroDeg) {
+    transforms += "rotateX(" + rotationX + _endParenthesis;
+  }
+  if (skewX !== _zeroDeg || skewY !== _zeroDeg) {
+    transforms += "skew(" + skewX + ", " + skewY + _endParenthesis;
+  }
+  if (scaleX !== 1 || scaleY !== 1) {
+    transforms += "scale(" + scaleX + ", " + scaleY + _endParenthesis;
+  }
+  target.style[_transformProp] = transforms || "translate(0, 0)";
+}, _renderSVGTransforms = function _renderSVGTransforms2(ratio, cache) {
+  var _ref2 = cache || this, xPercent = _ref2.xPercent, yPercent = _ref2.yPercent, x = _ref2.x, y = _ref2.y, rotation = _ref2.rotation, skewX = _ref2.skewX, skewY = _ref2.skewY, scaleX = _ref2.scaleX, scaleY = _ref2.scaleY, target = _ref2.target, xOrigin = _ref2.xOrigin, yOrigin = _ref2.yOrigin, xOffset = _ref2.xOffset, yOffset = _ref2.yOffset, forceCSS = _ref2.forceCSS, tx = parseFloat(x), ty = parseFloat(y), a11, a21, a12, a22, temp;
+  rotation = parseFloat(rotation);
+  skewX = parseFloat(skewX);
+  skewY = parseFloat(skewY);
+  if (skewY) {
+    skewY = parseFloat(skewY);
+    skewX += skewY;
+    rotation += skewY;
+  }
+  if (rotation || skewX) {
+    rotation *= _DEG2RAD;
+    skewX *= _DEG2RAD;
+    a11 = Math.cos(rotation) * scaleX;
+    a21 = Math.sin(rotation) * scaleX;
+    a12 = Math.sin(rotation - skewX) * -scaleY;
+    a22 = Math.cos(rotation - skewX) * scaleY;
+    if (skewX) {
+      skewY *= _DEG2RAD;
+      temp = Math.tan(skewX - skewY);
+      temp = Math.sqrt(1 + temp * temp);
+      a12 *= temp;
+      a22 *= temp;
+      if (skewY) {
+        temp = Math.tan(skewY);
+        temp = Math.sqrt(1 + temp * temp);
+        a11 *= temp;
+        a21 *= temp;
+      }
+    }
+    a11 = _round(a11);
+    a21 = _round(a21);
+    a12 = _round(a12);
+    a22 = _round(a22);
+  } else {
+    a11 = scaleX;
+    a22 = scaleY;
+    a21 = a12 = 0;
+  }
+  if (tx && !~(x + "").indexOf("px") || ty && !~(y + "").indexOf("px")) {
+    tx = _convertToUnit(target, "x", x, "px");
+    ty = _convertToUnit(target, "y", y, "px");
+  }
+  if (xOrigin || yOrigin || xOffset || yOffset) {
+    tx = _round(tx + xOrigin - (xOrigin * a11 + yOrigin * a12) + xOffset);
+    ty = _round(ty + yOrigin - (xOrigin * a21 + yOrigin * a22) + yOffset);
+  }
+  if (xPercent || yPercent) {
+    temp = target.getBBox();
+    tx = _round(tx + xPercent / 100 * temp.width);
+    ty = _round(ty + yPercent / 100 * temp.height);
+  }
+  temp = "matrix(" + a11 + "," + a21 + "," + a12 + "," + a22 + "," + tx + "," + ty + ")";
+  target.setAttribute("transform", temp);
+  forceCSS && (target.style[_transformProp] = temp);
+}, _addRotationalPropTween = function _addRotationalPropTween2(plugin, target, property, startNum, endValue, relative) {
+  var cap = 360, isString2 = _isString(endValue), endNum = parseFloat(endValue) * (isString2 && ~endValue.indexOf("rad") ? _RAD2DEG : 1), change = relative ? endNum * relative : endNum - startNum, finalValue = startNum + change + "deg", direction, pt;
+  if (isString2) {
+    direction = endValue.split("_")[1];
+    if (direction === "short") {
+      change %= cap;
+      if (change !== change % (cap / 2)) {
+        change += change < 0 ? cap : -cap;
+      }
+    }
+    if (direction === "cw" && change < 0) {
+      change = (change + cap * _bigNum) % cap - ~~(change / cap) * cap;
+    } else if (direction === "ccw" && change > 0) {
+      change = (change - cap * _bigNum) % cap - ~~(change / cap) * cap;
+    }
+  }
+  plugin._pt = pt = new PropTween(plugin._pt, target, property, startNum, change, _renderPropWithEnd);
+  pt.e = finalValue;
+  pt.u = "deg";
+  plugin._props.push(property);
+  return pt;
+}, _assign = function _assign2(target, source) {
+  for (var p2 in source) {
+    target[p2] = source[p2];
+  }
+  return target;
+}, _addRawTransformPTs = function _addRawTransformPTs2(plugin, transforms, target) {
+  var startCache = _assign({}, target._gsap), exclude = "perspective,force3D,transformOrigin,svgOrigin", style = target.style, endCache, p2, startValue, endValue, startNum, endNum, startUnit, endUnit;
+  if (startCache.svg) {
+    startValue = target.getAttribute("transform");
+    target.setAttribute("transform", "");
+    style[_transformProp] = transforms;
+    endCache = _parseTransform(target, 1);
+    _removeProperty(target, _transformProp);
+    target.setAttribute("transform", startValue);
+  } else {
+    startValue = getComputedStyle(target)[_transformProp];
+    style[_transformProp] = transforms;
+    endCache = _parseTransform(target, 1);
+    style[_transformProp] = startValue;
+  }
+  for (p2 in _transformProps) {
+    startValue = startCache[p2];
+    endValue = endCache[p2];
+    if (startValue !== endValue && exclude.indexOf(p2) < 0) {
+      startUnit = getUnit(startValue);
+      endUnit = getUnit(endValue);
+      startNum = startUnit !== endUnit ? _convertToUnit(target, p2, startValue, endUnit) : parseFloat(startValue);
+      endNum = parseFloat(endValue);
+      plugin._pt = new PropTween(plugin._pt, endCache, p2, startNum, endNum - startNum, _renderCSSProp);
+      plugin._pt.u = endUnit || 0;
+      plugin._props.push(p2);
+    }
+  }
+  _assign(endCache, startCache);
+};
+_forEachName("padding,margin,Width,Radius", function(name, index2) {
+  var t = "Top", r2 = "Right", b = "Bottom", l = "Left", props = (index2 < 3 ? [t, r2, b, l] : [t + l, t + r2, b + r2, b + l]).map(function(side) {
+    return index2 < 2 ? name + side : "border" + side + name;
+  });
+  _specialProps[index2 > 1 ? "border" + name : name] = function(plugin, target, property, endValue, tween) {
+    var a, vars2;
+    if (arguments.length < 4) {
+      a = props.map(function(prop) {
+        return _get(plugin, prop, property);
+      });
+      vars2 = a.join(" ");
+      return vars2.split(a[0]).length === 5 ? a[0] : vars2;
+    }
+    a = (endValue + "").split(" ");
+    vars2 = {};
+    props.forEach(function(prop, i) {
+      return vars2[prop] = a[i] = a[i] || a[(i - 1) / 2 | 0];
+    });
+    plugin.init(target, vars2, tween);
+  };
+});
+var CSSPlugin = {
+  name: "css",
+  register: _initCore,
+  targetTest: function targetTest(target) {
+    return target.style && target.nodeType;
+  },
+  init: function init3(target, vars2, tween, index2, targets) {
+    var props = this._props, style = target.style, startAt = tween.vars.startAt, startValue, endValue, endNum, startNum, type, specialProp, p2, startUnit, endUnit, relative, isTransformRelated, transformPropTween, cache, smooth, hasPriority;
+    _pluginInitted || _initCore();
+    for (p2 in vars2) {
+      if (p2 === "autoRound") {
+        continue;
+      }
+      endValue = vars2[p2];
+      if (_plugins[p2] && _checkPlugin(p2, vars2, tween, index2, target, targets)) {
+        continue;
+      }
+      type = typeof endValue;
+      specialProp = _specialProps[p2];
+      if (type === "function") {
+        endValue = endValue.call(tween, index2, target, targets);
+        type = typeof endValue;
+      }
+      if (type === "string" && ~endValue.indexOf("random(")) {
+        endValue = _replaceRandom(endValue);
+      }
+      if (specialProp) {
+        specialProp(this, target, p2, endValue, tween) && (hasPriority = 1);
+      } else if (p2.substr(0, 2) === "--") {
+        startValue = (getComputedStyle(target).getPropertyValue(p2) + "").trim();
+        endValue += "";
+        _colorExp.lastIndex = 0;
+        if (!_colorExp.test(startValue)) {
+          startUnit = getUnit(startValue);
+          endUnit = getUnit(endValue);
+        }
+        endUnit ? startUnit !== endUnit && (startValue = _convertToUnit(target, p2, startValue, endUnit) + endUnit) : startUnit && (endValue += startUnit);
+        this.add(style, "setProperty", startValue, endValue, index2, targets, 0, 0, p2);
+        props.push(p2);
+      } else if (type !== "undefined") {
+        if (startAt && p2 in startAt) {
+          startValue = typeof startAt[p2] === "function" ? startAt[p2].call(tween, index2, target, targets) : startAt[p2];
+          _isString(startValue) && ~startValue.indexOf("random(") && (startValue = _replaceRandom(startValue));
+          getUnit(startValue + "") || (startValue += _config.units[p2] || getUnit(_get(target, p2)) || "");
+          (startValue + "").charAt(1) === "=" && (startValue = _get(target, p2));
+        } else {
+          startValue = _get(target, p2);
+        }
+        startNum = parseFloat(startValue);
+        relative = type === "string" && endValue.charAt(1) === "=" ? +(endValue.charAt(0) + "1") : 0;
+        relative && (endValue = endValue.substr(2));
+        endNum = parseFloat(endValue);
+        if (p2 in _propertyAliases) {
+          if (p2 === "autoAlpha") {
+            if (startNum === 1 && _get(target, "visibility") === "hidden" && endNum) {
+              startNum = 0;
+            }
+            _addNonTweeningPT(this, style, "visibility", startNum ? "inherit" : "hidden", endNum ? "inherit" : "hidden", !endNum);
+          }
+          if (p2 !== "scale" && p2 !== "transform") {
+            p2 = _propertyAliases[p2];
+            ~p2.indexOf(",") && (p2 = p2.split(",")[0]);
+          }
+        }
+        isTransformRelated = p2 in _transformProps;
+        if (isTransformRelated) {
+          if (!transformPropTween) {
+            cache = target._gsap;
+            cache.renderTransform && !vars2.parseTransform || _parseTransform(target, vars2.parseTransform);
+            smooth = vars2.smoothOrigin !== false && cache.smooth;
+            transformPropTween = this._pt = new PropTween(this._pt, style, _transformProp, 0, 1, cache.renderTransform, cache, 0, -1);
+            transformPropTween.dep = 1;
+          }
+          if (p2 === "scale") {
+            this._pt = new PropTween(this._pt, cache, "scaleY", cache.scaleY, (relative ? relative * endNum : endNum - cache.scaleY) || 0);
+            props.push("scaleY", p2);
+            p2 += "X";
+          } else if (p2 === "transformOrigin") {
+            endValue = _convertKeywordsToPercentages(endValue);
+            if (cache.svg) {
+              _applySVGOrigin(target, endValue, 0, smooth, 0, this);
+            } else {
+              endUnit = parseFloat(endValue.split(" ")[2]) || 0;
+              endUnit !== cache.zOrigin && _addNonTweeningPT(this, cache, "zOrigin", cache.zOrigin, endUnit);
+              _addNonTweeningPT(this, style, p2, _firstTwoOnly(startValue), _firstTwoOnly(endValue));
+            }
+            continue;
+          } else if (p2 === "svgOrigin") {
+            _applySVGOrigin(target, endValue, 1, smooth, 0, this);
+            continue;
+          } else if (p2 in _rotationalProperties) {
+            _addRotationalPropTween(this, cache, p2, startNum, endValue, relative);
+            continue;
+          } else if (p2 === "smoothOrigin") {
+            _addNonTweeningPT(this, cache, "smooth", cache.smooth, endValue);
+            continue;
+          } else if (p2 === "force3D") {
+            cache[p2] = endValue;
+            continue;
+          } else if (p2 === "transform") {
+            _addRawTransformPTs(this, endValue, target);
+            continue;
+          }
+        } else if (!(p2 in style)) {
+          p2 = _checkPropPrefix(p2) || p2;
+        }
+        if (isTransformRelated || (endNum || endNum === 0) && (startNum || startNum === 0) && !_complexExp.test(endValue) && p2 in style) {
+          startUnit = (startValue + "").substr((startNum + "").length);
+          endNum || (endNum = 0);
+          endUnit = getUnit(endValue) || (p2 in _config.units ? _config.units[p2] : startUnit);
+          startUnit !== endUnit && (startNum = _convertToUnit(target, p2, startValue, endUnit));
+          this._pt = new PropTween(this._pt, isTransformRelated ? cache : style, p2, startNum, relative ? relative * endNum : endNum - startNum, !isTransformRelated && (endUnit === "px" || p2 === "zIndex") && vars2.autoRound !== false ? _renderRoundedCSSProp : _renderCSSProp);
+          this._pt.u = endUnit || 0;
+          if (startUnit !== endUnit && endUnit !== "%") {
+            this._pt.b = startValue;
+            this._pt.r = _renderCSSPropWithBeginning;
+          }
+        } else if (!(p2 in style)) {
+          if (p2 in target) {
+            this.add(target, p2, startValue || target[p2], endValue, index2, targets);
+          } else {
+            _missingPlugin(p2, endValue);
+            continue;
+          }
+        } else {
+          _tweenComplexCSSString.call(this, target, p2, startValue, endValue);
+        }
+        props.push(p2);
+      }
+    }
+    hasPriority && _sortPropTweensByPriority(this);
+  },
+  get: _get,
+  aliases: _propertyAliases,
+  getSetter: function getSetter(target, property, plugin) {
+    var p2 = _propertyAliases[property];
+    p2 && p2.indexOf(",") < 0 && (property = p2);
+    return property in _transformProps && property !== _transformOriginProp && (target._gsap.x || _get(target, "x")) ? plugin && _recentSetterPlugin === plugin ? property === "scale" ? _setterScale : _setterTransform : (_recentSetterPlugin = plugin || {}) && (property === "scale" ? _setterScaleWithRender : _setterTransformWithRender) : target.style && !_isUndefined(target.style[property]) ? _setterCSSStyle : ~property.indexOf("-") ? _setterCSSProp : _getSetter(target, property);
+  },
+  core: {
+    _removeProperty,
+    _getMatrix
+  }
+};
+gsap.utils.checkPrefix = _checkPropPrefix;
+(function(positionAndScale, rotation, others, aliases) {
+  var all = _forEachName(positionAndScale + "," + rotation + "," + others, function(name) {
+    _transformProps[name] = 1;
+  });
+  _forEachName(rotation, function(name) {
+    _config.units[name] = "deg";
+    _rotationalProperties[name] = 1;
+  });
+  _propertyAliases[all[13]] = positionAndScale + "," + rotation;
+  _forEachName(aliases, function(name) {
+    var split = name.split(":");
+    _propertyAliases[split[1]] = all[split[0]];
+  });
+})("x,y,z,scale,scaleX,scaleY,xPercent,yPercent", "rotation,rotationX,rotationY,skewX,skewY", "transform,transformOrigin,svgOrigin,force3D,smoothOrigin,transformPerspective", "0:translateX,1:translateY,2:translateZ,8:rotate,8:rotationZ,8:rotateZ,9:rotateX,10:rotateY");
+_forEachName("x,y,z,top,right,bottom,left,width,height,fontSize,padding,margin,perspective", function(name) {
+  _config.units[name] = "px";
+});
+gsap.registerPlugin(CSSPlugin);
+var gsapWithCSS = gsap.registerPlugin(CSSPlugin) || gsap;
+gsapWithCSS.core.Tween;
+var Articles_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _withScopeId = (n) => (pushScopeId("data-v-927e3ad0"), n = n(), popScopeId(), n);
+const _hoisted_1$a = { class: "article-wrapper" };
+const _hoisted_2$6 = { class: "article-box" };
+const _hoisted_3$4 = { class: "article" };
+const _hoisted_4$2 = {
+  key: 0,
+  class: "poster-wrapper"
+};
+const _hoisted_5$1 = ["href"];
+const _hoisted_6 = {
+  key: 0,
+  class: "category"
+};
+const _hoisted_7 = {
+  key: 1,
+  class: "article-info"
+};
+const _hoisted_8 = { class: "article-title" };
+const _hoisted_9 = ["href"];
+const _hoisted_10 = { class: "article-con" };
+const _hoisted_11 = { class: "article-desc" };
+const _hoisted_12 = {
+  key: 0,
+  class: "article-tags"
+};
+const _hoisted_13 = { class: "tag" };
+const _hoisted_14 = { class: "article-meta" };
+const _hoisted_15 = { class: "date" };
+const _hoisted_16 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("i", { class: "iconfont icon-rili1" }, null, -1));
+const _hoisted_17 = { class: "author" };
+const _hoisted_18 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("i", { class: "iconfont icon-zuozhe" }, null, -1));
+const _hoisted_19 = ["href"];
+const _hoisted_20 = { class: "words" };
+const _hoisted_21 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("i", { class: "iconfont icon-tongji" }, null, -1));
+const _hoisted_22 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "read" }, [
+  /* @__PURE__ */ createTextVNode("\u9605\u8BFB\u5168\u6587 "),
+  /* @__PURE__ */ createBaseVNode("i", { class: "iconfont icon-you" })
+], -1));
+const _sfc_main$c = {
+  setup(__props) {
+    const handlerStagger = () => {
+      var ob = new IntersectionObserver((entries, self2) => {
+        let targets = entries.map((entry) => {
+          if (entry.isIntersecting) {
+            self2.unobserve(entry.target);
+            return entry.target;
+          }
+        });
+        if (gsapWithCSS) {
+          gsapWithCSS.to(targets, {
+            opacity: 1,
+            y: 0,
+            stagger: 0.2,
+            ease: "Back.easeOut"
+          });
+        }
+      });
+      document.querySelectorAll(".article-box").forEach((box) => {
+        ob.observe(box);
+      });
+      __vitePreload(() => import("./vanilla-tilt.es2015.23c0b18e.js"), true ? [] : void 0).then((res) => {
+        res.default.init(document.querySelectorAll(".article"), {
+          max: 5
+        });
+      });
+    };
+    onMounted(() => {
+      handlerStagger();
+    });
+    const posts = { "power": "artiely", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-vscode-plugin", "frontmatter": { "title": "\u5982\u4F55\u4F7F\u4F60\u7684vscode\u66F4\u597D\u7528", "data": "2020-12-29T00:00:00.000Z", "summary": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "description": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "author": "artiely", "primary": "25262d", "readTime": "6 min read", "words": 1057, "group": 1, "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316094033.png", "secondary": "dad9d2", "tag": [], "date": "2022-01-30", "password": false, "base64": "fafafa", "text": "6 min read" }, "id": "83516b2c-ca17-431d-a5ff-ab941204233f" }, { "text": "artiely", "link": "/posts/2021/2020-3-16-chrome-plugin", "frontmatter": { "title": "\u8BA9\u4F60\u7684chrome\u5982\u864E\u6DFB\u7FFC", "data": "2020-12-29T00:00:00.000Z", "summary": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "description": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316120320.png", "author": "artiely", "primary": "f4f6f6", "secondary": "0b0909", "readTime": "5 min read", "words": 914, "tag": [], "date": "2022-01-30", "password": false, "base64": "fafafa", "text": "5 min read" }, "id": "d4809973-ca2b-4087-a100-3be63a1f3c89" }, { "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }, { "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": ["proxy"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "aaa01a10-49bd-4195-85ce-8fd4a09437ba" }, { "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": ["electron", "javascrip"], "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 404, "password": false, "text": "3 min read" }, "id": "88526e84-2d19-4cbc-ab94-66cd3cc5b57e" }, { "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": ["windows"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "29593993-5c1f-4f1c-8501-533254ab8f16" }], "tags": [{ "tag": "\u6653\u9732", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "\u5BDD\u5B89", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "\u5178\u7C4D", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "\u6D45\u4E91", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "\u900D\u9065", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "\u79CB\u534A", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "tag": "proxy", "posts": [{ "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": ["proxy"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "aaa01a10-49bd-4195-85ce-8fd4a09437ba" }] }, { "tag": "electron", "posts": [{ "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": ["electron", "javascrip"], "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 404, "password": false, "text": "3 min read" }, "id": "88526e84-2d19-4cbc-ab94-66cd3cc5b57e" }] }, { "tag": "javascrip", "posts": [{ "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": ["electron", "javascrip"], "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 404, "password": false, "text": "3 min read" }, "id": "88526e84-2d19-4cbc-ab94-66cd3cc5b57e" }] }, { "tag": "windows", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": ["windows"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "29593993-5c1f-4f1c-8501-533254ab8f16" }] }], "timeline": [{ "date": "2022-01-30", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-vscode-plugin", "frontmatter": { "title": "\u5982\u4F55\u4F7F\u4F60\u7684vscode\u66F4\u597D\u7528", "data": "2020-12-29T00:00:00.000Z", "summary": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "description": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "author": "artiely", "primary": "25262d", "readTime": "6 min read", "words": 1057, "group": 1, "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316094033.png", "secondary": "dad9d2", "tag": [], "date": "2022-01-30", "password": false, "base64": "fafafa", "text": "6 min read" }, "id": "83516b2c-ca17-431d-a5ff-ab941204233f" }, { "text": "artiely", "link": "/posts/2021/2020-3-16-chrome-plugin", "frontmatter": { "title": "\u8BA9\u4F60\u7684chrome\u5982\u864E\u6DFB\u7FFC", "data": "2020-12-29T00:00:00.000Z", "summary": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "description": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316120320.png", "author": "artiely", "primary": "f4f6f6", "secondary": "0b0909", "readTime": "5 min read", "words": 914, "tag": [], "date": "2022-01-30", "password": false, "base64": "fafafa", "text": "5 min read" }, "id": "d4809973-ca2b-4087-a100-3be63a1f3c89" }] }, { "date": "2022-01-19", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1934, "password": false, "base64": "fafafa", "text": "10 min read" }, "id": "1d4c6187-6d64-4aed-ba96-4476fabd9e4b" }] }, { "date": "2021-02-23", "posts": [{ "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": ["proxy"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "aaa01a10-49bd-4195-85ce-8fd4a09437ba" }] }, { "date": "2020-03-18", "posts": [{ "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": ["electron", "javascrip"], "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 404, "password": false, "text": "3 min read" }, "id": "88526e84-2d19-4cbc-ab94-66cd3cc5b57e" }] }, { "date": "2020-03-16", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": ["windows"], "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "29593993-5c1f-4f1c-8501-533254ab8f16" }] }] }.posts;
+    const link = (link2) => `${link2}.html`;
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("div", _hoisted_1$a, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(posts), (item) => {
+          return openBlock(), createElementBlock("div", _hoisted_2$6, [
+            createBaseVNode("article", _hoisted_3$4, [
+              item.frontmatter ? (openBlock(), createElementBlock("div", _hoisted_4$2, [
+                createBaseVNode("a", {
+                  href: link(item.link)
+                }, [
+                  item.frontmatter.category ? (openBlock(), createElementBlock("div", _hoisted_6, [
+                    createBaseVNode("span", {
+                      class: "category-inner",
+                      style: normalizeStyle({
+                        backgroundColor: unref(hexToRgba)(`#${item.frontmatter.secondary}`, 0.6),
+                        color: `#${item.frontmatter.primary}`
+                      })
+                    }, toDisplayString(item.frontmatter.category), 5)
+                  ])) : createCommentVNode("", true),
+                  createVNode(Cover, { item }, null, 8, ["item"])
+                ], 8, _hoisted_5$1)
+              ])) : createCommentVNode("", true),
+              item.frontmatter ? (openBlock(), createElementBlock("div", _hoisted_7, [
+                createBaseVNode("h1", _hoisted_8, [
+                  createBaseVNode("a", {
+                    href: link(item.link)
+                  }, toDisplayString(item.frontmatter.title), 9, _hoisted_9)
+                ]),
+                createBaseVNode("div", _hoisted_10, [
+                  createBaseVNode("p", _hoisted_11, toDisplayString(item.frontmatter.summary), 1)
+                ]),
+                item.frontmatter.tag ? (openBlock(), createElementBlock("div", _hoisted_12, [
+                  (openBlock(true), createElementBlock(Fragment, null, renderList(item.frontmatter.tag.slice(0, 3), (tag) => {
+                    return openBlock(), createElementBlock("span", _hoisted_13, "#" + toDisplayString(tag), 1);
+                  }), 256))
+                ])) : createCommentVNode("", true),
+                createBaseVNode("div", _hoisted_14, [
+                  createBaseVNode("span", _hoisted_15, [
+                    _hoisted_16,
+                    createTextVNode(" " + toDisplayString(unref(dayjs)(item.frontmatter.date).format("YYYY/MM/DD")), 1)
+                  ]),
+                  createBaseVNode("span", _hoisted_17, [
+                    _hoisted_18,
+                    createTextVNode(" " + toDisplayString(item.frontmatter.author), 1)
+                  ])
+                ]),
+                createBaseVNode("a", {
+                  class: "more",
+                  href: link(item.link)
+                }, [
+                  createBaseVNode("span", _hoisted_20, [
+                    _hoisted_21,
+                    createTextVNode(" " + toDisplayString(item.frontmatter.words) + " words /" + toDisplayString(item.frontmatter.readTime), 1)
+                  ]),
+                  _hoisted_22
+                ], 8, _hoisted_19)
+              ])) : createCommentVNode("", true)
+            ])
+          ]);
+        }), 256))
+      ]);
+    };
+  }
+};
+var Articles = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["__scopeId", "data-v-927e3ad0"]]);
+var Articles$1 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": Articles
+});
+const _sfc_main$b = {
+  setup(__props) {
+    return (_ctx, _cache) => {
+      return openBlock(), createBlock(Articles);
+    };
+  }
+};
+var Home = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  "default": _sfc_main$b
+});
 function tryOnScopeDispose(fn) {
   if (getCurrentScope()) {
     onScopeDispose(fn);
@@ -8097,14 +12461,6 @@ function watchWithFilter(source, cb, options = {}) {
   ]);
   return watch(source, createFilterWrapper(eventFilter, cb), watchOptions);
 }
-function tryOnMounted(fn, sync = true) {
-  if (getCurrentInstance())
-    onMounted(fn);
-  else if (sync)
-    fn();
-  else
-    nextTick(fn);
-}
 const defaultWindow = isClient ? window : void 0;
 isClient ? window.document : void 0;
 isClient ? window.navigator : void 0;
@@ -8140,35 +12496,7 @@ function useEventListener(...args) {
   tryOnScopeDispose(stop);
   return stop;
 }
-function useMediaQuery(query, options = {}) {
-  const { window: window2 = defaultWindow } = options;
-  let mediaQuery;
-  const matches = ref(false);
-  const update = () => {
-    if (!window2)
-      return;
-    if (!mediaQuery)
-      mediaQuery = window2.matchMedia(query);
-    matches.value = mediaQuery.matches;
-  };
-  tryOnMounted(() => {
-    update();
-    if (!mediaQuery)
-      return;
-    if ("addEventListener" in mediaQuery)
-      mediaQuery.addEventListener("change", update);
-    else
-      mediaQuery.addListener(update);
-    tryOnScopeDispose(() => {
-      if ("removeEventListener" in update)
-        mediaQuery.removeEventListener("change", update);
-      else
-        mediaQuery.removeListener(update);
-    });
-  });
-  return matches;
-}
-const _global = globalThis || void 0;
+const _global = typeof globalThis === "undefined" ? void 0 : globalThis;
 const globalKey = "__vueuse_ssr_handlers__";
 _global[globalKey] = _global[globalKey] || {};
 const handlers = _global[globalKey];
@@ -8275,8 +12603,9 @@ function useStorage(key, initialValue, storage, options = {}) {
   }
   return data;
 }
-function usePreferredDark(options) {
-  return useMediaQuery("(prefers-color-scheme: dark)", options);
+function useLocalStorage(key, initialValue, options = {}) {
+  const { window: window2 = defaultWindow } = options;
+  return useStorage(key, initialValue, window2 == null ? void 0 : window2.localStorage, options);
 }
 var _a, _b;
 isClient && (window == null ? void 0 : window.navigator) && ((_a = window == null ? void 0 : window.navigator) == null ? void 0 : _a.platform) && /iP(ad|hone|od)/.test((_b = window == null ? void 0 : window.navigator) == null ? void 0 : _b.platform);
@@ -8307,372 +12636,73 @@ const initialRect = {
 __spreadValues$3({
   text: ""
 }, initialRect);
-const darkModeSymbol = Symbol("");
-const useDarkMode = () => {
-  const isDarkMode = inject(darkModeSymbol);
-  if (!isDarkMode) {
-    throw new Error("useDarkMode() is called without provider.");
-  }
-  return isDarkMode;
-};
-const setupDarkMode = () => {
-  const themeLocale = useThemeLocaleData();
-  const isDarkPreferred = usePreferredDark();
-  const darkStorage = useStorage("vuepress-color-scheme", "auto");
-  const isDarkMode = computed({
-    get() {
-      if (!themeLocale.value.darkMode) {
-        return false;
-      }
-      if (darkStorage.value === "auto") {
-        return isDarkPreferred.value;
-      }
-      return darkStorage.value === "dark";
-    },
-    set(val) {
-      if (val === isDarkPreferred.value) {
-        darkStorage.value = "auto";
-      } else {
-        darkStorage.value = val ? "dark" : "light";
-      }
-    }
-  });
-  provide(darkModeSymbol, isDarkMode);
-  updateHtmlDarkClass(isDarkMode);
-};
-const updateHtmlDarkClass = (isDarkMode) => {
-  const update = (value = isDarkMode.value) => {
-    const htmlEl = window === null || window === void 0 ? void 0 : window.document.querySelector("html");
-    htmlEl === null || htmlEl === void 0 ? void 0 : htmlEl.classList.toggle("dark", value);
-  };
-  onMounted(() => {
-    watch(isDarkMode, update, { immediate: true });
-  });
-  onUnmounted(() => update());
-};
-const useResolveRouteWithRedirect = (...args) => {
-  const router = useRouter();
-  const route = router.resolve(...args);
-  const lastMatched = route.matched[route.matched.length - 1];
-  if (!(lastMatched === null || lastMatched === void 0 ? void 0 : lastMatched.redirect)) {
-    return route;
-  }
-  const { redirect } = lastMatched;
-  const resolvedRedirect = isFunction(redirect) ? redirect(route) : redirect;
-  const resolvedRedirectObj = isString$1(resolvedRedirect) ? { path: resolvedRedirect } : resolvedRedirect;
-  return useResolveRouteWithRedirect(__spreadValues({
-    hash: route.hash,
-    query: route.query,
-    params: route.params
-  }, resolvedRedirectObj));
-};
-const useNavLink = (item) => {
-  const resolved = useResolveRouteWithRedirect(item);
-  return {
-    text: resolved.meta.title || item,
-    link: resolved.name === "404" ? item : resolved.fullPath
-  };
-};
-let promise = null;
-let promiseResolve = null;
-const scrollPromise = {
-  wait: () => promise,
-  pending: () => {
-    promise = new Promise((resolve2) => promiseResolve = resolve2);
-  },
-  resolve: () => {
-    promiseResolve === null || promiseResolve === void 0 ? void 0 : promiseResolve();
-    promise = null;
-    promiseResolve = null;
-  }
-};
-const useScrollPromise = () => scrollPromise;
-const sidebarItemsSymbol = Symbol("sidebarItems");
-const useSidebarItems = () => {
-  const sidebarItems = inject(sidebarItemsSymbol);
-  if (!sidebarItems) {
-    throw new Error("useSidebarItems() is called without provider.");
-  }
-  return sidebarItems;
-};
-const setupSidebarItems = () => {
-  const themeLocale = useThemeLocaleData();
-  const frontmatter = usePageFrontmatter();
-  const sidebarItems = computed(() => resolveSidebarItems(frontmatter.value, themeLocale.value));
-  provide(sidebarItemsSymbol, sidebarItems);
-};
-const resolveSidebarItems = (frontmatter, themeLocale) => {
-  var _a2, _b2, _c, _d;
-  const sidebarConfig = (_b2 = (_a2 = frontmatter.sidebar) !== null && _a2 !== void 0 ? _a2 : themeLocale.sidebar) !== null && _b2 !== void 0 ? _b2 : "auto";
-  const sidebarDepth = (_d = (_c = frontmatter.sidebarDepth) !== null && _c !== void 0 ? _c : themeLocale.sidebarDepth) !== null && _d !== void 0 ? _d : 2;
-  if (frontmatter.home || sidebarConfig === false) {
-    return [];
-  }
-  if (sidebarConfig === "auto") {
-    return resolveAutoSidebarItems(sidebarDepth);
-  }
-  if (isArray(sidebarConfig)) {
-    return resolveArraySidebarItems(sidebarConfig, sidebarDepth);
-  }
-  if (isPlainObject(sidebarConfig)) {
-    return resolveMultiSidebarItems(sidebarConfig, sidebarDepth);
-  }
-  return [];
-};
-const headerToSidebarItem = (header, sidebarDepth) => ({
-  text: header.title,
-  link: `#${header.slug}`,
-  children: headersToSidebarItemChildren(header.children, sidebarDepth)
-});
-const headersToSidebarItemChildren = (headers, sidebarDepth) => sidebarDepth > 0 ? headers.map((header) => headerToSidebarItem(header, sidebarDepth - 1)) : [];
-const resolveAutoSidebarItems = (sidebarDepth) => {
-  const page = usePageData();
-  return [
-    {
-      text: page.value.title,
-      children: headersToSidebarItemChildren(page.value.headers, sidebarDepth)
-    }
-  ];
-};
-const resolveArraySidebarItems = (sidebarConfig, sidebarDepth) => {
-  const route = useRoute();
-  const page = usePageData();
-  const handleChildItem = (item) => {
-    var _a2;
-    let childItem;
-    if (isString$1(item)) {
-      childItem = useNavLink(item);
-    } else {
-      childItem = item;
-    }
-    if (childItem.children) {
-      return __spreadProps(__spreadValues({}, childItem), {
-        children: childItem.children.map((item2) => handleChildItem(item2))
-      });
-    }
-    if (childItem.link === route.path) {
-      const headers = ((_a2 = page.value.headers[0]) === null || _a2 === void 0 ? void 0 : _a2.level) === 1 ? page.value.headers[0].children : page.value.headers;
-      return __spreadProps(__spreadValues({}, childItem), {
-        children: headersToSidebarItemChildren(headers, sidebarDepth)
-      });
-    }
-    return childItem;
-  };
-  return sidebarConfig.map((item) => handleChildItem(item));
-};
-const resolveMultiSidebarItems = (sidebarConfig, sidebarDepth) => {
-  var _a2;
-  const route = useRoute();
-  const sidebarPath = resolveLocalePath(sidebarConfig, route.path);
-  const matchedSidebarConfig = (_a2 = sidebarConfig[sidebarPath]) !== null && _a2 !== void 0 ? _a2 : [];
-  return resolveArraySidebarItems(matchedSidebarConfig, sidebarDepth);
-};
-const useThemeLocaleData = () => useThemeLocaleData$1();
-var index = "";
-var clientAppEnhance3 = defineClientAppEnhance(({ app, router }) => {
-  app.component("Badge", _sfc_main$h);
-  app.component("CodeGroup", CodeGroup);
-  app.component("CodeGroupItem", _sfc_main$g);
-  app.component("NavbarSearch", () => {
-    const SearchComponent = app.component("Docsearch") || app.component("SearchBox");
-    if (SearchComponent) {
-      return h(SearchComponent);
-    }
-    return null;
-  });
-  const scrollBehavior = router.options.scrollBehavior;
-  router.options.scrollBehavior = async (...args) => {
-    await useScrollPromise().wait();
-    return scrollBehavior(...args);
-  };
-});
-var clientAppEnhance4 = ({ app }) => {
-  app.component("404", defineAsyncComponent(() => __vitePreload(() => import("./404.dcaecb15.js"), true ? [] : void 0))), app.component("Articles", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Articles$1;
-  }), true ? void 0 : void 0))), app.component("Cover", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Cover$1;
-  }), true ? void 0 : void 0))), app.component("Detail", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Detail;
-  }), true ? void 0 : void 0))), app.component("Footer", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Footer$1;
-  }), true ? void 0 : void 0))), app.component("Home", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Home;
-  }), true ? void 0 : void 0))), app.component("Layout", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Layout;
-  }), true ? void 0 : void 0))), app.component("Meta", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Meta;
-  }), true ? void 0 : void 0))), app.component("NavBar", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return NavBar;
-  }), true ? void 0 : void 0))), app.component("Page", defineAsyncComponent(() => __vitePreload(() => import("./Page.d870103c.js"), true ? [] : void 0))), app.component("Sidebar", defineAsyncComponent(() => __vitePreload(() => Promise.resolve().then(function() {
-    return Sidebar;
-  }), true ? void 0 : void 0)));
-};
-var clientAppEnhance5 = ({ app }) => {
-  app.component("Test", defineAsyncComponent(() => __vitePreload(() => import("./Test.b6a4115f.js"), true ? [] : void 0)));
-};
-var _export_sfc = (sfc, props) => {
-  const target = sfc.__vccOpts || sfc;
-  for (const [key, val] of props) {
-    target[key] = val;
-  }
-  return target;
-};
-const _sfc_main$f = {};
-const _hoisted_1$d = /* @__PURE__ */ createTextVNode("\u8FD9\u662F\u81EA\u5B9A\u4E49\u5E03\u5C40 ");
-function _sfc_render$1(_ctx, _cache) {
-  const _component_Content = resolveComponent("Content");
-  return openBlock(), createElementBlock(Fragment, null, [
-    _hoisted_1$d,
-    createVNode(_component_Content)
-  ], 64);
-}
-var CustomLayout = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$1]]);
-const hexToRgba = (hex, opacity) => {
-  return "rgba(" + parseInt("0x" + hex.slice(1, 3)) + "," + parseInt("0x" + hex.slice(3, 5)) + "," + parseInt("0x" + hex.slice(5, 7)) + "," + opacity + ")";
-};
-var Cover_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _hoisted_1$c = { class: "img-box" };
-const _hoisted_2$6 = ["src"];
-const _sfc_main$e = {
-  props: {
-    item: Object
-  },
+var ThemeMeta_vue_vue_type_style_index_0_lang = "";
+const _hoisted_1$9 = { class: "theme-box" };
+const _hoisted_2$5 = /* @__PURE__ */ createBaseVNode("div", { class: "trigger" }, " \u4E3B\u9898 ", -1);
+const _sfc_main$a = {
   setup(__props) {
-    let isLoaded = ref(false);
-    const imgLoaded = () => {
-      console.log("\u52A0\u8F7D\u5B8C\u6BD5");
-      isLoaded.value = true;
+    const theme = ref("");
+    const themeData2 = useLocalStorage("theme", theme);
+    onMounted(() => {
+      document.querySelector("html").classList = themeData2.value;
+    });
+    const handleTheme = (_theme) => {
+      theme.value = _theme;
+      document.querySelector("html").classList = _theme;
     };
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock(Fragment, null, [
-        createBaseVNode("div", _hoisted_1$c, [
-          createBaseVNode("img", {
-            src: __props.item.frontmatter.cover,
-            onLoad: imgLoaded,
-            loading: "lazy",
-            class: normalizeClass([{ isImgLoaded: unref(isLoaded) }, "cover"]),
-            alt: "cover"
-          }, null, 42, _hoisted_2$6)
-        ]),
-        createBaseVNode("div", {
-          class: normalizeClass(["loading", { isLoaded: unref(isLoaded) }]),
-          style: normalizeStyle({ backgroundColor: unref(hexToRgba)(`#${__props.item.frontmatter.primary}`, 0.1) })
-        }, null, 6)
-      ], 64);
-    };
-  }
-};
-var Cover = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["__scopeId", "data-v-081be67a"]]);
-var Cover$1 = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": Cover
-});
-var Articles_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-47111f50"), n = n(), popScopeId(), n);
-const _hoisted_1$b = { class: "article-wrapper" };
-const _hoisted_2$5 = { class: "article" };
-const _hoisted_3$4 = {
-  key: 0,
-  class: "poster-wrapper"
-};
-const _hoisted_4$1 = ["href"];
-const _hoisted_5$1 = {
-  key: 0,
-  class: "category"
-};
-const _hoisted_6$1 = {
-  key: 1,
-  class: "article-info"
-};
-const _hoisted_7$1 = { class: "article-title" };
-const _hoisted_8$1 = ["href"];
-const _hoisted_9$1 = {
-  key: 0,
-  class: "article-tags"
-};
-const _hoisted_10 = { class: "tag" };
-const _hoisted_11 = { class: "article-con" };
-const _hoisted_12$1 = { class: "article-desc" };
-const _hoisted_13$1 = { class: "article-meta" };
-const _hoisted_14$1 = { class: "more" };
-const _hoisted_15$1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createBaseVNode("span", { class: "read" }, "\u9605\u8BFB\u5168\u6587->", -1));
-const _sfc_main$d = {
-  setup(__props) {
-    const posts = { "power": "artiely", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-vscode-plugin", "frontmatter": { "title": "\u5982\u4F55\u4F7F\u4F60\u7684vscode\u66F4\u597D\u7528", "data": "2020-12-29T00:00:00.000Z", "summary": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "description": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "author": "artiely", "primary": "25262d", "readTime": "6 min read", "words": 1057, "group": 1, "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316094033.png", "secondary": "dad9d2", "tag": [], "date": "2022-01-25", "password": false, "base64": "fafafa", "text": "6 min read" }, "id": "a483777a-336a-454a-81b3-11d4b4f64f72" }, { "text": "artiely", "link": "/posts/2021/2020-3-16-chrome-plugin", "frontmatter": { "title": "\u8BA9\u4F60\u7684chrome\u5982\u864E\u6DFB\u7FFC", "data": "2020-12-29T00:00:00.000Z", "summary": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "description": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316120320.png", "author": "artiely", "primary": "f4f6f6", "secondary": "0b0909", "readTime": "5 min read", "words": 914, "tag": [], "date": "2022-01-25", "password": false, "base64": "fafafa", "text": "5 min read" }, "id": "1d316000-2729-4343-b566-810da4bfb28e" }, { "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }, { "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": "proxy", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "64295286-ce51-49c0-9dee-179cb5736cfe" }, { "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": "electron,javascrip", "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 401, "password": false, "text": "2 min read" }, "id": "07d1c7ed-514f-4bb5-8372-13d83312fdf2" }, { "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": "windows", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "336e7cbd-0393-4c52-be88-840f46745349" }], "tags": [{ "tag": "\u6653\u9732", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "\u5BDD\u5B89", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "\u5178\u7C4D", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "\u6D45\u4E91", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "\u900D\u9065", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "\u79CB\u534A", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "tag": "proxy", "posts": [{ "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": "proxy", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "64295286-ce51-49c0-9dee-179cb5736cfe" }] }, { "tag": "electron,javascrip", "posts": [{ "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": "electron,javascrip", "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 401, "password": false, "text": "2 min read" }, "id": "07d1c7ed-514f-4bb5-8372-13d83312fdf2" }] }, { "tag": "windows", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": "windows", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "336e7cbd-0393-4c52-be88-840f46745349" }] }], "timeline": [{ "date": "2022-01-25", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-vscode-plugin", "frontmatter": { "title": "\u5982\u4F55\u4F7F\u4F60\u7684vscode\u66F4\u597D\u7528", "data": "2020-12-29T00:00:00.000Z", "summary": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "description": "VS Code \u5199\u4EE3\u7801\u662F\u771F\u597D\u7528\u3001\u771F\u723D\u3001\u771F\u9999\uFF01\u60F3\u5FC5\u4F60\u4E5F\u5DF2\u7ECF\u542C\u8FC7\u8EAB\u8FB9\u4E0D\u6B62\u4E00\u4E2A\u4EBA\u8FD9\u4E48\u8BF4\u3002\u6700\u8FD1\u7684 JS 2019 \u62A5\u544A\u4E2D\uFF0CVS Code \u4E5F\u662F\u4EE5\u538B\u5012\u6027\u7684\u4F18\u52BF\u83B7\u80DC\u7B2C\u4E00\uFF0C\u5176\u4ED6\u7684\u7F16\u8F91\u5668\u53EA\u80FD\u88AB\u65E0\u60C5\u78BE\u538B\u5728\u5730\u4E0A\u6469\u64E6\u2026\u2026!## \u56FE\u7247\u9884\u89C8> \u5149\u6807\u60AC\u6D6E\u5728\u56FE\u7247\u8DEF\u5F84\u4E0A\u65F6\uFF0C\u663E\u793A\u56FE\u7247\u9884\u89C8\uFF0C\u8FD9\u6837\u6211\u4EEC\u5728\u6572\u4EE3\u7801\u7684\u65F6\u5019\u4E00\u4E0B\u5B50\u5C31\u80FD\u77E5\u9053\u6709\u6CA1\u6709\u5F15\u7528\u4E86\u6B63\u786E\u7684\u56FE\u7247\u6216\u56FE\u6807\u3002!## \u5F69\u8679\u7F29\u8FDB> \u5199\u4EE3\u7801\u7684\u65F6\u5019\uFF0C ...", "author": "artiely", "primary": "25262d", "readTime": "6 min read", "words": 1057, "group": 1, "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316094033.png", "secondary": "dad9d2", "tag": [], "date": "2022-01-25", "password": false, "base64": "fafafa", "text": "6 min read" }, "id": "a483777a-336a-454a-81b3-11d4b4f64f72" }, { "text": "artiely", "link": "/posts/2021/2020-3-16-chrome-plugin", "frontmatter": { "title": "\u8BA9\u4F60\u7684chrome\u5982\u864E\u6DFB\u7FFC", "data": "2020-12-29T00:00:00.000Z", "summary": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "description": "\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5927\u591A\u6570\u60C5\u51B5\u4E0B\u6211\u4EEC\u662F\u65E0\u6CD5\u8BBF\u95EE\u8C37\u6B4C\u7684\uFF0C\u6240\u4EE5\u6211\u4EEC\u5148\u4E0B\u8F7D\u4E00\u4E2A\u8C37\u6B4C\u8BBF\u95EE\u52A9\u624B\u5E2E\u52A9\u6211\u4EEC\u8BBF\u95EE\u8C37\u6B4C\u5E94\u7528\u5546\u5E97\uFF0C\u8FD9\u662F\u4E00\u4E2A\u7834\u89E3\u7248\u3002\u6B63\u7248\u4E5F\u662F\u53EF\u4EE5\u514D\u8D39\u4F7F\u7528\u7684\uFF0C\u4F46\u662F\u4ED6\u4F1A\u4FEE\u6539\u4F60\u7684\u4E3B\u9875\u5E76\u4E14\u5F3A\u5236\u7ED1\u5B9A\u3002\u6240\u4EE5\u6709\u70B9\u813E\u6C14\u7684\u90FD\u5FCD\u4E0D\u4E86\u3002!\u4F60\u4E5F\u53EF\u4EE5\u653E\u5728\u9ED8\u8BA4\u8DEF\u5F84\u4E0B\uFF0C\u4E0B\u56FE\u662F\u5982\u4F55\u67E5\u770B\u8DEF\u5F84!!\u73B0\u5728\u5C31\u53EF\u4EE5\u8BBF\u95EE\u8C37\u6B4C\u5546\u5E97\u4E86\uFF0C\u5F53\u7136\u4F60\u4E5F\u53EF\u4EE5\u4F7F\u7528\u8C37\u6B4C\u641C\u7D22\u7B49!## \u6E05\u6670\u7684\u5386\u53F2\u8BB0\u5F55\u5386\u53F2\u8BB0\u5F55\u6309\u5929\u5206\u7C7B ...", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316120320.png", "author": "artiely", "primary": "f4f6f6", "secondary": "0b0909", "readTime": "5 min read", "words": 914, "tag": [], "date": "2022-01-25", "password": false, "base64": "fafafa", "text": "5 min read" }, "id": "1d316000-2729-4343-b566-810da4bfb28e" }] }, { "date": "2022-01-19", "posts": [{ "text": "artiely", "link": "/posts/2022-1-11md-test", "frontmatter": { "useLayout": "sino", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20220123084210.png", "title": "\u5E38\u7528Markdown\u6F14\u793A", "date": "2022-01-19", "tag": ["\u6653\u9732", "\u5BDD\u5B89", "\u5178\u7C4D", "\u6D45\u4E91", "\u900D\u9065", "\u79CB\u534A"], "summary": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "description": "\u5E38\u7528Markdown\u6F14\u793A## \u6ED5\u738B\u9601\u5E8F\u3010\u4F5C\u8005\u3011\u738B\u52C3 \uFF08650 \u5E74 \u2014 676 \u5E74\uFF09 \u3010\u671D\u4EE3\u3011\u5510\u8C6B\u7AE0\u6545\u90E1\uFF0C\u6D2A\u90FD\u65B0\u5E9C\u3002\u661F\u5206\u7FFC\u8F78\uFF0C\u5730\u63A5\u8861\u5E90\u3002\u895F\u4E09\u6C5F\u800C\u5E26\u4E94\u6E56\uFF0C\u63A7\u86EE\u8346\u800C\u5F15\u74EF\u8D8A\u3002\u7269\u534E\u5929\u5B9D\uFF0C\u9F99\u5149\u5C04\u725B\u6597\u4E4B\u589F\uFF1B\u4EBA\u6770\u5730\u7075\uFF0C\u5F90\u5B7A\u4E0B\u9648\u8543\u4E4B\u69BB\u3002\u96C4\u5DDE\u96FE\u5217\uFF0C\u4FCA\u91C7\u661F\u9A70\u3002\u53F0\u968D\u6795\u5937\u590F\u4E4B\u4EA4\uFF0C\u5BBE\u4E3B\u5C3D\u4E1C\u5357\u4E4B\u7F8E\u3002\u90FD\u7763\u960E\u516C\u4E4B\u96C5\u671B\uFF0C\u68E8\u621F\u9065\u4E34\uFF1B\u5B87\u6587\u65B0\u5DDE\u4E4B\u61FF\u8303\uFF0C\u895C\u5E37\u6682\u9A7B\u3002\u5341\u65EC\u4F11\u5047\uFF0C\u80DC\u53CB\u5982\u4E91\uFF1B\u5343\u91CC\u9022\u8FCE\uFF0C\u9AD8\u670B\u6EE1\u5EA7\u3002\u817E\u86DF\u8D77\u51E4\uFF0C\u5B5F\u5B66\u58EB\u4E4B\u8BCD ...", "author": "artiely", "primary": "d4d4d4", "secondary": "2b2b2b", "readTime": "7 min read", "words": 1702, "password": false, "base64": "fafafa", "text": "9 min read" }, "id": "09a6e779-eb39-4907-a0bb-671e8554de52" }] }, { "date": "2021-02-23", "posts": [{ "text": "artiely", "link": "/posts/2021-2-23-proxy", "frontmatter": { "title": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3proxy", "tag": "proxy", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/20210223114632.png", "base64": "f0df3d", "author": "artiely", "date": "2021-02-23", "data": "2021-2-23", "summary": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "description": "\u4ECE\u4F7F\u7528\u573A\u666F\u4E86\u89E3 proxy\u52A0\u7C97\u524D\u9762\u8BB2\u8FC7\u4E00\u7BC7\uFF0C\u73B0\u5728\u5C31\u5E26\u5927\u5BB6\u4E86\u89E3\u4E00\u4E0Bproxy\u7684\u5B9E\u9645\u5E94\u7528\uFF0C\u66F4\u6DF1\u5165\u7684\u4E86\u89E3proxy\u7684\u5999\u7528\u53CA\u4EF7\u503C\u5427\uFF01 \u547C\u5E94\u4E0A\u4E86~\u7531\u4FED\u5165\u5962### \u8DDF\u8E2A\u5C5E\u6027\u8BBF\u95EE\uFF08get\uFF0Cset\uFF09\u5047\u8BBE\u6211\u4EEC\u6709\u4E00\u4E2A\u51FD\u6570tracePropAccess(obj, propKeys)\uFF0C\u8BE5\u51FD\u6570 obj \u5728 propKeys \u8BBE\u7F6E\u6216\u83B7\u53D6\u7684\u5C5E\u6027\uFF08\u5176\u952E\u5728 Array \u4E2D\uFF09\u65F6\u8FDB\u884C\u8BB0\u5F55\u3002 ...", "primary": "ebdb5b", "secondary": "1424a4", "readTime": "13 min read", "words": 2769, "password": false, "text": "14 min read" }, "id": "64295286-ce51-49c0-9dee-179cb5736cfe" }] }, { "date": "2020-03-18", "posts": [{ "text": "artiely", "link": "/posts/2020-3-18-electron-mirror-down", "frontmatter": { "primary": "2974d1", "secondary": "d68b2e", "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5", "tag": "electron,javascrip", "author": "Artiely", "date": "2020-03-18", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png", "base64": "2e7bd7", "category": "electron", "data": "2020-3-18", "summary": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "description": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5\u56E0\u4E3A Electron \u7684\u6E90\u5728\u56FD\u5916\uFF0C\u5982\u679C\u6211\u4EEC\u76F4\u63A5\u4F7F\u7528 npm \u8FDB\u884C\u5B89\u88C5\uFF0C\u7531\u4E8E\u4F17\u6240\u5468\u77E5\u7684\u539F\u56E0\uFF0C\u5982\u679C\u4F60\u6CA1\u6709\u4E00\u4E2A\u597D\u7684\u68AF\u5B50\uFF0C\u901A\u5E38\u4E0B\u8F7D\u901F\u5EA6\u53EA\u6709\u51E0 k \u5230\u5341\u51E0 k\u7684\u901F\u5EA6\u3002\u5982\u56FE\uFF1A\u8FD0\u6C14\u975E\u5E38\u597D\u65F6\uFF0C\u53EF\u80FD\u80FD\u8DD1 ...", "readTime": "2 min read", "words": 401, "password": false, "text": "2 min read" }, "id": "07d1c7ed-514f-4bb5-8372-13d83312fdf2" }] }, { "date": "2020-03-16", "posts": [{ "text": "artiely", "link": "/posts/2020-3-16-windows-plugin", "frontmatter": { "primary": "2c62c8", "secondary": "d39d37", "title": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350", "tag": "windows", "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png", "date": "2020-03-16", "base64": "3260d0", "category": "Tool", "data": "2020-3-16", "summary": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "description": "windows \u597D\u7528\u7684\u8F6F\u4EF6\u63A8\u8350## wox\u5E94\u7528\u7BA1\u7406\u65B0\u4F53\u9A8C\u3002ctrl+space(\u7A7A\u683C)!!!## typoramarkdown\u4E66\u5199\u65B0\u4F53\u9A8C\u5E76\u4E14typora\u53EF\u4EE5\u548Cpicgo ...", "author": "artiely", "readTime": "1 min read", "words": 178, "password": false, "text": "1 min read" }, "id": "336e7cbd-0393-4c52-be88-840f46745349" }] }] }.posts;
-    const link = (link2) => `${link2}.html`;
-    return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$b, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(posts), (item) => {
-          return openBlock(), createElementBlock("article", _hoisted_2$5, [
-            item.frontmatter ? (openBlock(), createElementBlock("div", _hoisted_3$4, [
-              createBaseVNode("a", {
-                href: link(item.link)
-              }, [
-                item.frontmatter.category ? (openBlock(), createElementBlock("div", _hoisted_5$1, [
-                  createBaseVNode("span", {
-                    class: "category-inner",
-                    style: normalizeStyle({
-                      backgroundColor: unref(hexToRgba)(`#${item.frontmatter.secondary}`, 0.6),
-                      color: `#${item.frontmatter.primary}`
-                    })
-                  }, toDisplayString(item.frontmatter.category), 5)
-                ])) : createCommentVNode("", true),
-                createVNode(Cover, { item }, null, 8, ["item"])
-              ], 8, _hoisted_4$1)
-            ])) : createCommentVNode("", true),
-            item.frontmatter ? (openBlock(), createElementBlock("div", _hoisted_6$1, [
-              createBaseVNode("h1", _hoisted_7$1, [
-                createBaseVNode("a", {
-                  href: link(item.link)
-                }, toDisplayString(item.frontmatter.title), 9, _hoisted_8$1)
-              ]),
-              item.frontmatter.tags ? (openBlock(), createElementBlock("div", _hoisted_9$1, [
-                (openBlock(true), createElementBlock(Fragment, null, renderList(item.frontmatter.tag, (tag) => {
-                  return openBlock(), createElementBlock("span", _hoisted_10, toDisplayString(tag), 1);
-                }), 256))
-              ])) : createCommentVNode("", true),
-              createBaseVNode("div", _hoisted_11, [
-                createBaseVNode("p", _hoisted_12$1, toDisplayString(item.frontmatter.summary), 1)
-              ]),
-              createBaseVNode("div", _hoisted_13$1, [
-                createBaseVNode("span", null, toDisplayString(item.frontmatter.date), 1),
-                createBaseVNode("span", null, toDisplayString(item.frontmatter.author), 1)
-              ]),
-              createBaseVNode("div", _hoisted_14$1, [
-                createBaseVNode("span", null, toDisplayString(item.frontmatter.words) + "\u5B57/" + toDisplayString(parseInt(item.frontmatter.readTime)) + "\u5206\u949F", 1),
-                _hoisted_15$1
-              ])
-            ])) : createCommentVNode("", true)
-          ]);
-        }), 256))
+      return openBlock(), createElementBlock("div", _hoisted_1$9, [
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "" ? "active" : ""]),
+          onClick: _cache[0] || (_cache[0] = ($event) => handleTheme(""))
+        }, "\u6653\u9732", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "dark" ? "active" : ""]),
+          onClick: _cache[1] || (_cache[1] = ($event) => handleTheme("dark"))
+        }, "\u5BDD\u5B89", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme1" ? "active" : ""]),
+          onClick: _cache[2] || (_cache[2] = ($event) => handleTheme("theme1"))
+        }, "\u5178\u7C4D", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme2" ? "active" : ""]),
+          onClick: _cache[3] || (_cache[3] = ($event) => handleTheme("theme2"))
+        }, "\u6D45\u4E91", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme3" ? "active" : ""]),
+          onClick: _cache[4] || (_cache[4] = ($event) => handleTheme("theme3"))
+        }, "\u900D\u9065", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme4" ? "active" : ""]),
+          onClick: _cache[5] || (_cache[5] = ($event) => handleTheme("theme4"))
+        }, "\u79CB\u534A", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme5" ? "active" : ""]),
+          onClick: _cache[6] || (_cache[6] = ($event) => handleTheme("theme5"))
+        }, "\u5341\u6F3E", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme6" ? "active" : ""]),
+          onClick: _cache[7] || (_cache[7] = ($event) => handleTheme("theme6"))
+        }, "666", 2),
+        createBaseVNode("span", {
+          class: normalizeClass(["theme-btn", theme.value == "theme7" ? "active" : ""]),
+          onClick: _cache[8] || (_cache[8] = ($event) => handleTheme("theme7"))
+        }, "777", 2),
+        _hoisted_2$5
       ]);
     };
   }
 };
-var Articles = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["__scopeId", "data-v-47111f50"]]);
-var Articles$1 = /* @__PURE__ */ Object.freeze({
+var ThemeMeta = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": Articles
+  "default": _sfc_main$a
 });
-const _sfc_main$c = {
-  setup(__props) {
-    return (_ctx, _cache) => {
-      return openBlock(), createBlock(Articles);
-    };
-  }
-};
-var Home = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$c
-});
-const _hoisted_1$a = ["href", "rel", "target", "aria-label"];
+const _hoisted_1$8 = ["href", "rel", "target", "aria-label"];
 const __default__ = defineComponent({
   inheritAttrs: false
 });
-const _sfc_main$b = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__), {
+const _sfc_main$9 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__), {
   props: {
     item: {
       type: Object,
@@ -8756,11 +12786,11 @@ const _sfc_main$b = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
         createTextVNode(" " + toDisplayString(unref(item).text) + " ", 1),
         unref(isBlankTarget) ? (openBlock(), createBlock(_component_ExternalLinkIcon, { key: 0 })) : createCommentVNode("", true),
         renderSlot(_ctx.$slots, "after")
-      ], 16, _hoisted_1$a));
+      ], 16, _hoisted_1$8));
     };
   }
 }));
-const _sfc_main$a = /* @__PURE__ */ defineComponent({
+const _sfc_main$8 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const setHeight = (items) => {
       items.style.height = items.scrollHeight + "px";
@@ -8836,8 +12866,8 @@ const resolveEditLink = ({ docsRepo, docsBranch, docsDir, filePathRelative, edit
     return null;
   return pattern.replace(/:repo/, isLinkHttp(docsRepo) ? docsRepo : `https://github.com/${docsRepo}`).replace(/:branch/, docsBranch).replace(/:path/, removeLeadingSlash(`${removeEndingSlash(docsDir)}/${filePathRelative}`));
 };
-const _hoisted_1$9 = { class: "sidebar-item-children" };
-const _sfc_main$9 = /* @__PURE__ */ defineComponent({
+const _hoisted_1$7 = { class: "sidebar-item-children" };
+const _sfc_main$7 = /* @__PURE__ */ defineComponent({
   props: {
     item: {
       type: Object,
@@ -8876,7 +12906,7 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
       var _a2;
       const _component_SidebarItem = resolveComponent("SidebarItem", true);
       return openBlock(), createElementBlock("li", null, [
-        unref(item).link ? (openBlock(), createBlock(_sfc_main$b, {
+        unref(item).link ? (openBlock(), createBlock(_sfc_main$9, {
           key: 0,
           class: normalizeClass(unref(itemClass)),
           item: unref(item)
@@ -8893,9 +12923,9 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
             class: normalizeClass(["arrow", isOpen.value ? "down" : "right"])
           }, null, 2)) : createCommentVNode("", true)
         ], 34)),
-        ((_a2 = unref(item).children) == null ? void 0 : _a2.length) ? (openBlock(), createBlock(_sfc_main$a, { key: 2 }, {
+        ((_a2 = unref(item).children) == null ? void 0 : _a2.length) ? (openBlock(), createBlock(_sfc_main$8, { key: 2 }, {
           default: withCtx(() => [
-            withDirectives(createBaseVNode("ul", _hoisted_1$9, [
+            withDirectives(createBaseVNode("ul", _hoisted_1$7, [
               (openBlock(true), createElementBlock(Fragment, null, renderList(unref(item).children, (child) => {
                 return openBlock(), createBlock(_component_SidebarItem, {
                   key: `${unref(depth)}${child.text}${child.link}`,
@@ -8913,17 +12943,17 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const _hoisted_1$8 = {
+const _hoisted_1$6 = {
   key: 0,
   class: "sidebar-items"
 };
-const _sfc_main$8 = /* @__PURE__ */ defineComponent({
+const _sfc_main$6 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const sidebarItems = useSidebarItems();
     return (_ctx, _cache) => {
-      return unref(sidebarItems).length ? (openBlock(), createElementBlock("ul", _hoisted_1$8, [
+      return unref(sidebarItems).length ? (openBlock(), createElementBlock("ul", _hoisted_1$6, [
         (openBlock(true), createElementBlock(Fragment, null, renderList(unref(sidebarItems), (item) => {
-          return openBlock(), createBlock(_sfc_main$9, {
+          return openBlock(), createBlock(_sfc_main$7, {
             key: item.link || item.text,
             item
           }, null, 8, ["item"]);
@@ -8933,13 +12963,13 @@ const _sfc_main$8 = /* @__PURE__ */ defineComponent({
   }
 });
 var Sidebar_vue_vue_type_style_index_0_lang = "";
-const _hoisted_1$7 = { class: "dog-sidebar" };
-const _sfc_main$7 = /* @__PURE__ */ defineComponent({
+const _hoisted_1$5 = { class: "dog-sidebar" };
+const _sfc_main$5 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("aside", _hoisted_1$7, [
+      return openBlock(), createElementBlock("aside", _hoisted_1$5, [
         renderSlot(_ctx.$slots, "top"),
-        createVNode(_sfc_main$8),
+        createVNode(_sfc_main$6),
         renderSlot(_ctx.$slots, "bottom")
       ]);
     };
@@ -8948,59 +12978,8 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
 var Sidebar = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$7
+  "default": _sfc_main$5
 });
-var Meta_vue_vue_type_style_index_0_lang = "";
-const _hoisted_1$6 = { class: "theme-box" };
-const _sfc_main$6 = {
-  setup(__props) {
-    const handleTheme = (theme) => {
-      document.querySelector("html").classList = theme;
-    };
-    return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("div", _hoisted_1$6, [
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[0] || (_cache[0] = ($event) => handleTheme(""))
-        }, "\u6653\u9732"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[1] || (_cache[1] = ($event) => handleTheme("dark"))
-        }, "\u5BDD\u5B89"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[2] || (_cache[2] = ($event) => handleTheme("theme1"))
-        }, "\u5178\u7C4D"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[3] || (_cache[3] = ($event) => handleTheme("theme2"))
-        }, "\u6D45\u4E91"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[4] || (_cache[4] = ($event) => handleTheme("theme3"))
-        }, "\u900D\u9065"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[5] || (_cache[5] = ($event) => handleTheme("theme4"))
-        }, "\u79CB\u534A"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[6] || (_cache[6] = ($event) => handleTheme("theme5"))
-        }, "\u5341\u6F3E"),
-        createBaseVNode("span", {
-          class: "theme-btn",
-          onClick: _cache[7] || (_cache[7] = ($event) => handleTheme("theme6"))
-        }, "666")
-      ]);
-    };
-  }
-};
-var Meta = /* @__PURE__ */ Object.freeze({
-  __proto__: null,
-  [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$6
-});
-var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var webPinyin = { exports: {} };
 var dictZiWeb = {
   "a": "",
@@ -11270,223 +15249,740 @@ webPinyin.exports.STYLE_TO3NE = Pinyin.STYLE_TO3NE;
 webPinyin.exports.STYLE_INITIALS = Pinyin.STYLE_INITIALS;
 webPinyin.exports.STYLE_FIRST_LETTER = Pinyin.STYLE_FIRST_LETTER;
 var pinyin$1 = webPinyin.exports;
-var dayjs_min = { exports: {} };
-(function(module, exports) {
-  !function(t, e) {
-    module.exports = e();
-  }(commonjsGlobal, function() {
-    var t = 1e3, e = 6e4, n = 36e5, r2 = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h2 = "quarter", c = "year", d = "date", $ = "Invalid Date", l = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_") }, m = function(t2, e2, n2) {
-      var r3 = String(t2);
-      return !r3 || r3.length >= e2 ? t2 : "" + Array(e2 + 1 - r3.length).join(n2) + t2;
-    }, g = { s: m, z: function(t2) {
-      var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r3 = Math.floor(n2 / 60), i2 = n2 % 60;
-      return (e2 <= 0 ? "+" : "-") + m(r3, 2, "0") + ":" + m(i2, 2, "0");
-    }, m: function t2(e2, n2) {
-      if (e2.date() < n2.date())
-        return -t2(n2, e2);
-      var r3 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r3, f), s2 = n2 - i2 < 0, u2 = e2.clone().add(r3 + (s2 ? -1 : 1), f);
-      return +(-(r3 + (n2 - i2) / (s2 ? i2 - u2 : u2 - i2)) || 0);
-    }, a: function(t2) {
-      return t2 < 0 ? Math.ceil(t2) || 0 : Math.floor(t2);
-    }, p: function(t2) {
-      return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r2, Q: h2 }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
-    }, u: function(t2) {
-      return t2 === void 0;
-    } }, D = "en", v = {};
-    v[D] = M;
-    var p2 = function(t2) {
-      return t2 instanceof _;
-    }, S = function(t2, e2, n2) {
-      var r3;
-      if (!t2)
-        return D;
-      if (typeof t2 == "string")
-        v[t2] && (r3 = t2), e2 && (v[t2] = e2, r3 = t2);
-      else {
-        var i2 = t2.name;
-        v[i2] = t2, r3 = i2;
+const calendar = {
+  lunarInfo: [
+    19416,
+    19168,
+    42352,
+    21717,
+    53856,
+    55632,
+    91476,
+    22176,
+    39632,
+    21970,
+    19168,
+    42422,
+    42192,
+    53840,
+    119381,
+    46400,
+    54944,
+    44450,
+    38320,
+    84343,
+    18800,
+    42160,
+    46261,
+    27216,
+    27968,
+    109396,
+    11104,
+    38256,
+    21234,
+    18800,
+    25958,
+    54432,
+    59984,
+    92821,
+    23248,
+    11104,
+    100067,
+    37600,
+    116951,
+    51536,
+    54432,
+    120998,
+    46416,
+    22176,
+    107956,
+    9680,
+    37584,
+    53938,
+    43344,
+    46423,
+    27808,
+    46416,
+    86869,
+    19872,
+    42416,
+    83315,
+    21168,
+    43432,
+    59728,
+    27296,
+    44710,
+    43856,
+    19296,
+    43748,
+    42352,
+    21088,
+    62051,
+    55632,
+    23383,
+    22176,
+    38608,
+    19925,
+    19152,
+    42192,
+    54484,
+    53840,
+    54616,
+    46400,
+    46752,
+    103846,
+    38320,
+    18864,
+    43380,
+    42160,
+    45690,
+    27216,
+    27968,
+    44870,
+    43872,
+    38256,
+    19189,
+    18800,
+    25776,
+    29859,
+    59984,
+    27480,
+    23232,
+    43872,
+    38613,
+    37600,
+    51552,
+    55636,
+    54432,
+    55888,
+    30034,
+    22176,
+    43959,
+    9680,
+    37584,
+    51893,
+    43344,
+    46240,
+    47780,
+    44368,
+    21977,
+    19360,
+    42416,
+    86390,
+    21168,
+    43312,
+    31060,
+    27296,
+    44368,
+    23378,
+    19296,
+    42726,
+    42208,
+    53856,
+    60005,
+    54576,
+    23200,
+    30371,
+    38608,
+    19195,
+    19152,
+    42192,
+    118966,
+    53840,
+    54560,
+    56645,
+    46496,
+    22224,
+    21938,
+    18864,
+    42359,
+    42160,
+    43600,
+    111189,
+    27936,
+    44448,
+    84835,
+    37744,
+    18936,
+    18800,
+    25776,
+    92326,
+    59984,
+    27424,
+    108228,
+    43744,
+    37600,
+    53987,
+    51552,
+    54615,
+    54432,
+    55888,
+    23893,
+    22176,
+    42704,
+    21972,
+    21200,
+    43448,
+    43344,
+    46240,
+    46758,
+    44368,
+    21920,
+    43940,
+    42416,
+    21168,
+    45683,
+    26928,
+    29495,
+    27296,
+    44368,
+    84821,
+    19296,
+    42352,
+    21732,
+    53600,
+    59752,
+    54560,
+    55968,
+    92838,
+    22224,
+    19168,
+    43476,
+    41680,
+    53584,
+    62034,
+    54560
+  ],
+  solarMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+  Gan: ["\u7532", "\u4E59", "\u4E19", "\u4E01", "\u620A", "\u5DF1", "\u5E9A", "\u8F9B", "\u58EC", "\u7678"],
+  Zhi: ["\u5B50", "\u4E11", "\u5BC5", "\u536F", "\u8FB0", "\u5DF3", "\u5348", "\u672A", "\u7533", "\u9149", "\u620C", "\u4EA5"],
+  Animals: ["\u9F20", "\u725B", "\u864E", "\u5154", "\u9F99", "\u86C7", "\u9A6C", "\u7F8A", "\u7334", "\u9E21", "\u72D7", "\u732A"],
+  festival: {
+    "1-1": { title: "\u5143\u65E6\u8282" },
+    "2-14": { title: "\u60C5\u4EBA\u8282" },
+    "5-1": { title: "\u52B3\u52A8\u8282" },
+    "5-4": { title: "\u9752\u5E74\u8282" },
+    "6-1": { title: "\u513F\u7AE5\u8282" },
+    "9-10": { title: "\u6559\u5E08\u8282" },
+    "10-1": { title: "\u56FD\u5E86\u8282" },
+    "12-25": { title: "\u5723\u8BDE\u8282" },
+    "3-8": { title: "\u5987\u5973\u8282" },
+    "3-12": { title: "\u690D\u6811\u8282" },
+    "4-1": { title: "\u611A\u4EBA\u8282" },
+    "5-12": { title: "\u62A4\u58EB\u8282" },
+    "7-1": { title: "\u5EFA\u515A\u8282" },
+    "8-1": { title: "\u5EFA\u519B\u8282" },
+    "12-24": { title: "\u5E73\u5B89\u591C" }
+  },
+  lFestival: {
+    "12-30": { title: "\u9664\u5915" },
+    "1-1": { title: "\u6625\u8282" },
+    "1-15": { title: "\u5143\u5BB5\u8282" },
+    "2-2": { title: "\u9F99\u62AC\u5934" },
+    "5-5": { title: "\u7AEF\u5348\u8282" },
+    "7-7": { title: "\u4E03\u5915\u8282" },
+    "7-15": { title: "\u4E2D\u5143\u8282" },
+    "8-15": { title: "\u4E2D\u79CB\u8282" },
+    "9-9": { title: "\u91CD\u9633\u8282" },
+    "10-1": { title: "\u5BD2\u8863\u8282" },
+    "10-15": { title: "\u4E0B\u5143\u8282" },
+    "12-8": { title: "\u814A\u516B\u8282" },
+    "12-23": { title: "\u5317\u65B9\u5C0F\u5E74" },
+    "12-24": { title: "\u5357\u65B9\u5C0F\u5E74" }
+  },
+  getFestival() {
+    return this.festival;
+  },
+  getLunarFestival() {
+    return this.lFestival;
+  },
+  setFestival(param = {}) {
+    this.festival = param;
+  },
+  setLunarFestival(param = {}) {
+    this.lFestival = param;
+  },
+  solarTerm: ["\u5C0F\u5BD2", "\u5927\u5BD2", "\u7ACB\u6625", "\u96E8\u6C34", "\u60CA\u86F0", "\u6625\u5206", "\u6E05\u660E", "\u8C37\u96E8", "\u7ACB\u590F", "\u5C0F\u6EE1", "\u8292\u79CD", "\u590F\u81F3", "\u5C0F\u6691", "\u5927\u6691", "\u7ACB\u79CB", "\u5904\u6691", "\u767D\u9732", "\u79CB\u5206", "\u5BD2\u9732", "\u971C\u964D", "\u7ACB\u51AC", "\u5C0F\u96EA", "\u5927\u96EA", "\u51AC\u81F3"],
+  sTermInfo: [
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c3598082c95f8c965cc920f",
+    "97bd0b06bdb0722c965ce1cfcc920f",
+    "b027097bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c359801ec95f8c965cc920f",
+    "97bd0b06bdb0722c965ce1cfcc920f",
+    "b027097bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c359801ec95f8c965cc920f",
+    "97bd0b06bdb0722c965ce1cfcc920f",
+    "b027097bd097c36b0b6fc9274c91aa",
+    "9778397bd19801ec9210c965cc920e",
+    "97b6b97bd19801ec95f8c965cc920f",
+    "97bd09801d98082c95f8e1cfcc920f",
+    "97bd097bd097c36b0b6fc9210c8dc2",
+    "9778397bd197c36c9210c9274c91aa",
+    "97b6b97bd19801ec95f8c965cc920e",
+    "97bd09801d98082c95f8e1cfcc920f",
+    "97bd097bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36c9210c9274c91aa",
+    "97b6b97bd19801ec95f8c965cc920e",
+    "97bcf97c3598082c95f8e1cfcc920f",
+    "97bd097bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36c9210c9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c3598082c95f8c965cc920f",
+    "97bd097bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c3598082c95f8c965cc920f",
+    "97bd097bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c359801ec95f8c965cc920f",
+    "97bd097bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c359801ec95f8c965cc920f",
+    "97bd097bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf97c359801ec95f8c965cc920f",
+    "97bd097bd07f595b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9210c8dc2",
+    "9778397bd19801ec9210c9274c920e",
+    "97b6b97bd19801ec95f8c965cc920f",
+    "97bd07f5307f595b0b0bc920fb0722",
+    "7f0e397bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36c9210c9274c920e",
+    "97b6b97bd19801ec95f8c965cc920f",
+    "97bd07f5307f595b0b0bc920fb0722",
+    "7f0e397bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36c9210c9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bd07f1487f595b0b0bc920fb0722",
+    "7f0e397bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf7f1487f595b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf7f1487f595b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf7f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c965cc920e",
+    "97bcf7f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b97bd19801ec9210c9274c920e",
+    "97bcf7f0e47f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "9778397bd097c36b0b6fc9210c91aa",
+    "97b6b97bd197c36c9210c9274c920e",
+    "97bcf7f0e47f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "9778397bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36c9210c9274c920e",
+    "97b6b7f0e47f531b0723b0b6fb0722",
+    "7f0e37f5307f595b0b0bc920fb0722",
+    "7f0e397bd097c36b0b6fc9210c8dc2",
+    "9778397bd097c36b0b70c9274c91aa",
+    "97b6b7f0e47f531b0723b0b6fb0721",
+    "7f0e37f1487f595b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc9210c8dc2",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f595b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "9778397bd097c36b0b6fc9274c91aa",
+    "97b6b7f0e47f531b0723b0787b0721",
+    "7f0e27f0e47f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "9778397bd097c36b0b6fc9210c91aa",
+    "97b6b7f0e47f149b0723b0787b0721",
+    "7f0e27f0e47f531b0723b0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "9778397bd097c36b0b6fc9210c8dc2",
+    "977837f0e37f149b0723b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0722",
+    "7f0e37f5307f595b0b0bc920fb0722",
+    "7f0e397bd097c35b0b6fc9210c8dc2",
+    "977837f0e37f14998082b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e37f1487f595b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc9210c8dc2",
+    "977837f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "977837f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd097c35b0b6fc920fb0722",
+    "977837f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "977837f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "977837f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f149b0723b0787b0721",
+    "7f0e27f0e47f531b0b0bb0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "977837f0e37f14998082b0723b06bd",
+    "7f07e7f0e37f149b0723b0787b0721",
+    "7f0e27f0e47f531b0723b0b6fb0722",
+    "7f0e397bd07f595b0b0bc920fb0722",
+    "977837f0e37f14898082b0723b02d5",
+    "7ec967f0e37f14998082b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0722",
+    "7f0e37f1487f595b0b0bb0b6fb0722",
+    "7f0e37f0e37f14898082b0723b02d5",
+    "7ec967f0e37f14998082b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0722",
+    "7f0e37f1487f531b0b0bb0b6fb0722",
+    "7f0e37f0e37f14898082b0723b02d5",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e37f1487f531b0b0bb0b6fb0722",
+    "7f0e37f0e37f14898082b072297c35",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e37f0e37f14898082b072297c35",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e37f0e366aa89801eb072297c35",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f149b0723b0787b0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722",
+    "7f0e37f0e366aa89801eb072297c35",
+    "7ec967f0e37f14998082b0723b06bd",
+    "7f07e7f0e47f149b0723b0787b0721",
+    "7f0e27f0e47f531b0723b0b6fb0722",
+    "7f0e37f0e366aa89801eb072297c35",
+    "7ec967f0e37f14998082b0723b06bd",
+    "7f07e7f0e37f14998083b0787b0721",
+    "7f0e27f0e47f531b0723b0b6fb0722",
+    "7f0e37f0e366aa89801eb072297c35",
+    "7ec967f0e37f14898082b0723b02d5",
+    "7f07e7f0e37f14998082b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0722",
+    "7f0e36665b66aa89801e9808297c35",
+    "665f67f0e37f14898082b0723b02d5",
+    "7ec967f0e37f14998082b0787b0721",
+    "7f07e7f0e47f531b0723b0b6fb0722",
+    "7f0e36665b66a449801e9808297c35",
+    "665f67f0e37f14898082b0723b02d5",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e36665b66a449801e9808297c35",
+    "665f67f0e37f14898082b072297c35",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e26665b66a449801e9808297c35",
+    "665f67f0e37f1489801eb072297c35",
+    "7ec967f0e37f14998082b0787b06bd",
+    "7f07e7f0e47f531b0723b0b6fb0721",
+    "7f0e27f1487f531b0b0bb0b6fb0722"
+  ],
+  nStr1: ["\u65E5", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341"],
+  nStr2: ["\u521D", "\u5341", "\u5EFF", "\u5345"],
+  nStr3: ["\u6B63", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u51AC", "\u814A"],
+  lYearDays: function(y) {
+    let i, sum = 348;
+    for (i = 32768; i > 8; i >>= 1) {
+      sum += this.lunarInfo[y - 1900] & i ? 1 : 0;
+    }
+    return sum + this.leapDays(y);
+  },
+  leapMonth: function(y) {
+    return this.lunarInfo[y - 1900] & 15;
+  },
+  leapDays: function(y) {
+    if (this.leapMonth(y)) {
+      return this.lunarInfo[y - 1900] & 65536 ? 30 : 29;
+    }
+    return 0;
+  },
+  monthDays: function(y, m) {
+    if (m > 12 || m < 1) {
+      return -1;
+    }
+    return this.lunarInfo[y - 1900] & 65536 >> m ? 30 : 29;
+  },
+  solarDays: function(y, m) {
+    if (m > 12 || m < 1) {
+      return -1;
+    }
+    const ms = m - 1;
+    if (ms === 1) {
+      return y % 4 === 0 && y % 100 !== 0 || y % 400 === 0 ? 29 : 28;
+    } else {
+      return this.solarMonth[ms];
+    }
+  },
+  toGanZhiYear: function(lYear) {
+    var ganKey = (lYear - 3) % 10;
+    var zhiKey = (lYear - 3) % 12;
+    if (ganKey === 0)
+      ganKey = 10;
+    if (zhiKey === 0)
+      zhiKey = 12;
+    return this.Gan[ganKey - 1] + this.Zhi[zhiKey - 1];
+  },
+  toAstro: function(cMonth, cDay) {
+    const s = "\u9B54\u7FAF\u6C34\u74F6\u53CC\u9C7C\u767D\u7F8A\u91D1\u725B\u53CC\u5B50\u5DE8\u87F9\u72EE\u5B50\u5904\u5973\u5929\u79E4\u5929\u874E\u5C04\u624B\u9B54\u7FAF";
+    const arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+    return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + "\u5EA7";
+  },
+  toGanZhi: function(offset2) {
+    return this.Gan[offset2 % 10] + this.Zhi[offset2 % 12];
+  },
+  getTerm: function(y, n) {
+    if (y < 1900 || y > 2100 || n < 1 || n > 24) {
+      return -1;
+    }
+    const _table = this.sTermInfo[y - 1900];
+    const _calcDay = [];
+    for (let index2 = 0; index2 < _table.length; index2 += 5) {
+      const chunk = parseInt("0x" + _table.substr(index2, 5)).toString();
+      _calcDay.push(chunk[0], chunk.substr(1, 2), chunk[3], chunk.substr(4, 2));
+    }
+    return parseInt(_calcDay[n - 1]);
+  },
+  toChinaMonth: function(m) {
+    if (m > 12 || m < 1) {
+      return -1;
+    }
+    let s = this.nStr3[m - 1];
+    s += "\u6708";
+    return s;
+  },
+  toChinaDay: function(d) {
+    let s;
+    switch (d) {
+      case 10:
+        s = "\u521D\u5341";
+        break;
+      case 20:
+        s = "\u4E8C\u5341";
+        break;
+      case 30:
+        s = "\u4E09\u5341";
+        break;
+      default:
+        s = this.nStr2[Math.floor(d / 10)];
+        s += this.nStr1[d % 10];
+    }
+    return s;
+  },
+  getAnimal: function(y) {
+    return this.Animals[(y - 4) % 12];
+  },
+  solar2lunar: function(yPara, mPara, dPara) {
+    let y = parseInt(yPara);
+    let m = parseInt(mPara);
+    let d = parseInt(dPara);
+    if (y < 1900 || y > 2100) {
+      return -1;
+    }
+    if (y === 1900 && m === 1 && d < 31) {
+      return -1;
+    }
+    let objDate;
+    if (!y) {
+      objDate = new Date();
+    } else {
+      objDate = new Date(y, parseInt(m) - 1, d);
+    }
+    let i, leap = 0, temp = 0;
+    y = objDate.getFullYear();
+    m = objDate.getMonth() + 1;
+    d = objDate.getDate();
+    let offset2 = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 864e5;
+    for (i = 1900; i < 2101 && offset2 > 0; i++) {
+      temp = this.lYearDays(i);
+      offset2 -= temp;
+    }
+    if (offset2 < 0) {
+      offset2 += temp;
+      i--;
+    }
+    let isTodayObj = new Date(), isToday = false;
+    if (isTodayObj.getFullYear() === y && isTodayObj.getMonth() + 1 === m && isTodayObj.getDate() === d) {
+      isToday = true;
+    }
+    let nWeek = objDate.getDay(), cWeek = this.nStr1[nWeek];
+    if (nWeek === 0) {
+      nWeek = 7;
+    }
+    const year = i;
+    leap = this.leapMonth(i);
+    let isLeap = false;
+    for (i = 1; i < 13 && offset2 > 0; i++) {
+      if (leap > 0 && i === leap + 1 && isLeap === false) {
+        --i;
+        isLeap = true;
+        temp = this.leapDays(year);
+      } else {
+        temp = this.monthDays(year, i);
       }
-      return !n2 && r3 && (D = r3), r3 || !n2 && D;
-    }, w = function(t2, e2) {
-      if (p2(t2))
-        return t2.clone();
-      var n2 = typeof e2 == "object" ? e2 : {};
-      return n2.date = t2, n2.args = arguments, new _(n2);
-    }, O = g;
-    O.l = S, O.i = p2, O.w = function(t2, e2) {
-      return w(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+      if (isLeap === true && i === leap + 1) {
+        isLeap = false;
+      }
+      offset2 -= temp;
+    }
+    if (offset2 === 0 && leap > 0 && i === leap + 1) {
+      if (isLeap) {
+        isLeap = false;
+      } else {
+        isLeap = true;
+        --i;
+      }
+    }
+    if (offset2 < 0) {
+      offset2 += temp;
+      --i;
+    }
+    const month = i;
+    const day = offset2 + 1;
+    const sm = m - 1;
+    const gzY = this.toGanZhiYear(year);
+    const firstNode = this.getTerm(y, m * 2 - 1);
+    const secondNode = this.getTerm(y, m * 2);
+    let gzM = this.toGanZhi((y - 1900) * 12 + m + 11);
+    if (d >= firstNode) {
+      gzM = this.toGanZhi((y - 1900) * 12 + m + 12);
+    }
+    let isTerm = false;
+    let Term = null;
+    if (firstNode === d) {
+      isTerm = true;
+      Term = this.solarTerm[m * 2 - 2];
+    }
+    if (secondNode === d) {
+      isTerm = true;
+      Term = this.solarTerm[m * 2 - 1];
+    }
+    const dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 864e5 + 25567 + 10;
+    const gzD = this.toGanZhi(dayCyclical + d - 1);
+    const astro = this.toAstro(m, d);
+    const solarDate = y + "-" + m + "-" + d;
+    const lunarDate = year + "-" + month + "-" + day;
+    const festival = this.festival;
+    const lFestival = this.lFestival;
+    const festivalDate = m + "-" + d;
+    let lunarFestivalDate = month + "-" + day;
+    if (month === 12 && day === 29 && this.monthDays(year, month) === 29) {
+      lunarFestivalDate = "12-30";
+    }
+    return {
+      date: solarDate,
+      lunarDate,
+      festival: festival[festivalDate] ? festival[festivalDate].title : null,
+      lunarFestival: lFestival[lunarFestivalDate] ? lFestival[lunarFestivalDate].title : null,
+      "lYear": year,
+      "lMonth": month,
+      "lDay": day,
+      "Animal": this.getAnimal(year),
+      "IMonthCn": (isLeap ? "\u95F0" : "") + this.toChinaMonth(month),
+      "IDayCn": this.toChinaDay(day),
+      "cYear": y,
+      "cMonth": m,
+      "cDay": d,
+      "gzYear": gzY,
+      "gzMonth": gzM,
+      "gzDay": gzD,
+      "isToday": isToday,
+      "isLeap": isLeap,
+      "nWeek": nWeek,
+      "ncWeek": "\u661F\u671F" + cWeek,
+      "isTerm": isTerm,
+      "Term": Term,
+      "astro": astro
     };
-    var _ = function() {
-      function M2(t2) {
-        this.$L = S(t2.locale, null, true), this.parse(t2);
-      }
-      var m2 = M2.prototype;
-      return m2.parse = function(t2) {
-        this.$d = function(t3) {
-          var e2 = t3.date, n2 = t3.utc;
-          if (e2 === null)
-            return new Date(NaN);
-          if (O.u(e2))
-            return new Date();
-          if (e2 instanceof Date)
-            return new Date(e2);
-          if (typeof e2 == "string" && !/Z$/i.test(e2)) {
-            var r3 = e2.match(l);
-            if (r3) {
-              var i2 = r3[2] - 1 || 0, s2 = (r3[7] || "0").substring(0, 3);
-              return n2 ? new Date(Date.UTC(r3[1], i2, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s2)) : new Date(r3[1], i2, r3[3] || 1, r3[4] || 0, r3[5] || 0, r3[6] || 0, s2);
-            }
-          }
-          return new Date(e2);
-        }(t2), this.$x = t2.x || {}, this.init();
-      }, m2.init = function() {
-        var t2 = this.$d;
-        this.$y = t2.getFullYear(), this.$M = t2.getMonth(), this.$D = t2.getDate(), this.$W = t2.getDay(), this.$H = t2.getHours(), this.$m = t2.getMinutes(), this.$s = t2.getSeconds(), this.$ms = t2.getMilliseconds();
-      }, m2.$utils = function() {
-        return O;
-      }, m2.isValid = function() {
-        return !(this.$d.toString() === $);
-      }, m2.isSame = function(t2, e2) {
-        var n2 = w(t2);
-        return this.startOf(e2) <= n2 && n2 <= this.endOf(e2);
-      }, m2.isAfter = function(t2, e2) {
-        return w(t2) < this.startOf(e2);
-      }, m2.isBefore = function(t2, e2) {
-        return this.endOf(e2) < w(t2);
-      }, m2.$g = function(t2, e2, n2) {
-        return O.u(t2) ? this[e2] : this.set(n2, t2);
-      }, m2.unix = function() {
-        return Math.floor(this.valueOf() / 1e3);
-      }, m2.valueOf = function() {
-        return this.$d.getTime();
-      }, m2.startOf = function(t2, e2) {
-        var n2 = this, r3 = !!O.u(e2) || e2, h3 = O.p(t2), $2 = function(t3, e3) {
-          var i2 = O.w(n2.$u ? Date.UTC(n2.$y, e3, t3) : new Date(n2.$y, e3, t3), n2);
-          return r3 ? i2 : i2.endOf(a);
-        }, l2 = function(t3, e3) {
-          return O.w(n2.toDate()[t3].apply(n2.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
-        }, y2 = this.$W, M3 = this.$M, m3 = this.$D, g2 = "set" + (this.$u ? "UTC" : "");
-        switch (h3) {
-          case c:
-            return r3 ? $2(1, 0) : $2(31, 11);
-          case f:
-            return r3 ? $2(1, M3) : $2(0, M3 + 1);
-          case o:
-            var D2 = this.$locale().weekStart || 0, v2 = (y2 < D2 ? y2 + 7 : y2) - D2;
-            return $2(r3 ? m3 - v2 : m3 + (6 - v2), M3);
-          case a:
-          case d:
-            return l2(g2 + "Hours", 0);
-          case u:
-            return l2(g2 + "Minutes", 1);
-          case s:
-            return l2(g2 + "Seconds", 2);
-          case i:
-            return l2(g2 + "Milliseconds", 3);
-          default:
-            return this.clone();
+  },
+  lunar2solar: function(y, m, d, isLeapMonth) {
+    y = parseInt(y);
+    m = parseInt(m);
+    d = parseInt(d);
+    isLeapMonth = !!isLeapMonth;
+    const leapMonth = this.leapMonth(y);
+    this.leapDays(y);
+    if (isLeapMonth && leapMonth !== m) {
+      return -1;
+    }
+    if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) {
+      return -1;
+    }
+    const day = this.monthDays(y, m);
+    let _day = day;
+    if (isLeapMonth) {
+      _day = this.leapDays(y, m);
+    }
+    if (y < 1900 || y > 2100 || d > _day) {
+      return -1;
+    }
+    let offset2 = 0;
+    let i;
+    for (i = 1900; i < y; i++) {
+      offset2 += this.lYearDays(i);
+    }
+    let leap = 0, isAdd = false;
+    for (i = 1; i < m; i++) {
+      leap = this.leapMonth(y);
+      if (!isAdd) {
+        if (leap <= i && leap > 0) {
+          offset2 += this.leapDays(y);
+          isAdd = true;
         }
-      }, m2.endOf = function(t2) {
-        return this.startOf(t2, false);
-      }, m2.$set = function(t2, e2) {
-        var n2, o2 = O.p(t2), h3 = "set" + (this.$u ? "UTC" : ""), $2 = (n2 = {}, n2[a] = h3 + "Date", n2[d] = h3 + "Date", n2[f] = h3 + "Month", n2[c] = h3 + "FullYear", n2[u] = h3 + "Hours", n2[s] = h3 + "Minutes", n2[i] = h3 + "Seconds", n2[r2] = h3 + "Milliseconds", n2)[o2], l2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
-        if (o2 === f || o2 === c) {
-          var y2 = this.clone().set(d, 1);
-          y2.$d[$2](l2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
-        } else
-          $2 && this.$d[$2](l2);
-        return this.init(), this;
-      }, m2.set = function(t2, e2) {
-        return this.clone().$set(t2, e2);
-      }, m2.get = function(t2) {
-        return this[O.p(t2)]();
-      }, m2.add = function(r3, h3) {
-        var d2, $2 = this;
-        r3 = Number(r3);
-        var l2 = O.p(h3), y2 = function(t2) {
-          var e2 = w($2);
-          return O.w(e2.date(e2.date() + Math.round(t2 * r3)), $2);
-        };
-        if (l2 === f)
-          return this.set(f, this.$M + r3);
-        if (l2 === c)
-          return this.set(c, this.$y + r3);
-        if (l2 === a)
-          return y2(1);
-        if (l2 === o)
-          return y2(7);
-        var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[l2] || 1, m3 = this.$d.getTime() + r3 * M3;
-        return O.w(m3, this);
-      }, m2.subtract = function(t2, e2) {
-        return this.add(-1 * t2, e2);
-      }, m2.format = function(t2) {
-        var e2 = this, n2 = this.$locale();
-        if (!this.isValid())
-          return n2.invalidDate || $;
-        var r3 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h3 = function(t3, n3, i3, s3) {
-          return t3 && (t3[n3] || t3(e2, r3)) || i3[n3].substr(0, s3);
-        }, c2 = function(t3) {
-          return O.s(s2 % 12 || 12, t3, "0");
-        }, d2 = n2.meridiem || function(t3, e3, n3) {
-          var r4 = t3 < 12 ? "AM" : "PM";
-          return n3 ? r4.toLowerCase() : r4;
-        }, l2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h3(n2.monthsShort, a2, f2, 3), MMMM: h3(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h3(n2.weekdaysMin, this.$W, o2, 2), ddd: h3(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d2(s2, u2, true), A: d2(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
-        return r3.replace(y, function(t3, e3) {
-          return e3 || l2[t3] || i2.replace(":", "");
-        });
-      }, m2.utcOffset = function() {
-        return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
-      }, m2.diff = function(r3, d2, $2) {
-        var l2, y2 = O.p(d2), M3 = w(r3), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, D2 = O.m(this, M3);
-        return D2 = (l2 = {}, l2[c] = D2 / 12, l2[f] = D2, l2[h2] = D2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? D2 : O.a(D2);
-      }, m2.daysInMonth = function() {
-        return this.endOf(f).$D;
-      }, m2.$locale = function() {
-        return v[this.$L];
-      }, m2.locale = function(t2, e2) {
-        if (!t2)
-          return this.$L;
-        var n2 = this.clone(), r3 = S(t2, e2, true);
-        return r3 && (n2.$L = r3), n2;
-      }, m2.clone = function() {
-        return O.w(this.$d, this);
-      }, m2.toDate = function() {
-        return new Date(this.valueOf());
-      }, m2.toJSON = function() {
-        return this.isValid() ? this.toISOString() : null;
-      }, m2.toISOString = function() {
-        return this.$d.toISOString();
-      }, m2.toString = function() {
-        return this.$d.toUTCString();
-      }, M2;
-    }(), b = _.prototype;
-    return w.prototype = b, [["$ms", r2], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t2) {
-      b[t2[1]] = function(e2) {
-        return this.$g(e2, t2[0], t2[1]);
-      };
-    }), w.extend = function(t2, e2) {
-      return t2.$i || (t2(e2, _, w), t2.$i = true), w;
-    }, w.locale = S, w.isDayjs = p2, w.unix = function(t2) {
-      return w(1e3 * t2);
-    }, w.en = v[D], w.Ls = v, w.p = {}, w;
-  });
-})(dayjs_min);
-var dayjs = dayjs_min.exports;
+      }
+      offset2 += this.monthDays(y, i);
+    }
+    if (isLeapMonth) {
+      offset2 += day;
+    }
+    const strap = Date.UTC(1900, 1, 30, 0, 0, 0);
+    const calObj = new Date((offset2 + d - 31) * 864e5 + strap);
+    const cY = calObj.getUTCFullYear();
+    const cM = calObj.getUTCMonth() + 1;
+    const cD = calObj.getUTCDate();
+    return this.solar2lunar(cY, cM, cD);
+  }
+};
 var Detail_vue_vue_type_style_index_0_lang = "";
-const _hoisted_1$5 = { class: "sidebar-box" };
+const _hoisted_1$4 = { class: "sidebar-box" };
 const _hoisted_2$4 = { class: "con" };
-const _hoisted_3$3 = { class: "page-meta" };
-const _hoisted_4 = { class: "date" };
-const _hoisted_5 = { class: "words" };
-const _hoisted_6 = { class: "readTime" };
-const _hoisted_7 = { class: "tag" };
-const _hoisted_8 = { class: "summary" };
-const _hoisted_9 = { class: "default-content" };
-const _sfc_main$5 = {
+const _hoisted_3$3 = { class: "default-content" };
+const _sfc_main$4 = {
   setup(__props) {
     const { useLayout } = usePageData().value.frontmatter || {};
-    const frontmatter = usePageData().value.frontmatter || {};
+    usePageData().value.frontmatter || {};
     console.log(usePageData().value);
+    console.log(dayjs(usePageData().value.frontmatter.date).format("YYYY-MM-DD").split("-"));
+    const [y, m, d] = dayjs(usePageData().value.frontmatter.date).format("YYYY-MM-DD").split("-");
+    console.log(calendar.solar2lunar(y, m, d));
     onMounted(() => {
       Array.from(document.querySelectorAll(".content")).map((v) => {
         let py = pinyin$1(v.innerText.replace("#", ""), {
@@ -11494,34 +15990,25 @@ const _sfc_main$5 = {
         }).join(" ");
         v.setAttribute("pinyin", py);
       });
+      Array.from(document.querySelectorAll(".default-content img")).map((v) => {
+        v.onload = (res) => {
+          console.log(v.height / 30);
+          v.height = parseInt(v.height / 30) * 30;
+        };
+      });
     });
     return (_ctx, _cache) => {
       const _component_Content = resolveComponent("Content");
       return openBlock(), createElementBlock(Fragment, null, [
-        createBaseVNode("div", _hoisted_1$5, [
+        createBaseVNode("div", _hoisted_1$4, [
           createBaseVNode("div", _hoisted_2$4, [
-            createVNode(_sfc_main$6),
-            createVNode(_sfc_main$7)
+            createVNode(_sfc_main$5)
           ])
-        ]),
-        createBaseVNode("div", _hoisted_3$3, [
-          createBaseVNode("h1", null, toDisplayString(unref(frontmatter).title), 1),
-          createBaseVNode("p", null, [
-            createBaseVNode("span", _hoisted_4, toDisplayString(unref(dayjs)(unref(frontmatter).date).format("YY-MM-DD")), 1),
-            createBaseVNode("span", _hoisted_5, toDisplayString(unref(frontmatter).words) + "\u5B57", 1),
-            createBaseVNode("span", _hoisted_6, toDisplayString(unref(frontmatter).readTime), 1)
-          ]),
-          createBaseVNode("p", null, [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(frontmatter).tag, (tag) => {
-              return openBlock(), createElementBlock("span", _hoisted_7, toDisplayString(tag), 1);
-            }), 256))
-          ]),
-          createBaseVNode("p", _hoisted_8, toDisplayString(unref(frontmatter).summary), 1)
         ]),
         createBaseVNode("div", {
           class: normalizeClass(["md-body sino sino-kai", unref(useLayout)])
         }, [
-          createBaseVNode("div", _hoisted_9, [
+          createBaseVNode("div", _hoisted_3$3, [
             createVNode(_component_Content)
           ])
         ], 2)
@@ -11532,90 +16019,34 @@ const _sfc_main$5 = {
 var Detail = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  "default": _sfc_main$5
-});
-const _hoisted_1$4 = ["title"];
-const _hoisted_2$3 = {
-  class: "icon",
-  focusable: "false",
-  viewBox: "0 0 32 32"
-};
-const _hoisted_3$2 = /* @__PURE__ */ createStaticVNode('<path d="M16 12.005a4 4 0 1 1-4 4a4.005 4.005 0 0 1 4-4m0-2a6 6 0 1 0 6 6a6 6 0 0 0-6-6z" fill="currentColor"></path><path d="M5.394 6.813l1.414-1.415l3.506 3.506L8.9 10.318z" fill="currentColor"></path><path d="M2 15.005h5v2H2z" fill="currentColor"></path><path d="M5.394 25.197L8.9 21.691l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 25.005h2v5h-2z" fill="currentColor"></path><path d="M21.687 23.106l1.414-1.415l3.506 3.506l-1.414 1.414z" fill="currentColor"></path><path d="M25 15.005h5v2h-5z" fill="currentColor"></path><path d="M21.687 8.904l3.506-3.506l1.414 1.415l-3.506 3.505z" fill="currentColor"></path><path d="M15 2.005h2v5h-2z" fill="currentColor"></path>', 9);
-const _hoisted_12 = [
-  _hoisted_3$2
-];
-const _hoisted_13 = {
-  class: "icon",
-  focusable: "false",
-  viewBox: "0 0 32 32"
-};
-const _hoisted_14 = /* @__PURE__ */ createBaseVNode("path", {
-  d: "M13.502 5.414a15.075 15.075 0 0 0 11.594 18.194a11.113 11.113 0 0 1-7.975 3.39c-.138 0-.278.005-.418 0a11.094 11.094 0 0 1-3.2-21.584M14.98 3a1.002 1.002 0 0 0-.175.016a13.096 13.096 0 0 0 1.825 25.981c.164.006.328 0 .49 0a13.072 13.072 0 0 0 10.703-5.555a1.01 1.01 0 0 0-.783-1.565A13.08 13.08 0 0 1 15.89 4.38A1.015 1.015 0 0 0 14.98 3z",
-  fill: "currentColor"
-}, null, -1);
-const _hoisted_15 = [
-  _hoisted_14
-];
-const _sfc_main$4 = /* @__PURE__ */ defineComponent({
-  setup(__props) {
-    const themeLocale = useThemeLocaleData();
-    const isDarkMode = useDarkMode();
-    const toggleDarkMode = () => {
-      isDarkMode.value = !isDarkMode.value;
-    };
-    return (_ctx, _cache) => {
-      return openBlock(), createElementBlock("button", {
-        class: "toggle-dark-button",
-        title: unref(themeLocale).toggleDarkMode,
-        onClick: toggleDarkMode
-      }, [
-        withDirectives((openBlock(), createElementBlock("svg", _hoisted_2$3, _hoisted_12, 512)), [
-          [vShow, !unref(isDarkMode)]
-        ]),
-        withDirectives((openBlock(), createElementBlock("svg", _hoisted_13, _hoisted_15, 512)), [
-          [vShow, unref(isDarkMode)]
-        ])
-      ], 8, _hoisted_1$4);
-    };
-  }
+  "default": _sfc_main$4
 });
 var NavBar_vue_vue_type_style_index_0_lang = "";
 const _hoisted_1$3 = { class: "header" };
-const _hoisted_2$2 = { class: "nav" };
-const _hoisted_3$1 = ["href"];
+const _hoisted_2$3 = { class: "header-main" };
+const _hoisted_3$2 = /* @__PURE__ */ createBaseVNode("div", { class: "logo" }, "Artiely'Blog", -1);
+const _hoisted_4$1 = { class: "nav" };
+const _hoisted_5 = ["href"];
 const _sfc_main$3 = {
   setup(__props) {
-    const navBar = [{ "text": "Home", "link": "/" }, { "text": "Foo", "link": "/foo" }];
-    const themeLocale = useThemeLocaleData$1();
-    const enableDarkMode = computed(() => themeLocale.value.darkMode);
-    const handleTheme = (theme) => {
-      document.querySelector("html").classList = theme;
-    };
+    const navBar = [{ "text": "Home", "link": "/" }, { "text": "Foo", "link": "/foo" }, { "text": "Timeline", "link": "/timeline" }];
+    const path = ref();
+    onMounted(() => {
+      path.value = window.location.pathname;
+      console.log("\u{1F680} ~ file: NavBar.vue ~ line 23 ~ onMounted ~ path", path);
+    });
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("header", _hoisted_1$3, [
-        createBaseVNode("span", {
-          onClick: _cache[0] || (_cache[0] = ($event) => handleTheme(""))
-        }, "light"),
-        createBaseVNode("span", {
-          onClick: _cache[1] || (_cache[1] = ($event) => handleTheme("dark"))
-        }, "dark"),
-        createBaseVNode("span", {
-          onClick: _cache[2] || (_cache[2] = ($event) => handleTheme("theme1"))
-        }, "theme1"),
-        createBaseVNode("span", {
-          onClick: _cache[3] || (_cache[3] = ($event) => handleTheme("theme2"))
-        }, "theme2"),
-        createBaseVNode("span", {
-          onClick: _cache[4] || (_cache[4] = ($event) => handleTheme("theme3"))
-        }, "theme3"),
-        createBaseVNode("nav", _hoisted_2$2, [
-          (openBlock(true), createElementBlock(Fragment, null, renderList(unref(navBar), (item) => {
-            return openBlock(), createElementBlock("a", {
-              href: item.link,
-              class: "link"
-            }, toDisplayString(item.text), 9, _hoisted_3$1);
-          }), 256)),
-          unref(enableDarkMode) ? (openBlock(), createBlock(_sfc_main$4, { key: 0 })) : createCommentVNode("", true)
+        createBaseVNode("div", _hoisted_2$3, [
+          _hoisted_3$2,
+          createBaseVNode("nav", _hoisted_4$1, [
+            (openBlock(true), createElementBlock(Fragment, null, renderList(unref(navBar), (item) => {
+              return openBlock(), createElementBlock("a", {
+                href: item.link,
+                class: normalizeClass([item.link == path.value ? "active" : "", "link"])
+              }, toDisplayString(item.text), 11, _hoisted_5);
+            }), 256))
+          ])
         ])
       ]);
     };
@@ -11629,8 +16060,14 @@ var NavBar = /* @__PURE__ */ Object.freeze({
 var Footer_vue_vue_type_style_index_0_lang = "";
 const _sfc_main$2 = {};
 const _hoisted_1$2 = { class: "footer" };
+const _hoisted_2$2 = /* @__PURE__ */ createTextVNode(" powered by ");
+const _hoisted_3$1 = /* @__PURE__ */ createBaseVNode("a", { href: "https://github.com/artiely" }, " Artiely", -1);
+const _hoisted_4 = [
+  _hoisted_2$2,
+  _hoisted_3$1
+];
 function _sfc_render(_ctx, _cache) {
-  return openBlock(), createElementBlock("footer", _hoisted_1$2, " footer ");
+  return openBlock(), createElementBlock("footer", _hoisted_1$2, _hoisted_4);
 }
 var Footer = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render]]);
 var Footer$1 = /* @__PURE__ */ Object.freeze({
@@ -11643,7 +16080,7 @@ const _hoisted_1$1 = { class: "dog" };
 const _hoisted_2$1 = { class: "main" };
 const _sfc_main$1 = {
   setup(__props) {
-    let dynamic = usePageData().value.path == "/" ? _sfc_main$c : _sfc_main$5;
+    let dynamic = usePageData().value.path == "/" ? _sfc_main$b : _sfc_main$4;
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", _hoisted_1$1, [
         renderSlot(_ctx.$slots, "header", {}, () => [
@@ -11656,7 +16093,8 @@ const _sfc_main$1 = {
         ]),
         renderSlot(_ctx.$slots, "footer", {}, () => [
           createVNode(Footer)
-        ])
+        ]),
+        createVNode(_sfc_main$a)
       ]);
     };
   }
@@ -11866,7 +16304,7 @@ var nprogress$1 = { exports: {} };
     NProgress.status = null;
     NProgress.set = function(n) {
       var started = NProgress.isStarted();
-      n = clamp(n, Settings.minimum, 1);
+      n = clamp3(n, Settings.minimum, 1);
       NProgress.status = n === 1 ? null : n;
       var progress = NProgress.render(!started), bar = progress.querySelector(Settings.barSelector), speed = Settings.speed, ease = Settings.easing;
       progress.offsetWidth;
@@ -11925,9 +16363,9 @@ var nprogress$1 = { exports: {} };
         return NProgress.start();
       } else {
         if (typeof amount !== "number") {
-          amount = (1 - n) * clamp(Math.random() * n, 0.1, 0.95);
+          amount = (1 - n) * clamp3(Math.random() * n, 0.1, 0.95);
         }
-        n = clamp(n + amount, 0, 0.994);
+        n = clamp3(n + amount, 0, 0.994);
         return NProgress.set(n);
       }
     };
@@ -11999,7 +16437,7 @@ var nprogress$1 = { exports: {} };
         return "margin";
       }
     };
-    function clamp(n, min, max) {
+    function clamp3(n, min, max) {
       if (n < min)
         return min;
       if (n > max)
@@ -12141,7 +16579,8 @@ const routeItems = [
   ["v-810351b2", "/posts/2022-1-11md-test.html", { "title": "\u5E38\u7528Markdown\u6F14\u793A" }, ["/posts/2022-1-11md-test", "/posts/2022-1-11md-test.md"]],
   ["v-71182a26", "/posts/2021/2020-3-16-chrome-plugin.html", { "title": "\u8BA9\u4F60\u7684chrome\u5982\u864E\u6DFB\u7FFC" }, ["/posts/2021/2020-3-16-chrome-plugin", "/posts/2021/2020-3-16-chrome-plugin.md"]],
   ["v-3706649a", "/404.html", { "title": "" }, ["/404"]],
-  ["v-8daa1a0e", "/", { "title": "" }, ["/index.html"]]
+  ["v-8daa1a0e", "/", { "title": "" }, ["/index.html"]],
+  ["v-01560935", "/timeline/", { "title": "" }, ["/timeline/index.html"]]
 ];
 const pagesRoutes = routeItems.reduce((result, [name, path, meta, redirects]) => {
   result.push({
@@ -12262,7 +16701,7 @@ const setupUpdateHead = () => {
 };
 const queryHeadTag = ([tagName, attrs, content = ""]) => {
   const attrsSelector = Object.entries(attrs).map(([key, value]) => {
-    if (isString$1(value)) {
+    if (isString$2(value)) {
       return `[${key}="${value}"]`;
     }
     if (value === true) {
@@ -12270,26 +16709,26 @@ const queryHeadTag = ([tagName, attrs, content = ""]) => {
     }
     return "";
   }).join("");
-  const selector2 = `head > ${tagName}${attrsSelector}`;
-  const tags = Array.from(document.querySelectorAll(selector2));
+  const selector3 = `head > ${tagName}${attrsSelector}`;
+  const tags = Array.from(document.querySelectorAll(selector3));
   const matchedTag = tags.find((item) => item.innerText === content);
   return matchedTag || null;
 };
 const createHeadTag = ([tagName, attrs, content]) => {
-  if (!isString$1(tagName)) {
+  if (!isString$2(tagName)) {
     return null;
   }
   const tag = document.createElement(tagName);
   if (isPlainObject(attrs)) {
     Object.entries(attrs).forEach(([key, value]) => {
-      if (isString$1(value)) {
+      if (isString$2(value)) {
         tag.setAttribute(key, value);
       } else if (value === true) {
         tag.setAttribute(key, "");
       }
     });
   }
-  if (isString$1(content)) {
+  if (isString$2(content)) {
     tag.appendChild(document.createTextNode(content));
   }
   return tag;
@@ -12328,4 +16767,4 @@ const createVueApp = async () => {
     });
   });
 }
-export { Fragment as F, _export_sfc as _, computed as a, resolveComponent as b, createElementBlock as c, createVueApp, defineComponent as d, unref as e, createVNode as f, _sfc_main$b as g, createCommentVNode as h, createBaseVNode as i, renderList as j, createTextVNode as k, usePageData as l, usePageFrontmatter as m, useSidebarItems as n, openBlock as o, useRoute as p, isString$1 as q, resolveEditLink as r, useNavLink as s, toDisplayString as t, useThemeLocaleData as u, isPlainObject as v, withCtx as w, renderSlot as x, createStaticVNode as y, defineClientAppEnhance as z };
+export { _sfc_main$1 as A, __vitePreload as B, gsapWithCSS as C, normalizeStyle as D, createStaticVNode as E, Fragment as F, defineClientAppEnhance as G, _export_sfc as _, computed as a, resolveComponent as b, createElementBlock as c, createVueApp, defineComponent as d, unref as e, createVNode as f, _sfc_main$9 as g, createCommentVNode as h, createBaseVNode as i, renderList as j, createTextVNode as k, usePageData as l, usePageFrontmatter as m, useSidebarItems as n, openBlock as o, useRoute as p, isString$2 as q, resolveEditLink as r, useNavLink as s, toDisplayString as t, useThemeLocaleData as u, isPlainObject as v, withCtx as w, renderSlot as x, onMounted as y, createBlock as z };

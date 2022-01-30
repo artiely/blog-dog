@@ -7,7 +7,10 @@ const data = {
     "primary": "2974d1",
     "secondary": "d68b2e",
     "title": "Electron \u955C\u50CF\u4E0B\u8F7D\u6162\u7684\u89E3\u51B3\u529E\u6CD5",
-    "tag": "electron,javascrip",
+    "tag": [
+      "electron",
+      "javascrip"
+    ],
     "author": "Artiely",
     "date": "2020-3-18",
     "cover": "https://gitee.com/artiely/Figure-bed/raw/master/images/20200318132822.png",

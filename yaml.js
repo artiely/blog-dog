@@ -6,6 +6,7 @@ const removeMd = require("remove-markdown");
 const execSync = require("child_process").execSync;
 const readingTime = require("reading-time");
 const dayjs = require("dayjs");
+const calendar = require("./calendar");
 
 const readDir=(entry, files)=> {
   const dirInfo = fs.readdirSync(entry);
@@ -140,9 +141,14 @@ const replaceYaml = (yamlJson = {}, dir, content, contentArray) => {
     let yaml = {};
     yaml.title = yamlJson.title || getMdTitle(contentArray) || "";
     yaml.date =
-      yamlJson.date ||
-      (await getBirthtime(dir)) ||
+    dayjs(yamlJson.date )||
+    dayjs((await getBirthtime(dir))) ||
       dayjs(new Date()).format("YYYY-MM-DD");
+      //
+      const [y,m,d] = dayjs(yaml.date).format('YYYY-MM-DD').split('-')
+      const {gzYear,Animal,gzMonth,gzDay,IMonthCn,IDayCn,ncWeek}=calendar.solar2lunar(y,m,d)
+      //
+    yaml.calendar = [gzYear,Animal,gzMonth,gzDay,IMonthCn,IDayCn,ncWeek]
     yaml.summary = yamlJson.summary || getSummary(content) || "";
     yaml.description = yamlJson.description || yaml.summary || "";
     yaml.cover = yamlJson.cover || getCover(content) || "";

@@ -1,6 +1,8 @@
 <template>
   <div class="article-wrapper">
-    <article class="article" v-for="item in posts">
+  <div class="article-box" v-for="item in posts">
+    
+    <article class="article" >
       <div class="poster-wrapper" v-if="item.frontmatter">
         <a :href="link(item.link)">
           <div class="category" v-if="item.frontmatter.category">
@@ -23,55 +25,107 @@
         <h1 class="article-title">
           <a :href="link(item.link)">{{ item.frontmatter.title }}</a>
         </h1>
-        <div class="article-tags" v-if="item.frontmatter.tags">
-          <span class="tag" v-for="tag in item.frontmatter.tag">{{ tag }}</span>
-        </div>
+
         <div class="article-con">
           <p class="article-desc">{{ item.frontmatter.summary }}</p>
         </div>
-
-        <div class="article-meta">
-          <span>{{ item.frontmatter.date }}</span>
-          <span>{{ item.frontmatter.author }}</span>
-        </div>
-
-        <div class="more">
-          <span
-            >{{ item.frontmatter.words }}字/{{
-              parseInt(item.frontmatter.readTime)
-            }}分钟</span
+        <div class="article-tags" v-if="item.frontmatter.tag">
+          <span class="tag" v-for="tag in item.frontmatter.tag.slice(0, 3)"
+            >#{{ tag }}</span
           >
-          <span class="read">阅读全文-></span>
         </div>
+        <div class="article-meta">
+          <span class="date">
+            <i class="iconfont icon-rili1" />
+            {{ dayjs(item.frontmatter.date).format("YYYY/MM/DD") }}</span
+          >
+          <span class="author"
+            ><i class="iconfont icon-zuozhe" />
+            {{ item.frontmatter.author }}</span
+          >
+        </div>
+
+        <a class="more" :href="link(item.link)">
+          <span class="words">
+            <i class="iconfont icon-tongji" />
+            {{ item.frontmatter.words }} words /{{
+              item.frontmatter.readTime
+            }}</span
+          >
+          <span class="read">阅读全文 <i class="iconfont icon-you" /></span>
+        </a>
       </div>
     </article>
+  </div>
+
   </div>
 </template>
 <script setup>
 import Cover from "./Cover.vue";
 import { hexToRgba } from "../utils/index.js";
+import dayjs from "dayjs";
+import gsap from "gsap";
+import { onMounted } from "vue";
+const handlerStagger = () => {
+  var ob = new IntersectionObserver(
+    (entries, self) => {
+      let targets = entries
+        .map((entry) => {
+          if (entry.isIntersecting) {
+            self.unobserve(entry.target);
+            return entry.target;
+          }
+        })
+        // .filter((v) => v);
+      if (gsap) {
+        gsap.to(targets, {
+          opacity: 1,
+          y: 0,
+          stagger: 0.2,
+          ease: "Back.easeOut",
+        });
+      }
+    }
+  );
+  document.querySelectorAll(".article-box").forEach((box) => {
+    ob.observe(box);
+  });
+  import("vanilla-tilt").then((res) => {
+    res.default.init(document.querySelectorAll(".article"), {
+      max: 5,
+    });
+  });
+};
+
+onMounted(() => {
+  handlerStagger();
+});
 const posts = __POSTS__.posts;
-const link=(link)=>`${link}.html`
-// console.log("🚀 ~ file: Articles.vue ~ line 54 ~ __POSTS__", __POSTS__)
+const link = (link) => `${link}.html`;
 </script>
 <style lang="scss" scoped>
 @import "../styles/var.scss";
 .article-wrapper {
-  max-wrapper: $main_width;
+  max-width: var(--nav-content-max-width);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin: auto;
+  .article-box{
+    opacity: 0;
+    transform: translateY(100px);
+  }
   .article {
     display: flex;
     flex-direction: column;
+    
   }
   .poster-wrapper {
     height: 230px;
     width: 100%;
     overflow: hidden;
     position: relative;
-    /* background: #ddd; */
   }
   .article-info {
     padding: 20px;
@@ -128,23 +182,49 @@ const link=(link)=>`${link}.html`
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
   }
+  .article-meta {
+    color: #777;
+  }
   .article-meta,
   .more {
+    font-family: num;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: 20px;
+    text-transform: Capitalize;
+    .date {
+      font-size: 0.9em;
+    }
+    .author {
+      font-family: "Josefin Sans";
+    }
+    .words {
+      font-size: 0.9em;
+      color: #777;
+      display: flex;
+      align-items: center;
+    }
+    .read {
+      color: #ff6928;
+    }
   }
   .more .read {
-    color: #ff6928;
   }
   .article-tags {
     width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: "Josefin Sans";
     .tag {
       padding: 2px 6px;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.05);
+      border-radius: 2px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-size: 0.8em;
     }
   }
 }

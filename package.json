@@ -14,12 +14,15 @@
     "@vuepress/plugin-active-header-links": "^2.0.0-beta.35",
     "@vuepress/plugin-prismjs": "^2.0.0-beta.4",
     "@vuepress/plugin-register-components": "^2.0.0-beta.35",
+    "@vueuse/core": "^7.5.5",
     "address": "^1.1.2",
     "colorthief": "^2.3.2",
     "dayjs": "^1.10.7",
     "express": "^4.17.2",
+    "gsap": "^3.9.1",
     "heti": "^0.9.2",
     "js-yaml": "^4.1.0",
+    "less": "^4.1.2",
     "loadsh": "^0.0.4",
     "markdown-it-deflist": "^2.1.0",
     "markdown-it-implicit-figures": "^0.10.0",
@@ -32,7 +35,8 @@
     "pinyin": "^2.10.2",
     "reading-time": "^1.5.0",
     "remove-markdown": "^0.3.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vanilla-tilt": "^1.7.2"
   },
   "devDependencies": {
     "vuepress": "^2.0.0-beta.35"

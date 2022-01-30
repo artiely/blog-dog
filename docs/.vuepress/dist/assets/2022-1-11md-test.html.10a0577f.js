@@ -85,12 +85,12 @@ const data = {
     }
   ],
   "git": {
-    "updatedTime": 1643022831e3,
+    "updatedTime": 1643195702e3,
     "contributors": [
       {
         "name": "artiely",
         "email": "1119696785@qq.com",
-        "commits": 6
+        "commits": 8
       }
     ]
   },
