@@ -1,3 +1,4 @@
+// 绿茶
 @import "./sino/variables.scss";
 html.theme6 {
   --c-bg: rgb(213, 209, 174);
@@ -12,6 +13,7 @@ html.theme6 {
   --primary-bg: rgb(191, 191, 150);
   --c-border-dark: rgb(11, 0, 8);
   --page-meta-bg: rgba(101, 194, 192, 0.9);
+  --code-hl-bg-color:#e8ffeb;
 
   --shadow:0px 1px 2px rgb(0 0 0 / 50%), inset 0 -1px 0 rgb(0 0 0 / 50%),
   inset 0 1px 1px rgb(255 255 255 / 70%),
@@ -20,7 +22,7 @@ html.theme6 {
 
   --shadow_all: 0px 1px 2px rgb(0 0 0 / 10%), inset 0 0px 0 rgb(0 0 0 / 50%), inset 0 1px 0px rgb(255 255 255 / 70%), inset 0 -1px 0px rgb(0 0 0 / 20%), inset 0 0px 0px rgb(255 255 255 / 30%);
 
-  --text-shadow:0px 1px 1px rgb(0 0 0 / 50%);
+  --text-shadow: 0px 1px 1px rgb(44 62 80 / 38%)
 }
 .page-meta {
   background: var(--page-meta-bg);
@@ -33,21 +35,12 @@ html.theme6 .md-body {
   inset 0 1px 1px rgb(169 169 115 / 100%),
   inset 0 -10px 20px rgb(144 160 125 / 20%),
   inset 0 40px 40px rgb(169 169 115 / 100%);;
-  // background-image: url('https://gitee.com/artiely/Figure-bed/raw/master/20220123165541.png');
   background-color: var(--primary-bg);
-  // background-image: linear-gradient(
-  //   90deg,
-  //   rgb(247 189 172) 0%,
-  //   rgb(250 203 189) 50%,
-  //   rgb(247 189 172) 100%
-  // );
+  
   
   :not(h1) .content {
     background: var(--secondary-color);
-    // background: linear-gradient(to right, var(--secondary-color), transparent);
-    // padding:2px 4px;
-
-    // background: #dfefff;
+    
     box-shadow: 0px 0px 0px 5px var(--secondary-color);
     border: dashed 1px rgb(156 140 124);
     padding: 0.2em 0.5em;
@@ -61,7 +54,6 @@ html.theme6 .md-body {
     border-right: 1px solid var(--c-border-dark);
   }
   tr:last-child {
-    // border-top: 1px solid var(--c-border-dark);
     border-bottom: 1px solid var(--c-border-dark);
     transition: border-color var(--t-color);
   }
@@ -133,13 +125,6 @@ html.theme6 .md-body {
       margin: 0;
     }
   }
-  // .custom-container.tip{
-  //   position: relative;
-  //   border: solid 2px #ffc778!important;
-  //   margin-top: 1em;
-  //   margin-bottom: 2em;
-  //   padding: 1.2em 1em 1em;
-  // }
   .multiquote-1,
   .multiquote-2,
   .multiquote-3 {
@@ -155,25 +140,13 @@ html.theme6 .md-body {
     font-size: 0.9em;
     // overflow: auto;
     overflow-scrolling: touch;
-    // background: rgba(0, 0, 0, 1);
-    // color: #6a737d;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
-    // opacity: 0.9;
-    // background-image: linear-gradient(
-    //     90deg,
-    //     rgba(50, 0, 0, 0.05) 3%,
-    //     rgba(0, 0, 0, 0) 3%
-    //   ),
-    //   linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
-    // background-size: 20px 20px;
-    // background-position: center center;
-    // border-top: 4px solid #00598e;
-    // border: 2px solid #000;
+    
     border-radius: 0px;
     box-shadow: 0px 1px 2px rgb(0 0 0 / 10%), inset 0 0px 0 rgb(0 0 0 / 50%), inset 0 1px 0px rgb(255 255 255 / 70%), inset 0 -1px 0px rgb(0 0 0 / 20%), inset 0 40px 0px rgb(255 255 255 / 30%);;
     &::before {
@@ -185,16 +158,7 @@ html.theme6 .md-body {
       line-height: 1em;
       font-weight: 700;
     }
-    // &::after{
-    //   content: "";
-    //   position: absolute;
-    //   top: 10px;
-    //   left: 10px;
-    //   width:100%;
-    //   height:100%;
-    //   background-color:#999;
-    //   z-index: -1;
-    // }
+    
     blockquote {
       margin: 0;
       padding: 0;

@@ -77,20 +77,20 @@
 
   @if $format_pre_code {
     pre {
-      margin-block-start: $std-block-unit * 0.5;
-      margin-block-end: $std-block-unit * 0.5;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
-      padding-block-start: $std-block-unit * 0.5;
-      padding-block-end: $std-block-unit * 0.5;
-      padding-inline-start: $std-inline-unit;
-      padding-inline-end: $std-inline-unit;
-      overflow: auto;
-      font-family: $font-family-mono;
-      white-space: pre;
-      word-wrap: normal;
-      border-radius: 4px;
-      background-color: hsla(0, 0%, 0%, 0.054);
+      // margin-block-start: $std-block-unit * 0.5;
+      // margin-block-end: $std-block-unit * 0.5;
+      // margin-inline-start: 0;
+      // margin-inline-end: 0;
+      // padding-block-start: $std-block-unit * 0.5;
+      // padding-block-end: $std-block-unit * 0.5;
+      // padding-inline-start: $std-inline-unit;
+      // padding-inline-end: $std-inline-unit;
+      // overflow: auto;
+      // font-family: $font-family-mono;
+      // white-space: pre;
+      // word-wrap: normal;
+      // border-radius: 4px;
+      // background-color: hsla(0, 0%, 0%, 0.054);
 
       @include darkmode-style {
         background-color: hsla(0, 0%, 100%, 0.054);

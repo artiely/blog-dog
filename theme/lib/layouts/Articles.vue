@@ -76,7 +76,7 @@ const handlerStagger = () => {
             return entry.target;
           }
         })
-        // .filter((v) => v);
+        .filter((v) => v);
       if (gsap) {
         gsap.to(targets, {
           opacity: 1,

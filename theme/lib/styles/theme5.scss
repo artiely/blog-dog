@@ -9,11 +9,11 @@ html.theme5 {
   --code-bg-color: #ebeee8;
   --secondary-color:#5aa4ae;
   --c-border:var(--secondary-color);
+  --code-hl-bg-color:#ffe8ef;
 }
 
 html.theme5 .md-body {
   font-family: $font-family-kai;
-  // background-image: url('https://gitee.com/artiely/Figure-bed/raw/master/20220123165541.png');
   background-color: #d3cbc5;
   background-image: linear-gradient(
         90deg,
@@ -190,8 +190,6 @@ html.theme5 .md-body {
     font-size: 0.9em;
     overflow: auto;
     overflow-scrolling: touch;
-    // background: rgba(0, 0, 0, 0.02);
-    // color: #6a737d;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -199,34 +197,16 @@ html.theme5 .md-body {
     margin-bottom: 20px;
     margin-top: 20px;
     opacity: .9;
-    // background-image: linear-gradient(
-    //     90deg,
-    //     rgba(50, 0, 0, 0.05) 3%,
-    //     rgba(0, 0, 0, 0) 3%
-    //   ),
-    //   linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
     background-size: 20px 20px;
     background-position: center center;
-    // border-left: 4px solid #00598e;
-    // background: linear-gradient(top to left, white 50%, coral 50%);
-    // background: -webkit-linear-gradient(top left, white 50%, coral 50%);
     &::before {
-      // content: "“";
-      // display: inline;
-      // color: #999;
-      // font-size: 4em;
-      // font-family: Arial, serif;
-      // line-height: 1em;
-      // font-weight: 700;
       content: '';
       position: absolute;
       left:8px; 
       top:8px;
       right:8px;
       bottom:8px;
-      // width:90%; height:90%;
       border-radius: inherit;
-      // background: rgba(0,0,0,.1);
       box-shadow: 0 0 40px 20px rgba(0,0,0,.1);
       transform: translateZ(-100px);
     }

@@ -1,10 +1,10 @@
 html.theme2 {
   --font-family:'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", 'Segoe UI Emoji', sans-serif;
-  // #31855f
   --c-bg: #eaeef1;
   --c-brand:#31855f;
   --c-text-accent: var(--c-brand);
   --code-bg-color: #fafafa50;
+  --code-hl-bg-color:#e1e6e0;
   body {
     color: #595959;
     background-image: linear-gradient(
@@ -32,7 +32,6 @@ html.theme2 {
         width: 100%;
         background: rgba(49, 133 ,95,.6);
         z-index:-1;
-        // border-bottom: .2em solid rgba(50, 0, 0, 0.05);
       }
     }
   }

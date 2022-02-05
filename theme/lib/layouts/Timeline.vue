@@ -8,8 +8,6 @@
               <div class="cd-timeline-img cd-picture" :style="{background:`#${posts.frontmatter.primary}`}"></div>
 
               <div class="cd-timeline-content" >
-              <!-- <div class="cd-timeline-content-inner"> -->
-                
                 <h2>{{ posts.frontmatter.title }}</h2>
                 <div class="timeline-content-info">
                   <span class="timeline-content-info-title">
@@ -29,7 +27,6 @@
                 </ul>
                 <span class="cd-date">{{ posts.frontmatter.date }}</span>
               </div>
-              <!-- </div> -->
             </div>
           </div>
         </template>
@@ -178,26 +175,8 @@ Main components
   border-radius: 2px;
   color: var(--text-color);
   padding: 1em;
-  filter: drop-shadow(0px 1px 1px #999);
   opacity: 0;
   transform: translateY(100px) scale(0.6);
-  /* .cd-timeline-content-inner{
-   
-    padding:1em;
-    position:relative;
-    z-index:2;
-    background: var(--timeline-bg);
-    backdrop-filter: blur(4px);
-  } */
-  /* .cd-timeline-cover {
-    position: absolute;
-    top: 0;
-    left:0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index:0;
-  } */
   .timeline-content-info {
     background: rgba(0, 0, 0, 0.2);
     padding: 5px 10px;

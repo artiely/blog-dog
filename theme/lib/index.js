@@ -281,7 +281,15 @@ const dogTheme = (options, app) => {
       .use(require('markdown-it-deflist')) // 定义列表
       .use(require('./markdown/markdown-it-multiquote')) // 给多级引用加 class
       .use(require('markdown-it-imsize'))
-      .use(require('markdown-it-ruby'));
+      .use(require('markdown-it-ruby'))
+      .use(require('markdown-it-copy'),{
+        btnText: '复制', // 'copy' | button text
+      failText: '复制失败', // 'copy fail' | copy-fail text
+      successText: '复制成功', // 'copy success' | copy-success text
+      successTextDelay: 1000, // 2000 | successText show time [ms]
+      extraHtmlBeforeBtn: '', // '' | a html-fragment before <button>
+      extraHtmlAfterBtn: '', // '' | a html-fragment after <button>
+      showCodeLanguage: false,});
 
     },
     plugins: [

@@ -7,8 +7,10 @@
     <span class="theme-btn" :class="theme=='theme3'?'active':''" @click="handleTheme('theme3')">逍遥</span>
     <span class="theme-btn" :class="theme=='theme4'?'active':''" @click="handleTheme('theme4')">秋半</span>
     <span class="theme-btn" :class="theme=='theme5'?'active':''" @click="handleTheme('theme5')">十漾</span>
-    <span class="theme-btn" :class="theme=='theme6'?'active':''" @click="handleTheme('theme6')">666</span>
-    <span class="theme-btn" :class="theme=='theme7'?'active':''" @click="handleTheme('theme7')">777</span>
+    <span class="theme-btn" :class="theme=='theme6'?'active':''" @click="handleTheme('theme6')">绿茶</span>
+    <span class="theme-btn" :class="theme=='theme7'?'active':''" @click="handleTheme('theme7')">笔记</span>
+    <span class="theme-btn" :class="theme=='theme8'?'active':''" @click="handleTheme('theme8')">极客</span>
+    <span class="theme-btn" :class="theme=='theme9'?'active':''" @click="handleTheme('theme9')">轻拟</span>
     <div class="trigger">
       主题
     </div>

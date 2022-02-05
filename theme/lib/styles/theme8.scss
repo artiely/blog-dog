@@ -1,0 +1,223 @@
+// 极客
+@import "./sino/variables.scss";
+html.theme8 {
+  --c-bg: #151917;
+  --font-family: iPix;
+  --font-family-code: iPix;
+  --c-brand: #70f049;
+  --c-text:var(--c-brand);
+  --c-text-accent: var(--c-brand);
+  --c-border: rgba(0, 50, 74, 0.8);
+  --text-color: var(--c-brand);
+  --c-tip-title:var(--c-brand);
+  --code-bg-color: transparent;
+  --secondary-color: rgb(90 188 101);
+  --c-border: var(--secondary-color);
+  --c-border-dark: transparent;
+  --page-meta-bg: #c3ccc7;
+  --bottom-line-height:30px;
+  --code-hl-bg-color:#041919;
+  --c-bg-light:#162331;
+  --timeline-bg:#1c1b1b;
+  --copy-code-bg: #333;
+  --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+
+  --c-warning-bg: #fffae324;
+  --c-danger-bg: #ffe0e038;
+  --c-details-bg:#c0fbcf2e;
+  background:
+  radial-gradient(black 15%, transparent 16%) 0 0,
+  radial-gradient(black 15%, transparent 16%) 8px 8px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+  body{
+    background:none;
+  }
+  .dog-sidebar{
+    .sidebar-item.active:not(p.sidebar-heading){
+      border: none;
+    }
+    
+    .sidebar-item:not(.sidebar-heading) + .sidebar-item-children{
+      padding-left: 0;
+    }
+  }
+}
+
+html.theme8 .md-body {
+  font-family: iPix;
+  background-color: var(--c-bg);
+  border: 1px solid var(--c-brand);
+  div[class*=language-] {
+    border-radius: 0;
+    border: 1px solid #025f31;
+    margin-bottom:2em;
+}
+
+  pre{
+    padding-top:1rem;
+    margin-top:0;
+  }
+  pre>code{
+    filter:invert(1);
+    color:#f98d8d;
+    line-height:1;
+  }
+  div[class*=language-].line-numbers-mode .line-numbers{
+    padding-top: 1rem;
+  }
+  figure{
+    margin:0;
+    padding: 0;
+  }
+  table{
+    border-spacing: 0;
+    overflow: hidden;
+    border-collapse: inherit;
+  }
+  tr td:first-child,
+  tr th:first-child {
+    border-left: 1px solid var(--c-brand);
+  }
+  tr:last-child {
+    border-bottom: 1px solid var(--c-brand);
+    transition: border-color var(--t-color);
+  }
+  tr{
+    border: none;
+    color: var(--c-brand);
+    opacity: .8;
+  }
+  th,td{
+    margin:0;
+    padding:0;
+    line-height: $unityHeight;
+    padding: 0 .5em;
+    vertical-align: top;
+  }
+  th{
+    border-top: 1px solid var(--c-brand);
+    border-right: 1px solid var(--c-brand);
+    border-bottom: 1px solid var(--c-brand);
+  }
+  td{
+    border-right: 1px solid var(--c-brand);
+    border-bottom: 1px solid var(--c-brand);
+  }
+  /* headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+    color: var(--c-brand);
+    margin:0;
+    border: none;
+    font-size: 1em;
+  }
+  a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    animation: flash 1s infinite;
+  }
+  @keyframes flash {
+    0%{
+      border-color: transparent;
+    }
+    50%{
+      border-color: currentColor;
+    }
+    100%{
+      border-color: transparent;
+    }
+  }
+  img{
+    margin: auto;
+    border-radius: 0;
+    background: #dadfe3;
+    filter: grayscale(.8) brightness(0.8);
+    width:70%;
+    height:auto;
+  }
+  figure{
+    position: relative;
+    figcaption{
+      opacity:.7;
+    }
+  }
+  .code-group{
+    margin:0;
+    .code-group__nav{
+      margin-top:0;
+      margin-bottom:0;
+      padding-bottom: 0;
+      ul{
+        padding:0;
+      }
+    }
+  }
+  
+  .custom-container.tip, .custom-container.warning, .custom-container.danger{
+    padding-left: 1em;
+    margin-top: 0;
+    padding-right:1em;
+  }
+  .custom-container.details{
+    margin:0;
+    padding-left: 1em;
+    margin-bottom: 2em;
+  }
+  .multiquote-1,
+  .multiquote-2,
+  .multiquote-3 {
+    font-style: normal;
+    font-size: 1em;
+    padding: 10px;
+    position: relative;
+    text-indent: 0;
+    border: none;
+    display: block;
+    overflow: auto;
+    overflow-scrolling: touch;
+    background: rgba(0, 0, 0, 0.02);
+    padding-left: 20px;
+    padding-right: 10px;
+    opacity: 0.9;
+    margin:0;
+    padding-right: 1em;
+    padding-bottom:0;
+    padding-left:1em;
+    box-sizing: border-box;
+    overflow: hidden;
+    &::before {
+      content: "“";
+      display: inline;
+      color: var(--c-brand);
+      font-size: 2em;
+      font-family: Arial, serif;
+      line-height: 32px;
+      font-weight: 700;
+      position:absolute;
+      top: 0.2em;
+      left:0em;
+    }
+    blockquote {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+  }
+  blockquote {
+    text-size-adjust: 100%;
+    line-height: 1.55em;
+    font-weight: 400;
+    font-style: normal;
+    text-align: left;
+    box-sizing: inherit;
+    border-left: none;
+  }
+}
