@@ -23,6 +23,7 @@
   </div> -->
 
   <div class="md-body sino sino-kai" :class="useLayout">
+  <nav class="table-of-contents"> <Toc /> </nav>
     <div class="default-content">
       <Content />
     </div>
@@ -36,11 +37,15 @@ import { onMounted } from "vue";
 import pinyin from "pinyin";
 import dayjs from "dayjs";
 import calendar from "../calendar.js";
+// import defineClientAppSetup from "../plugin-active-header-links/lib/client/clientAppSetup.js"
 
+// import { useActiveHeaderLinks } from '../plugin-active-header-links/lib/client/composables';
 
 const { useLayout } = usePageData().value.frontmatter || {};
 const frontmatter = usePageData().value.frontmatter || {};
 console.log(usePageData().value)
+
+// useActiveHeaderLinks({ headerLinkSelector : 'a.sidebar-item', headerAnchorSelector : '.header-anchor', delay : 200, offset : 5 })
 
 console.log(dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-'))
 const [y,m,d] = dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-')
@@ -78,6 +83,9 @@ onMounted(() => {
 });
 </script>
 <style lang="scss">
+.table-of-contents{
+  position: fixed;
+}
 @media (max-width: 900px) {
   div[class*="language-"].line-numbers-mode .line-numbers {
     display: none;

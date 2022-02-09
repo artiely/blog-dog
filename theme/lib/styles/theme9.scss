@@ -51,7 +51,7 @@ html.theme9 .md-body {
     text-shadow: 0px 0px 1px #e4ebf5, 0px -1px 1px #ccc;
   }
   p {
-    filter: drop-shadow(0px 1px 1px currentColor);
+    // filter: drop-shadow(0px 1px 1px currentColor);
   }
   div[class*="language-"] {
     border-radius: 0;
@@ -104,8 +104,11 @@ html.theme9 .md-body {
   }
 
   table,
-  img {
+  figure{
     box-shadow: var(--light-shadow);
+  }
+  figure{
+    padding-top: .5em;
   }
   .custom-container.details {
     box-shadow: var(--light-shadow);

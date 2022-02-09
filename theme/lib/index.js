@@ -162,7 +162,6 @@ function getPostsSidebar(dir) {
       : 1;
   });
   
-  console.log(files)
   return {
     power: "artiely",
     posts: files,
@@ -172,15 +171,7 @@ function getPostsSidebar(dir) {
     
 }
 
-const resolveActiveHeaderLinksPluginOptions = (themePlugins) => {
-  if ((themePlugins === null || themePlugins === void 0 ? void 0 : themePlugins.activeHeaderLinks) === false) {
-      return false;
-  }
-  return {
-      headerLinkSelector: 'a.sidebar-item',
-      headerAnchorSelector: '.header-anchor',
-  };
-};
+
 
 const dogTheme = (options, app) => {
   console.log(options.navbar, app.options.themeConfig)
@@ -239,8 +230,11 @@ const dogTheme = (options, app) => {
     layouts: {
       Layout: path.resolve(__dirname, 'layouts/Layout.vue'),
       404: path.resolve(__dirname, 'layouts/404.vue'),
-      clientAppEnhanceFiles: path.resolve(__dirname, './clientAppEnhance.js'),
+      Timeline: path.resolve(__dirname, 'layouts/Timeline.vue'),
+     
     },
+    // clientAppSetupFiles: utils_1.path.resolve(__dirname, './clientAppSetup.js'),
+    // clientAppEnhanceFiles: path.resolve(__dirname, 'clientAppEnhance.js'),
     themeConfig:{
       navbar:[
         // NavbarItem
@@ -282,6 +276,8 @@ const dogTheme = (options, app) => {
       .use(require('./markdown/markdown-it-multiquote')) // 给多级引用加 class
       .use(require('markdown-it-imsize'))
       .use(require('markdown-it-ruby'))
+      .use( require('markdown-it-anchor'), { permalink: true, permalinkBefore: true, permalinkSymbol: '§' } )
+      .use( require('markdown-it-toc-done-right') )
       .use(require('markdown-it-copy'),{
         btnText: '复制', // 'copy' | button text
       failText: '复制失败', // 'copy fail' | copy-fail text
@@ -293,16 +289,17 @@ const dogTheme = (options, app) => {
 
     },
     plugins: [
+      // ['plugin-active-header-links']
       // FIXME:
       // ['@vuepress/plugin-medium-zoom',{
       //   selector:'.md-body'
       // }],
-      [
-        '@vuepress/register-components',
-        {
-          componentsDir: path.resolve(__dirname, './layouts'),
-        },
-      ],
+      // [
+      //   '@vuepress/register-components',
+      //   {
+      //     componentsDir: path.resolve(__dirname, './layouts'),
+      //   },
+      // ],
     ]
     
   }

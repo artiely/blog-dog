@@ -7,18 +7,20 @@ html.theme4 {
   --c-text-accent: var(--c-brand);
   --c-border: rgba(211, 203, 197, 0.8);
   --text-color: rgb(72 85 49);
+  --c-tip-bg:#f3f4f569;
+  // --code-bg-color:#fafafa69;
 }
 
 html.theme4 .md-body {
   font-family: $font-family-kai;
-  background-color: #d3cbc5;
-  background-image: linear-gradient(
-    180deg,
-    #dcd6ce 0%,
-    #d3cbc5 80%,
-    #d3cbc5 100%
-  );
-  
+  background-color: #dcd6ce;
+  // background-image: linear-gradient(
+  //   180deg,
+  //   #dcd6ce 0%,
+  //   #d3cbc5 80%,
+  //   #d3cbc5 100%
+  // );
+
   ol li {
     list-style-type: decimal;
     list-style-position: outside;
@@ -180,8 +182,6 @@ html.theme4 .md-body {
     // color: #888;
     display: block;
     font-size: 0.9em;
-    overflow: auto;
-    overflow-scrolling: touch;
     background: rgba(0, 0, 0, 0.02);
     // color: #6a737d;
     padding-top: 10px;
@@ -200,14 +200,32 @@ html.theme4 .md-body {
     background-size: 20px 20px;
     background-position: center center;
     border-top: 4px solid #ddd;
+    overflow: hidden;
     &::before {
       content: "“";
       display: inline;
       color: #999;
-      font-size: 4em;
+      font-size: 6em;
       font-family: Arial, serif;
       line-height: 1em;
       font-weight: 700;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.2;
+    }
+    &::after {
+      content: "”";
+      display: inline;
+      color: #999;
+      font-size: 5em;
+      font-family: Arial, serif;
+      line-height: 0.1em;
+      font-weight: 700;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      opacity: 0.2;
     }
     blockquote {
       margin: 0;
@@ -223,5 +241,10 @@ html.theme4 .md-body {
     text-align: left;
     box-sizing: inherit;
     border-left: none;
+  }
+  .custom-container {
+    border: none;
+    border-top-width: 4px;
+    border-top-style: solid;
   }
 }

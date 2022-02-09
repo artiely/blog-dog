@@ -1,31 +1,93 @@
-@import './sino/variables.scss';
+// 十漾
+@import "./sino/variables.scss";
 html.theme5 {
   --c-bg: #d4d3ca;
   --font-family: $font-family-kai;
-  --c-brand:#00324a;
+  --c-brand: #00324a;
   --c-text-accent: var(--c-brand);
-  --c-border: rgba(0,50, 74,.8);
-  --text-color:var(--c-brand);
+  --c-border: rgba(0, 50, 74, 0.8);
+  --text-color: var(--c-brand);
   --code-bg-color: #ebeee8;
-  --secondary-color:#5aa4ae;
-  --c-border:var(--secondary-color);
-  --code-hl-bg-color:#ffe8ef;
+  --secondary-color: #5aa4ae;
+  --c-border: var(--secondary-color);
+  --code-hl-bg-color: #ffe8ef;
+  --primary-bg: rgb(250, 203, 189);
 }
 
 html.theme5 .md-body {
   font-family: $font-family-kai;
-  background-color: #d3cbc5;
-  background-image: linear-gradient(
-        90deg,
-        rgb(247 189 172) 0%,
-        rgb(250 203 189) 50%,
-        rgb(247 189 172) 100%
-      );
-      :not(h1) .content{
-        background: var(--secondary-color);
-        background: linear-gradient(to right, var(--secondary-color), transparent);
-        padding:2px 4px;
-      }
+  background-color: var(--primary-bg);
+  // background-image: linear-gradient(
+  //       90deg,
+  //       rgb(247 189 172) 0%,
+  //       rgb(250 203 189) 50%,
+  //       rgb(247 189 172) 100%
+  //     );
+  table {
+    border: 1px solid var(--secondary-color);
+  }
+  th {
+    border-top: 1px solid var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+  }
+  td {
+    border-bottom: 1px solid var(--secondary-color);
+  }
+  .content {
+    // background: var(--secondary-color);
+    // background: linear-gradient(to right, var(--secondary-color), transparent);
+    padding: 2px 4px;
+    border-bottom: solid 2px #ff8c78;
+    position: relative;
+    &:after {
+      position: absolute;
+      content: " ";
+      display: block;
+      // border-bottom: solid 2px #ffc778;
+      border-bottom: solid 2px var(--secondary-color);
+      bottom: -2px;
+      width: 50%;
+      left: 0;
+    }
+  }
+  figure {
+    // display: inline-block;
+  }
+  div[class*="language-"] {
+    box-shadow: rgb(44 187 99 / 20%) 0px -25px 18px -14px inset,
+      rgb(44 187 99 / 15%) 0px 1px 2px, rgb(44 187 99 / 15%) 0px 2px 4px,
+      rgb(44 187 99 / 15%) 0px 4px 8px, rgb(44 187 99 / 15%) 0px 8px 16px,
+      rgb(44 187 99 / 15%) 0px 16px 32px;
+  }
+  .custom-container {
+    border-radius: 6px;
+    overflow: hidden;
+    border: 0;
+    --bg: rgba(100, 100, 100, 0.15);
+    --shadow:var(--bg) 0px -25px 18px -14px inset, var(--bg) 0px 1px 2px,
+    var(--bg) 0px 2px 4px, var(--bg) 0px 4px 8px, var(--bg) 0px 8px 16px,
+    var(--bg) 0px 16px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 2em;
+    &.danger {
+      --bg: rgba(204, 0, 0, 0.15);
+      box-shadow: var(--shadow);
+    }
+    &.tip {
+      --bg: rgba(66, 185, 131, 0.15);
+      box-shadow: var(--shadow);
+    }
+    &.warning {
+      --bg: rgba(231, 192, 0, 0.15);
+      box-shadow: var(--shadow);
+    }
+    // box-shadow: rgb(0 12 32 / 4%) 0 0 1px 0, rgb(10 31 68 / 10%) 0 3px 4px 0;
+  }
+  img {
+    box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
   ol li {
     list-style-type: decimal;
     list-style-position: outside;
@@ -62,7 +124,9 @@ html.theme5 .md-body {
   h6 {
     font-weight: bold;
     // color: #5c8eab;
-    color:var(--c-brand);
+    color: var(--c-brand);
+    border: 0 !important;
+    text-align: center;
   }
   h1 {
     font-size: 1.875em;
@@ -116,8 +180,6 @@ html.theme5 .md-body {
   h6 {
     margin-bottom: 1.5em;
   }
-  
-
 
   pre > code {
     background-color: none !important;
@@ -171,46 +233,72 @@ html.theme5 .md-body {
     border-bottom: 1px solid;
     border-left: none;
   }
-  
 
   blockquote ul,
   blockquote ol {
     margin-left: 0;
   }
-  
-  .multiquote-1,.multiquote-2,.multiquote-3 {
+
+  .multiquote-1,
+  .multiquote-2,
+  .multiquote-3 {
     font-style: normal;
-    padding: 10px;
+    // padding: 10px;
     position: relative;
     line-height: 1.8;
     text-indent: 0;
-    border: none;
+    // border: none;
     // color: #888;
-    display: block;
+    // display: block;
     font-size: 0.9em;
-    overflow: auto;
-    overflow-scrolling: touch;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 10px;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    opacity: .9;
-    background-size: 20px 20px;
+    // overflow: auto;
+    // overflow-scrolling: touch;
+    // padding-top: 10px;
+    // padding-bottom: 10px;
+    // padding-left: 20px;
+    // padding-right: 10px;
+    // margin-bottom: 20px;
+    // margin-top: 20px;
+    opacity: 0.9;
+    // background-size: 20px 20px;
     background-position: center center;
-    &::before {
-      content: '';
+    position: relative;
+    background: #fff0cda6;
+    box-shadow: 0px 0px 0px 5px #fff0cd;
+    border: dashed 2px white;
+    padding: 0.2em 0.5em;
+    color: #454545;
+    // overflow: hidden;
+    // &::before {
+    //   // content: '';
+    //   // position: absolute;
+    //   // left:8px;
+    //   // top:8px;
+    //   // right:8px;
+    //   // bottom:8px;
+    //   // border-radius: inherit;
+    //   // box-shadow: 0 0 40px 20px rgba(0,0,0,.1);
+    //   // transform: translateZ(-100px);
+    //   position: absolute;
+    //   content: '';
+    //   right: -7px;
+    //   top: -7px;
+    //   border-width: 0 15px 15px 0;
+    //   border-style: solid;
+    //   border-color: #ffdb88 #fff #ffdb88;
+    //   box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15);
+    // }
+    &:after {
       position: absolute;
-      left:8px; 
-      top:8px;
-      right:8px;
-      bottom:8px;
-      border-radius: inherit;
-      box-shadow: 0 0 40px 20px rgba(0,0,0,.1);
-      transform: translateZ(-100px);
+      content: "";
+      right: -7px;
+      top: -7px;
+      border-width: 0 20px 20px 0;
+      border-style: solid;
+      border-color: #ffdb88 var(--primary-bg) #ffdb88;
+      box-shadow: -1px 1px 1px rgba(0, 0, 0, 0.15);
     }
-    blockquote{
+    blockquote {
       margin: 0;
       padding: 0;
       border: none;
@@ -224,6 +312,5 @@ html.theme5 .md-body {
     text-align: left;
     box-sizing: inherit;
     border-left: none;
-   
   }
 }

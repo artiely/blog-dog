@@ -20,7 +20,15 @@ function makeRule(md, options) {
 
       // if (options.addHeadingSpan) {
         var spanTokenPre = new state.Token("html_inline", "", 0);
-        spanTokenPre.content = `<span class="prefix"></span><span class="content">`;
+        var id = headingInlineToken.children[0].attrs[1][1];
+        if(id){
+          id=id.replace('#','')
+        }else{
+          id=''
+        }
+        spanTokenPre.content = `<span class="prefix"></span><span class="content" id=${id}>`;
+        // console.log({headingInlineToken:headingInlineToken})
+        // console.log({headingInlineToken:headingInlineToken.children[0].attrs})
         headingInlineToken.children.unshift(spanTokenPre);
         var spanTokenPost = new state.Token("html_inline", "", 0);
         spanTokenPost.content = `</span><span class="suffix"></span>`;
@@ -35,9 +43,9 @@ function makeRule(md, options) {
 
 module.exports = (md, opts) => {
   var defaults = {
-    // anchorClass: "markdown-it-headingspan",
-    // addHeadingSpan: true,
-    // slugify: slugify,
+    anchorClass: "markdown-it-headingspan",
+    addHeadingSpan: true,
+    slugify: slugify,
   };
   var options = md.utils.assign(defaults, opts);
   md.core.ruler.push("heading_span", makeRule(md, options));
