@@ -234,7 +234,7 @@ const dogTheme = (options, app) => {
      
     },
     // clientAppSetupFiles: utils_1.path.resolve(__dirname, './clientAppSetup.js'),
-    // clientAppEnhanceFiles: path.resolve(__dirname, 'clientAppEnhance.js'),
+    clientAppEnhanceFiles: path.resolve(__dirname, './clientAppEnhance.js'),
     themeConfig:{
       navbar:[
         // NavbarItem

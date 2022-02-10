@@ -44,6 +44,13 @@ html.theme8 {
       padding-left: 0;
     }
   }
+  .poster-wrapper{
+
+    filter: grayscale(0.8) brightness(0.8);
+  }
+  .article-info{
+    background: var(--c-bg-light);
+  }
 }
 
 html.theme8 .md-body {

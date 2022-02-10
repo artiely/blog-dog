@@ -47,7 +47,10 @@ $color: red !default;
   flex-direction: column;
   .main {
     flex: 1;
+    width: 100%;
+    margin:auto;
     padding-top: $nav_height;
+    max-width: var(--nav-content-max-width);
   }
 }
 .sidebar {

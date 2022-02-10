@@ -1,6 +1,6 @@
 <template>
 <footer class="footer">
-powered by <a href="https://github.com/artiely"> Artiely</a>
+powered by <a target="_blank" href="https://github.com/artiely"> Artiely</a>
 </footer>
 </template>
 <style lang="scss">

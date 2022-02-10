@@ -64,10 +64,13 @@ html.theme6 .md-body {
   h4,
   h5,
   h6 {
+    text-align: center;
     font-weight: bold;
     // color: #5c8eab;
     color: var(--c-brand);
     text-shadow: var(--text-shadow);
+    margin-top:2em;
+    margin-bottom:1em;
   }
   p{
     text-shadow: var(--text-shadow);

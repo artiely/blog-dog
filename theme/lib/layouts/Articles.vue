@@ -106,7 +106,8 @@ const link = (link) => `${link}.html`;
 <style lang="scss" scoped>
 @import "../styles/var.scss";
 .article-wrapper {
-  max-width: var(--nav-content-max-width);
+  /* max-width: var(--nav-content-max-width); */
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

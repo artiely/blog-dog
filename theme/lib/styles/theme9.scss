@@ -1,4 +1,4 @@
-// 极客
+// 轻拟
 @import "./sino/variables.scss";
 html.theme9 {
   --c-bg: #f8f8f8;
@@ -39,6 +39,12 @@ html.theme9 {
       padding-left: 0;
     }
   }
+  .article{
+    box-shadow: var(--light-shadow);
+  }
+  .article-info{
+    background: var(--primary-bg);
+  }
 }
 
 html.theme9 .md-body {
@@ -50,8 +56,11 @@ html.theme9 .md-body {
   h5 {
     text-shadow: 0px 0px 1px #e4ebf5, 0px -1px 1px #ccc;
   }
-  p {
-    // filter: drop-shadow(0px 1px 1px currentColor);
+  code{
+    background-color: #ccc;
+  }
+  .iframe-box{
+    box-shadow:var(--light-shadow);
   }
   div[class*="language-"] {
     border-radius: 0;

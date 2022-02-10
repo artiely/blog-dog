@@ -45,6 +45,14 @@
 html {
   -webkit-font-smoothing: antialiased;
 }
+html,body{
+  width: 100%;
+  
+}
+a.header-anchor{
+  font-size: .5em;
+  // opacity: .5;
+}
 th,td{
   border:none;
 }
@@ -176,7 +184,7 @@ code {
   // padding: 0;
 }
 pre code {
-  background: none;
+  background: none!important;
   font-family: var(--font-family-code);
   font-size: var(--code-font-size);
   // display: inline-block;
@@ -203,6 +211,7 @@ p {
   right:0;
   padding-top: 12px;;
   padding-right: 14px;
+  cursor: pointer;
   .u-mdic-copy-notify{
     position: absolute;
     top: 0.8em;
@@ -231,6 +240,7 @@ p {
     background: var(--copy-code-bg);
     display:none;
     color:#777;
+    cursor: pointer;
   }
 }
 div[class*=language-]:hover {

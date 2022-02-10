@@ -54,10 +54,11 @@ html.theme5 .md-body {
     // display: inline-block;
   }
   div[class*="language-"] {
-    box-shadow: rgb(44 187 99 / 20%) 0px -25px 18px -14px inset,
-      rgb(44 187 99 / 15%) 0px 1px 2px, rgb(44 187 99 / 15%) 0px 2px 4px,
-      rgb(44 187 99 / 15%) 0px 4px 8px, rgb(44 187 99 / 15%) 0px 8px 16px,
-      rgb(44 187 99 / 15%) 0px 16px 32px;
+    --bg-color: rgb(44 187 99 / 10%);
+    box-shadow: var(--bg-color) 0px -25px 18px -14px inset,
+      var(--bg-color) 0px 1px 2px, var(--bg-color) 0px 2px 4px,
+      var(--bg-color) 0px 4px 8px, var(--bg-color) 0px 8px 16px,
+      var(--bg-color) 0px 16px 32px;
   }
   .custom-container {
     border-radius: 6px;
