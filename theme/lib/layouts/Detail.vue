@@ -27,11 +27,12 @@
     <div class="default-content">
       <Content />
     </div>
+    <ReadingProgress/>
   </div>
 </template>
 <script setup>
 import Sidebar from "./Sidebar.vue";
-
+import ReadingProgress from "./ReadingProgress.vue";
 import { usePageData } from "@vuepress/client";
 import { onMounted } from "vue";
 import pinyin from "pinyin";
@@ -43,14 +44,11 @@ import calendar from "../calendar.js";
 
 const { useLayout } = usePageData().value.frontmatter || {};
 const frontmatter = usePageData().value.frontmatter || {};
-console.log(usePageData().value)
 
 // useActiveHeaderLinks({ headerLinkSelector : 'a.sidebar-item', headerAnchorSelector : '.header-anchor', delay : 200, offset : 5 })
 
-console.log(dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-'))
 const [y,m,d] = dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-')
 
-console.log(calendar.solar2lunar(y,m,d))
 onMounted(() => {
   Array.from(document.querySelectorAll(".content")).map((v) => {
     //let py = pinyin(v.innerText.replace(/[^\u4e00-\u9fa5|,]+/,'')).join(' ')
@@ -67,7 +65,6 @@ onMounted(() => {
     v.onload=((res)=>{
       // 30为一个行高 16=1em 26=1.7em
       // v.width=100
-      console.log(v.height/30)
       v.height=parseInt(v.height/30)*30
     })
   })

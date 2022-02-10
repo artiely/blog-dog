@@ -28,7 +28,6 @@ const getPath = (link) => {
 };
 onMounted(() => {
   path.value = window.location.pathname;
-  console.log("🚀 ~ file: NavBar.vue ~ line 23 ~ onMounted ~ path", path);
 });
 </script>
 <style lang="scss">
