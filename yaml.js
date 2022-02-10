@@ -174,14 +174,12 @@ const jsonToYamlArr = (json) => {
 };
 
 const writeYaml = (contentArray, newYaml, dir) => {
-  console.log("🚀 ~ file: color.js ~ line 161 ~ writeYaml ~ newYaml", newYaml);
   let dashArray = [];
   contentArray.map((v, i) => {
     if (v === "---") {
       dashArray.push(i);
     }
   });
-  console.log(dashArray);
   if (dashArray.length >= 2) {
     contentArray.splice(dashArray[0], dashArray[1] + 1, ...newYaml);
   } else {
