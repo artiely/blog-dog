@@ -4,10 +4,10 @@ html.theme9 {
   --c-bg: #f8f8f8;
   --font-family: $font-family-hei;
   --c-brand: #4fad5a;
-  --c-text: var(--c-brand);
+  --c-text: rgb(47, 53, 49);
   --c-text-accent: var(--c-brand);
   --c-border: rgba(0, 50, 74, 0.8);
-  --text-color: var(--c-brand);
+  --text-color: var(--c-text);
   --c-tip-title: var(--c-brand);
   --code-bg-color: transparent;
   --secondary-color: rgb(90 188 101);
@@ -18,7 +18,7 @@ html.theme9 {
   --bottom-line-height: 30px;
   --code-hl-bg-color: #041919;
   --c-bg-light: #162331;
-  --copy-code-bg: #333;
+  --copy-code-bg: rgb(184, 218, 199);
   --shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 
   --c-warning-bg: #fffae324;
@@ -29,7 +29,6 @@ html.theme9 {
 
   --light-shadow: 5px 5px 10px #dde4ee, -5px -5px 10px #ebf2fc;
 
-
   .dog-sidebar {
     .sidebar-item.active:not(p.sidebar-heading) {
       border: none;
@@ -39,10 +38,10 @@ html.theme9 {
       padding-left: 0;
     }
   }
-  .article{
+  .article {
     box-shadow: var(--light-shadow);
   }
-  .article-info{
+  .article-info {
     background: var(--primary-bg);
   }
 }
@@ -56,11 +55,11 @@ html.theme9 .md-body {
   h5 {
     text-shadow: 0px 0px 1px #e4ebf5, 0px -1px 1px #ccc;
   }
-  code{
+  code {
     background-color: #ccc;
   }
-  .iframe-box{
-    box-shadow:var(--light-shadow);
+  .iframe-box {
+    box-shadow: var(--light-shadow);
   }
   div[class*="language-"] {
     border-radius: 0;
@@ -113,11 +112,11 @@ html.theme9 .md-body {
   }
 
   table,
-  figure{
+  figure {
     box-shadow: var(--light-shadow);
   }
-  figure{
-    padding-top: .5em;
+  figure {
+    padding-top: 0.5em;
   }
   .custom-container.details {
     box-shadow: var(--light-shadow);
@@ -125,14 +124,7 @@ html.theme9 .md-body {
   div[class*="language-"] {
     box-shadow: var(--light-shadow);
   }
-  .code-group__nav {
-    // border-radius: 50px;
-    // background: linear-gradient(145deg, #cdd4dd, #f4fbff);
-    // box-shadow:  20px 20px 60px #c2c8d0,
-    //              -20px -20px 60px #ffffff;
-  }
   .code-group {
-    // border-radius: 50px;
     box-shadow: var(--light-shadow);
     div[class*="language-"] {
       box-shadow: none;
@@ -149,7 +141,6 @@ html.theme9 .md-body {
     border: none;
     display: block;
     overflow: auto;
-    overflow-scrolling: touch;
     padding-left: 20px;
     padding-right: 10px;
     box-sizing: border-box;

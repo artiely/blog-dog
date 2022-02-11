@@ -1,6 +1,6 @@
 @import './var.scss';
 @import './font.scss';
-@import url('//at.alicdn.com/t/font_2707633_d997bzoy8b.css');
+@import url('//at.alicdn.com/t/font_2707633_fqd9lnnvrd.css');
 @import './sino/index.scss';
 @import './code-dark.scss';
 @import './code-light.scss';
@@ -13,3 +13,7 @@
 @import './theme7.scss';
 @import './theme8.scss';
 @import './theme9.scss';
+html, body {
+  margin: 0;
+  padding: 0;
+}

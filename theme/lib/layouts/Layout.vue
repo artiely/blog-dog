@@ -1,9 +1,9 @@
 <template>
-  <div class="dog">
+  <div class="dog ">
     <slot name="header">
       <NavBar />
     </slot>
-    <div class="main">
+    <div class="body"> 
       <slot name="main">
         <component :is="dynamic" />
       </slot>
@@ -45,13 +45,9 @@ $color: red !default;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  .main {
-    flex: 1;
-    width: 100%;
-    margin:auto;
-    padding-top: $nav_height;
-    max-width: var(--nav-content-max-width);
-  }
+  /* .body{
+    padding-top:var(--nav-height);
+  } */
 }
 .sidebar {
   background: none;

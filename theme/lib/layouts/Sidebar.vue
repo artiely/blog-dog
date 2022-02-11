@@ -16,7 +16,7 @@ import SidebarItems from "@theme/SidebarItems.vue";
 .sidebar-box {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: var(--nav-content-max-width);
   height: 100px;
   display: flex;
   align-items: center;

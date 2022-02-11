@@ -1,63 +1,61 @@
 <template>
   <div class="article-wrapper">
-  <div class="article-box" v-for="item in posts">
-    
-    <article class="article" >
-      <div class="poster-wrapper" v-if="item.frontmatter">
-        <a :href="link(item.link)">
-          <div class="category" v-if="item.frontmatter.category">
-            <span
-              class="category-inner"
-              :style="{
-                backgroundColor: hexToRgba(
-                  `#${item.frontmatter.secondary}`,
-                  0.6
-                ),
-                color: `#${item.frontmatter.primary}`,
-              }"
-              >{{ item.frontmatter.category }}</span
+    <div class="article-box" v-for="item in posts">
+      <article class="article">
+        <div class="poster-wrapper" v-if="item.frontmatter">
+          <a :href="link(item.link)">
+            <div class="category" v-if="item.frontmatter.category">
+              <span
+                class="category-inner"
+                :style="{
+                  backgroundColor: hexToRgba(
+                    `#${item.frontmatter.secondary}`,
+                    0.6
+                  ),
+                  color: `#${item.frontmatter.primary}`,
+                }"
+                >{{ item.frontmatter.category }}</span
+              >
+            </div>
+            <Cover :item="item" />
+          </a>
+        </div>
+        <div class="article-info" v-if="item.frontmatter">
+          <h1 class="article-title">
+            <a :href="link(item.link)">{{ item.frontmatter.title }}</a>
+          </h1>
+
+          <div class="article-con">
+            <p class="article-desc">{{ item.frontmatter.summary }}</p>
+          </div>
+          <div class="article-tags" v-if="item.frontmatter.tag">
+            <span class="tag" v-for="tag in item.frontmatter.tag.slice(0, 3)"
+              >#{{ tag }}</span
             >
           </div>
-          <Cover :item="item" />
-        </a>
-      </div>
-      <div class="article-info" v-if="item.frontmatter">
-        <h1 class="article-title">
-          <a :href="link(item.link)">{{ item.frontmatter.title }}</a>
-        </h1>
+          <div class="article-meta">
+            <span class="date">
+              <i class="iconfont icon-rili1" />
+              {{ dayjs(item.frontmatter.date).format("YYYY/MM/DD") }}</span
+            >
+            <span class="author"
+              ><i class="iconfont icon-zuozhe" />
+              {{ item.frontmatter.author }}</span
+            >
+          </div>
 
-        <div class="article-con">
-          <p class="article-desc">{{ item.frontmatter.summary }}</p>
+          <a class="more" :href="link(item.link)">
+            <span class="words">
+              <i class="iconfont icon-tongji" />
+              {{ item.frontmatter.words }} words /{{
+                item.frontmatter.readTime
+              }}</span
+            >
+            <span class="read">阅读全文 <i class="iconfont icon-you" /></span>
+          </a>
         </div>
-        <div class="article-tags" v-if="item.frontmatter.tag">
-          <span class="tag" v-for="tag in item.frontmatter.tag.slice(0, 3)"
-            >#{{ tag }}</span
-          >
-        </div>
-        <div class="article-meta">
-          <span class="date">
-            <i class="iconfont icon-rili1" />
-            {{ dayjs(item.frontmatter.date).format("YYYY/MM/DD") }}</span
-          >
-          <span class="author"
-            ><i class="iconfont icon-zuozhe" />
-            {{ item.frontmatter.author }}</span
-          >
-        </div>
-
-        <a class="more" :href="link(item.link)">
-          <span class="words">
-            <i class="iconfont icon-tongji" />
-            {{ item.frontmatter.words }} words /{{
-              item.frontmatter.readTime
-            }}</span
-          >
-          <span class="read">阅读全文 <i class="iconfont icon-you" /></span>
-        </a>
-      </div>
-    </article>
-  </div>
-
+      </article>
+    </div>
   </div>
 </template>
 <script setup>
@@ -67,26 +65,24 @@ import dayjs from "dayjs";
 import gsap from "gsap";
 import { onMounted } from "vue";
 const handlerStagger = () => {
-  var ob = new IntersectionObserver(
-    (entries, self) => {
-      let targets = entries
-        .map((entry) => {
-          if (entry.isIntersecting) {
-            self.unobserve(entry.target);
-            return entry.target;
-          }
-        })
-        .filter((v) => v);
-      if (gsap) {
-        gsap.to(targets, {
-          opacity: 1,
-          y: 0,
-          stagger: 0.2,
-          ease: "Back.easeOut",
-        });
-      }
+  var ob = new IntersectionObserver((entries, self) => {
+    let targets = entries
+      .map((entry) => {
+        if (entry.isIntersecting) {
+          self.unobserve(entry.target);
+          return entry.target;
+        }
+      })
+      .filter((v) => v);
+    if (gsap) {
+      gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        stagger: 0.2,
+        ease: "Back.easeOut",
+      });
     }
-  );
+  });
   document.querySelectorAll(".article-box").forEach((box) => {
     ob.observe(box);
   });
@@ -107,20 +103,21 @@ const link = (link) => `${link}.html`;
 @import "../styles/var.scss";
 .article-wrapper {
   /* max-width: var(--nav-content-max-width); */
+  --read: var(--nav-active-color);
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   margin: auto;
-  .article-box{
+  .article-box {
     opacity: 0;
     transform: translateY(100px);
   }
   .article {
     display: flex;
     flex-direction: column;
-    
+    background: var(--primary-bg);
   }
   .poster-wrapper {
     height: 230px;
@@ -170,6 +167,87 @@ const link = (link) => `${link}.html`;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    a {
+      /* background: radial-gradient(
+            circle at 10px -7px,
+            transparent 8px,
+            currentColor 8px,
+            currentColor 9px,
+            transparent 9px
+          )
+          repeat-x,
+        radial-gradient(
+            circle at 10px 27px,
+            transparent 8px,
+            currentColor 8px,
+            currentColor 9px,
+            transparent 9px
+          )
+          repeat-x;
+      background-size: 20px 20px;
+      background-position: -10px calc(100% + 16px), 0 calc(100% - 4px);
+      animation: waveFlow 1s infinite linear; */
+      position: relative;
+      display: inline-block;
+      height: 40px;
+      max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: 12px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: currentColor;
+        z-index: -1;
+      }
+      &::after {
+        opacity: 0;
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 76%;
+        background: radial-gradient(
+              circle at 10px -7px,
+              transparent 8px,
+              currentColor 8px,
+              currentColor 9px,
+              transparent 9px
+            )
+            repeat-x,
+          radial-gradient(
+              circle at 10px 27px,
+              transparent 8px,
+              currentColor 8px,
+              currentColor 9px,
+              transparent 9px
+            )
+            repeat-x;
+        background-size: 20px 20px;
+        background-position: -10px calc(100% + 16px), 0 calc(100% - 4px);
+        animation: waveFlow 1s infinite linear;
+      }
+      &:hover {
+        color: var(--read);
+        &::before {
+          display: none;
+        }
+        &::after {
+          opacity: 1 !important;
+        }
+      }
+    }
+  }
+  @keyframes waveFlow {
+    from {
+      background-position-x: -10px, 0;
+    }
+    to {
+      background-position-x: -30px, -20px;
+    }
   }
   .article-con {
     flex: 1;
@@ -208,7 +286,7 @@ const link = (link) => `${link}.html`;
       align-items: center;
     }
     .read {
-      color: #ff6928;
+      color: var(--read);
     }
   }
   .more .read {

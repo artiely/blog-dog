@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar-box">
     <div class="con">
-      
       <Sidebar />
     </div>
   </div>
@@ -23,7 +22,6 @@
   </div> -->
 
   <div class="md-body sino sino-kai" :class="useLayout">
-  <nav class="table-of-contents"> <Toc /> </nav>
     <div class="default-content">
       <Content />
     </div>
@@ -39,7 +37,7 @@ import pinyin from "pinyin";
 import dayjs from "dayjs";
 import calendar from "../calendar.js";
 // import defineClientAppSetup from "../plugin-active-header-links/lib/client/clientAppSetup.js"
-
+import 'lightgallery/css/lightgallery-bundle.css';
 // import { useActiveHeaderLinks } from '../plugin-active-header-links/lib/client/composables';
 
 const { useLayout } = usePageData().value.frontmatter || {};
@@ -49,7 +47,37 @@ const frontmatter = usePageData().value.frontmatter || {};
 
 const [y,m,d] = dayjs(usePageData().value.frontmatter.date).format('YYYY-MM-DD').split('-')
 
+const lightImage = () => {
+  var commentContents = document.getElementsByClassName(
+    "md-body"
+  );
+  for (var i = 0; i < commentContents.length; i++) {
+    var commentItem = commentContents[i];
+    var imgEls = commentItem.getElementsByTagName("img");
+    if (imgEls.length > 0) {
+      for (var j = 0; j < imgEls.length; j++) {
+        var imgEl = imgEls[j];
+        var aEl = document.createElement("a");
+        aEl.setAttribute("class", "tk-lg-link");
+        aEl.setAttribute("href", imgEl.getAttribute("src"));
+        aEl.setAttribute("data-src", imgEl.getAttribute("src"));
+        aEl.appendChild(imgEl.cloneNode(false));
+        imgEl.parentNode.insertBefore(aEl, imgEl.nextSibling);
+        imgEl.remove();
+      }
+      import("lightgallery").then((res) => {
+        console.log("🚀 ~ file: Detail.vue ~ line 71 ~ import ~ res", res)
+        res.default(commentItem, {
+          selector: ".tk-lg-link",
+          share: false,
+        });
+      });
+    }
+  }
+};
+
 onMounted(() => {
+  lightImage()
   Array.from(document.querySelectorAll(".content")).map((v) => {
     //let py = pinyin(v.innerText.replace(/[^\u4e00-\u9fa5|,]+/,'')).join(' ')
     let py = pinyin(v.innerText.replace("#", ""), {
@@ -94,6 +122,7 @@ onMounted(() => {
     margin-left: 0;
   }
 }
+
 @media (max-width: 1400px) {
   .sidebar-box .dog-sidebar {
     display: none;

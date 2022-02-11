@@ -1,20 +1,13 @@
-const { path } = require('@vuepress/utils')
+const { path } = require("@vuepress/utils");
 const removeMd = require("remove-markdown");
-const ColorThief = require('colorthief');
-const { createPage } = require('@vuepress/core');
-// const  presetWind = require('@unocss/preset-wind').default
-// const co=require('co')
-// const  WindiCSS = require('vite-plugin-windicss').default
-// const toc = require("markdown-toc");
-// const styleImport = require("vite-plugin-style-import").default;
-// const uslug = require("uslug");
+const ColorThief = require("colorthief");
+const { createPage } = require("@vuepress/core");
 const dayjs = require("dayjs");
 const _ = require("loadsh");
 const { v4: uuid } = require("uuid");
 const fs = require("fs");
 const yaml = require("js-yaml");
 const readingTime = require("reading-time");
-
 
 function readDir(entry, files) {
   const dirInfo = fs.readdirSync(entry);
@@ -38,15 +31,18 @@ function readFiltes(dir) {
   return files;
 }
 function getPostsSidebar(dir) {
-  let files=[]
+  let files = [];
   try {
     files = readFiltes(dir);
-  }catch (e) {
-    console.log("🚀 ~ file: index.js ~ line 45 ~ getPostsSidebar ~ 请设置正确的postsDir", e)
+  } catch (e) {
+    console.log(
+      "🚀 ~ file: index.js ~ line 45 ~ getPostsSidebar ~ 请设置正确的postsDir",
+      e
+    );
   }
-  
+
   files = files
-    .map( (item) => {
+    .map((item) => {
       // 读取内容
       const content = fs.readFileSync(item, "utf8");
       let re = /---(.*?)---/gs;
@@ -54,8 +50,8 @@ function getPostsSidebar(dir) {
       let frontmatters = s && s[1] ? s[1] : {};
       let json = yaml.load(frontmatters);
       json.tag = json.tag || json.tags || [];
-      if(Object.prototype.toString.call(json.tag) !== '[object Array]'){
-        json.tag= [json.tag]
+      if (Object.prototype.toString.call(json.tag) !== "[object Array]") {
+        json.tag = [json.tag];
       }
       json.date = dayjs(json.date).format("YYYY-MM-DD");
       json.author = json.author || "Artiely";
@@ -72,22 +68,18 @@ function getPostsSidebar(dir) {
               .replace(/<script setup>(.*?)<\/script>/gs, "")
               .slice(0, 200)
           ) + " ...";
-         
 
-
-
-      // console.log(json.primary)
       // 获取读取时间
       let tim = readingTime(content);
       json.text = tim.text;
       json.words = tim.words;
       let v = item.split(dir)[1].split(".md")[0];
-      let pathArr = dir.split('/')
-      let relativePath =pathArr[pathArr.length - 1];
-       return {
+      let pathArr = dir.split("/");
+      let relativePath = pathArr[pathArr.length - 1];
+      return {
         text: "artiely",
         link: `/${relativePath}${v}`,
-        frontmatter: json||{},
+        frontmatter: json || {},
         id: uuid(),
       };
     })
@@ -97,13 +89,6 @@ function getPostsSidebar(dir) {
         new Date(a.frontmatter && a.frontmatter.date).getTime()
       );
     });
-  // 正序
-  // const list = _.cloneDeep(files);
-  // const reverse = list.reverse();
-  // 推荐
-  // const hot = files.filter(
-  //   (f) => f.frontmatter && f.frontmatter.hot && f.frontmatter.hot
-  // );
   // 文章遍历出tags 进行分类
   var tags = [];
   files.map((v) => {
@@ -117,8 +102,8 @@ function getPostsSidebar(dir) {
         tempTags = [];
       }
     }
-    if(Object.prototype.toString.call(tempTags) !== '[object Array]'){
-      tempTags=[tempTags]
+    if (Object.prototype.toString.call(tempTags) !== "[object Array]") {
+      tempTags = [tempTags];
     }
     tempTags.map((tag) => {
       const findIndex = (el) => {
@@ -161,147 +146,117 @@ function getPostsSidebar(dir) {
       ? -1
       : 1;
   });
-  
+
   return {
     power: "artiely",
     posts: files,
     tags,
     timeline,
-  }
-    
+  };
 }
-
-
 
 const dogTheme = (options, app) => {
   return {
     // 初始化之后，所有的页面已经加载完毕
-  async onInitialized(app) {
-    // 如果主页不存在
-    if (app.pages.every((page) => page.path !== '/')) {
-      // 创建一个主页
-      const homepage = await createPage(app, {
-        path: '/',
-        // 设置 frontmatter
-        frontmatter: {
-          layout: 'Layout',
-        },
-      })
-      // 把它添加到 `app.pages`
-      app.pages.push(homepage)
-    }
-    // 如果时间线不存在
-    if (app.pages.every((page) => page.path !== '/timeline')) {
-      // 创建一个主页
-      const homepage = await createPage(app, {
-        path: '/timeline',
-        // 设置 frontmatter
-        frontmatter: {
-          layout: 'Timeline',
-        },
-      })
-      // 把它添加到 `app.pages`
-      app.pages.push(homepage)
-    }
-  },
-    name: 'vuepress-theme-dog',
-    // alias: {
-    //   // 为可替换的组件设置别名
-    //   '@theme/Navbar.vue': path.resolve(__dirname, 'layouts/Navbar.vue'),
-    //   '@theme/Layout.vue': path.resolve(__dirname, 'layouts/Layout.vue'),
-    // },
-    alias: Object.fromEntries(fs
-      .readdirSync(path.resolve(__dirname, 'layouts'))
-      .filter((file) => file.endsWith('.vue'))
-      .map((file) => [
-      `@theme/${file}`,
-      path.resolve(__dirname, 'layouts', file),
-  ])),
-    extends:'@vuepress/theme-default',
+    async onInitialized(app) {
+      // 如果主页不存在
+      if (app.pages.every((page) => page.path !== "/")) {
+        // 创建一个主页
+        const homepage = await createPage(app, {
+          path: "/",
+          // 设置 frontmatter
+          frontmatter: {
+            layout: "Layout",
+          },
+        });
+        // 把它添加到 `app.pages`
+        app.pages.push(homepage);
+      }
+      // 如果时间线不存在
+      if (app.pages.every((page) => page.path !== "/timeline")) {
+        // 创建一个主页
+        const homepage = await createPage(app, {
+          path: "/timeline",
+          // 设置 frontmatter
+          frontmatter: {
+            layout: "Timeline",
+          },
+        });
+        // 把它添加到 `app.pages`
+        app.pages.push(homepage);
+      }
+    },
+    name: "vuepress-theme-dog",
+    alias: Object.fromEntries(
+      fs
+        .readdirSync(path.resolve(__dirname, "layouts"))
+        .filter((file) => file.endsWith(".vue"))
+        .map((file) => [
+          `@theme/${file}`,
+          path.resolve(__dirname, "layouts", file),
+        ])
+    ),
+    extends: "@vuepress/theme-default",
+    shouldPrefetch:true,
     define: {
-      __POSTS__:  getPostsSidebar(options.postsDir),
-      __NAVBAR__: options.navbar
+      __POSTS__: getPostsSidebar(options.postsDir),
+      __NAVBAR__: options.navbar,
     },
     extendsPageData: (page) => {
-      const meta = 'foobar'
-      return { meta }
+      const meta = "foobar";
+      return { meta };
     },
     layouts: {
-      Layout: path.resolve(__dirname, 'layouts/Layout.vue'),
-      404: path.resolve(__dirname, 'layouts/404.vue'),
-      Timeline: path.resolve(__dirname, 'layouts/Timeline.vue'),
-     
+      Layout: path.resolve(__dirname, "layouts/Layout.vue"),
+      404: path.resolve(__dirname, "layouts/404.vue"),
+      Timeline: path.resolve(__dirname, "layouts/Timeline.vue"),
     },
     // clientAppSetupFiles: utils_1.path.resolve(__dirname, './clientAppSetup.js'),
-    clientAppEnhanceFiles: path.resolve(__dirname, './clientAppEnhance.js'),
-    themeConfig:{
-      navbar:[
-        // NavbarItem
+    clientAppEnhanceFiles: path.resolve(__dirname, "./clientAppEnhance.js"),
+    themeConfig: {
+      navbar: [
+        // NavbarItem default
         {
-          text: 'Home',
-          link: '/',
+          text: "Home",
+          link: "/",
         },
         {
-          text: 'Timeline',
-          link: '/timeline',
+          text: "Timeline",
+          link: "/timeline",
         },
       ],
     },
-    
-    markdown:{
 
-    },
+    markdown: {},
     extendsMarkdown: (md) => {
-      // md.use(require('markdown-it-attribution'), {
-      //   classNameContainer: 'md-body',
-      //   // classNameAttribution: 'c-quote__attribution',
-      //   marker: '>>',
-      //   removeMarker: false,
-      // })
-      // 原来这个东西会导致header-active失效
-      
-      md.use(require('./markdown/markdown-it-span.js')) // 在标题标签中添加span
-      md.use(require('./markdown/markdown-it-table-container.js')) // 在表格外部添加容器
-      // .use(require('./markdown/markdown-it-math.js')) // 数学公式
-      // .use(require('markdown-it-math'))
-      // .use(require('markdown-it-katex'))
-      // .use(require('markdown-it-table-of-contents'), {
-      //   transformLink: () => "",
-      //   includeLevel: [2, 3],
-      //   markerPattern: /^\[toc\]/im,
-      // }) // TOC仅支持二级和三级标题
-      .use(require('markdown-it-implicit-figures'), {figcaption: true}) // 图示
-      .use(require('markdown-it-deflist')) // 定义列表
-      .use(require('./markdown/markdown-it-multiquote')) // 给多级引用加 class
-      .use(require('markdown-it-imsize'))
-      .use(require('markdown-it-ruby'))
-      .use( require('markdown-it-anchor'), { permalink: true, permalinkBefore: true, permalinkSymbol: '§' } )
-      .use( require('markdown-it-toc-done-right') )
-      .use(require('markdown-it-copy'),{
-        btnText: '复制', // 'copy' | button text
-      failText: '复制失败', // 'copy fail' | copy-fail text
-      successText: '复制成功', // 'copy success' | copy-success text
-      successTextDelay: 1000, // 2000 | successText show time [ms]
-      extraHtmlBeforeBtn: '', // '' | a html-fragment before <button>
-      extraHtmlAfterBtn: '', // '' | a html-fragment after <button>
-      showCodeLanguage: false,});
-
+      md.use(require("./markdown/markdown-it-span.js")); // 在标题标签中添加span
+      md.use(require("./markdown/markdown-it-table-container.js")) // 在表格外部添加容器
+        .use(require("markdown-it-implicit-figures"), { figcaption: true }) // 图示
+        .use(require("markdown-it-deflist")) // 定义列表
+        .use(require("./markdown/markdown-it-multiquote")) // 给多级引用加 class
+        .use(require("markdown-it-imsize"))
+        .use(require("markdown-it-ruby"))
+        .use(require("markdown-it-anchor"), {
+          permalink: true,
+          permalinkBefore: true,
+          // permalinkSymbol: "§",
+          permalinkSymbol: "¶",
+        })
+        .use(require("markdown-it-toc-done-right"))
+        .use(require("markdown-it-copy"), {
+          btnText: "复制", // 'copy' | button text
+          failText: "复制失败", // 'copy fail' | copy-fail text
+          successText: "复制成功", // 'copy success' | copy-success text
+          successTextDelay: 1000, // 2000 | successText show time [ms]
+          extraHtmlBeforeBtn: "", // '' | a html-fragment before <button>
+          extraHtmlAfterBtn: "", // '' | a html-fragment after <button>
+          showCodeLanguage: false,
+        });
     },
     plugins: [
-      // ['plugin-active-header-links']
-      // FIXME:
-      // ['@vuepress/plugin-medium-zoom',{
-      //   selector:'.md-body'
-      // }],
-      // [
-      //   '@vuepress/register-components',
-      //   {
-      //     componentsDir: path.resolve(__dirname, './layouts'),
-      //   },
-      // ],
-    ]
-    
-  }
-}
+      
+    ],
+  };
+};
 
-module.exports = dogTheme
+module.exports = dogTheme;

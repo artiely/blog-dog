@@ -53,7 +53,7 @@ html.theme7 .md-body {
     // @include BottomLine();
     position: relative;
     z-index: 2;
-    border: 1px solid rgba(0, 0, 0, 0.2)
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
   // 重置部分
@@ -76,18 +76,6 @@ html.theme7 .md-body {
     margin: 0;
     padding: 0;
   }
-  p,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  pre,
-  table,
-  blockquote {
-    // @include BottomLine();
-  }
 
   pre {
     padding-top: calc($unityHeight / 2);
@@ -106,18 +94,15 @@ html.theme7 .md-body {
     margin: 0;
     line-height: $unityHeight;
     padding-bottom: $unityHeight;
-    // @include BottomLine();
   }
   figure {
     margin: 0;
     padding: 0;
-    // @include BottomLine();
     figcaption {
       line-height: $unityHeight;
     }
   }
   table {
-    // background: #f8f1e1;
     border-spacing: 0;
     overflow: hidden;
     border-collapse: inherit;
@@ -127,7 +112,6 @@ html.theme7 .md-body {
     border-right: 1px solid var(--c-border-dark);
   }
   tr:last-child {
-    // border-top: 1px solid var(--c-border-dark);
     border-bottom: 1px solid var(--c-border-dark);
     transition: border-color var(--t-color);
   }
@@ -139,7 +123,6 @@ html.theme7 .md-body {
     margin: 0;
     padding: 0;
     line-height: $unityHeight;
-    // @include BottomLine();
     padding: 0 0.5em;
     vertical-align: top;
   }
@@ -161,46 +144,35 @@ html.theme7 .md-body {
     border: none;
     font-size: 1em;
     .content {
-      // background: #beb29b;
-      // padding: 0 1em;
-      // position: relative;
-      // display: inline-block;
-      // box-sizing: border-box;
-      // padding-top: 0.2em;
-      // box-shadow: 0 .2em .3em -.1em #beb29b;
-      // margin-left: -20px;
-  //     border-top: dashed 2px rgba(255, 255, 255, 0.5);
-  // border-bottom: dashed 2px rgba(255, 255, 255, 0.5);
-  display: inline-block;
-  position: relative;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  padding: 7px 0;
-  font-size: 18px;
-  background: #acd879;
-  color: #FFF;
-  box-sizing: border-box;
+      display: inline-block;
+      position: relative;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      padding: 7px 0;
+      font-size: 18px;
+      background: #acd879;
+      color: #fff;
+      box-sizing: border-box;
       &:after {
         position: absolute;
-  content: '';
-  width: 0px;
-  height: 0px;
-  z-index: 1;
+        content: "";
+        width: 0px;
+        height: 0px;
+        z-index: 1;
         /*右の山形*/
         top: 0;
         right: 0;
         border-width: 30px 15px 30px 0px;
         border-color: transparent var(--primary-bg) transparent transparent;
         border-style: solid;
-      
       }
       &:before {
         position: absolute;
-  content: '';
-  width: 0px;
-  height: 0px;
-  z-index: 1;
+        content: "";
+        width: 0px;
+        height: 0px;
+        z-index: 1;
         /*左の山形*/
         top: 0;
         left: 0;
@@ -208,28 +180,16 @@ html.theme7 .md-body {
         border-color: transparent transparent transparent var(--primary-bg);
         border-style: solid;
       }
-      &::after{
-        // position: absolute;
-        // content: '';
-        // z-index: 1;
-        // top: 0;
-        // right: 0;
-        // width: 0px;
-        // height: 0px;
-        // border-width: 30px 15px 30px 0px;
-        // border-color: transparent #f1f1f1 transparent transparent;
-        // border-style: solid;
-      }
 
-  //     &::before{
-  //       position: absolute;
-  // content: '';
-  // top: 100%;
-  // left: 0;
-  // border: none;
-  // border-bottom: solid 15px transparent;
-  // border-right: solid 20px #6081b7;
-  //     }
+      //     &::before{
+      //       position: absolute;
+      // content: '';
+      // top: 100%;
+      // left: 0;
+      // border: none;
+      // border-bottom: solid 15px transparent;
+      // border-right: solid 20px #6081b7;
+      //     }
       // &::after {
       //   position: absolute;
       //   top: 4px;
@@ -282,7 +242,7 @@ html.theme7 .md-body {
     height: calc($unityHeight * 2);
     .content {
       font-size: 1.5em;
-      padding-top:0;
+      padding-top: 0;
     }
   }
   h2,

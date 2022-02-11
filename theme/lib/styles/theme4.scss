@@ -8,18 +8,12 @@ html.theme4 {
   --c-border: rgba(211, 203, 197, 0.8);
   --text-color: rgb(72 85 49);
   --c-tip-bg:#f3f4f569;
-  // --code-bg-color:#fafafa69;
+  font-family: $font-family-kai;
 }
 
 html.theme4 .md-body {
   font-family: $font-family-kai;
   background-color: #dcd6ce;
-  // background-image: linear-gradient(
-  //   180deg,
-  //   #dcd6ce 0%,
-  //   #d3cbc5 80%,
-  //   #d3cbc5 100%
-  // );
 
   ol li {
     list-style-type: decimal;
@@ -61,32 +55,23 @@ html.theme4 .md-body {
   }
   h1 {
     font-size: 1.875em;
-    /*30 / 16*/
     line-height: 1.6em;
-    /* 48 / 30*/
     margin-top: 2em;
   }
   h2,
   h3 {
     font-size: 1.3125em;
-    /*21 / 16*/
     line-height: 1.15;
-    /*24 / 21*/
     margin-top: 2.285714em;
-    /*48 / 21*/
     margin-bottom: 1.15em;
-    /*24 / 21*/
   }
   h4 {
     font-size: 1.125em;
-    /*18 / 16*/
     margin-top: 2.67em;
-    /*48 / 18*/
   }
   h5,
   h6 {
     font-size: 1em;
-    /*16*/
   }
   h1 {
     border-bottom: 1px solid;

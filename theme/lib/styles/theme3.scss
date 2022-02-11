@@ -1,13 +1,17 @@
 // 逍遥
-@import './sino/variables.scss';
+@import "./sino/variables.scss";
 html.theme3 {
   --c-bg: #f3f2ee;
-  --font-family: $font-family-kai;
-  --c-brand:#5c8eab;
+  // --font-family: $font-family-kai;
+  --c-brand: #5c8eab;
   --c-text-accent: var(--c-brand);
-  font-family: $font-family-kai;
+  --primary-bg: transparent;
+  --font-family-code: Consolas;
+    font-family: $font-family-kai;
 }
-
+// html.theme3 .md-body div[class*=language-]{
+//   font-family: var(--font-family-code);
+// }
 html.theme3 .md-body {
   font-family: $font-family-kai;
   ol li {
@@ -18,7 +22,7 @@ html.theme3 .md-body {
     list-style-type: disc;
     list-style-position: outside;
   }
-  
+
   ol,
   ul {
     list-style: none;
@@ -49,32 +53,23 @@ html.theme3 .md-body {
   }
   h1 {
     font-size: 1.875em;
-    /*30 / 16*/
     line-height: 1.6em;
-    /* 48 / 30*/
     margin-top: 2em;
   }
   h2,
   h3 {
     font-size: 1.3125em;
-    /*21 / 16*/
     line-height: 1.15;
-    /*24 / 21*/
     margin-top: 2.285714em;
-    /*48 / 21*/
     margin-bottom: 1.15em;
-    /*24 / 21*/
   }
   h4 {
     font-size: 1.125em;
-    /*18 / 16*/
     margin-top: 2.67em;
-    /*48 / 18*/
   }
   h5,
   h6 {
     font-size: 1em;
-    /*16*/
   }
   h1 {
     border-bottom: 1px solid;
@@ -99,12 +94,8 @@ html.theme3 .md-body {
   h6 {
     margin-bottom: 1.5em;
   }
+
   
-
-
-  pre > code {
-    background-color: none !important;
-  }
 
   /* some fixes */
 
@@ -154,18 +145,23 @@ html.theme3 .md-body {
     border-bottom: 1px solid;
     border-left: none;
   }
-  td{
+  table {
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    &:last-child{
+  }
+  td {
+    border-right: 1px solid #ccc;
+    &:last-child {
       border: none;
     }
   }
-  figure{
+  figure {
     border: 4px solid currentColor;
     display: inline-block;
     box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    img{
-      margin:1em auto;
+    img {
+      margin: 1em auto;
       box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     }
   }
@@ -173,28 +169,50 @@ html.theme3 .md-body {
   blockquote ol {
     margin-left: 0;
   }
-  
-  .multiquote-1,.multiquote-2,.multiquote-3 {
+  .custom-container {
+    border: 0;
+    border-top: 4px solid var(--c-tip);
+    position: relative;
+    &:before {
+      box-shadow: 0px 5px 10px 0 rgb(0 0 0 / 50%);
+      content: "";
+      position: absolute;
+      top: -4px;
+      width: 100%;
+      left: 0;
+      height: 1px;
+      overflow: hidden;
+    }
+    &.tip {
+      border-top: 4px solid var(--c-tip);
+    }
+    &.danger {
+      border-top: 4px solid var(--c-danger);
+    }
+    &.warning {
+      border-top: 4px solid var(--c-warning);
+    }
+  }
+  .multiquote-1,
+  .multiquote-2,
+  .multiquote-3 {
     font-style: normal;
     padding: 10px;
     position: relative;
     line-height: 1.8;
     text-indent: 0;
     border: none;
-    // color: #888;
     display: block;
     font-size: 0.9em;
     overflow: auto;
-    overflow-scrolling: touch;
     background: rgba(0, 0, 0, 0.02);
-    // color: #6a737d;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
-    opacity: .9;
+    opacity: 0.9;
     background-image: linear-gradient(
         90deg,
         rgba(50, 0, 0, 0.05) 3%,
@@ -203,7 +221,7 @@ html.theme3 .md-body {
       linear-gradient(360deg, rgba(50, 0, 0, 0.05) 3%, rgba(0, 0, 0, 0) 3%);
     background-size: 20px 20px;
     background-position: center center;
-    border-top: 4px solid #ddd;
+    border-top: 4px solid #bbb;
     &::before {
       content: "“";
       display: inline;
@@ -213,7 +231,7 @@ html.theme3 .md-body {
       line-height: 1em;
       font-weight: 700;
     }
-    blockquote{
+    blockquote {
       margin: 0;
       padding: 0;
       border: none;
@@ -227,12 +245,11 @@ html.theme3 .md-body {
     text-align: left;
     box-sizing: inherit;
     border-left: none;
-   
   }
-  div[class*=language-]{
+  div[class*="language-"] {
     border-radius: 0;
   }
-  .code-group__nav{
+  .code-group__nav {
     border-radius: 0;
   }
 }

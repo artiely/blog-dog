@@ -5,7 +5,7 @@ module.exports = {
   title: '你好， VuePress ！',
   description: '这是我的第一个 VuePress 站点',
   // debug: true,
-  // shouldPrefetch:true,
+  shouldPrefetch:true,
   // home:'/',
   themeConfig: {
     postsDir:path.resolve(__dirname, '../posts'),

@@ -8,7 +8,7 @@
               <div class="cd-timeline-img cd-picture" :style="{background:`#${posts.frontmatter.primary}`}"></div>
 
               <div class="cd-timeline-content" >
-                <h2>{{ posts.frontmatter.title }}</h2>
+                <h2><a :href="`${posts.link}.html`">{{ posts.frontmatter.title }}</a></h2>
                 <div class="timeline-content-info">
                   <span class="timeline-content-info-title">
                     <i class="fa fa-certificate" aria-hidden="true"></i>
@@ -87,7 +87,7 @@ Main components
 #cd-timeline {
   position: relative;
   padding: 2em 0;
-  margin-top: 2em;
+  margin-top: 5em;
   margin-bottom: 2em;
 }
 #cd-timeline::before {

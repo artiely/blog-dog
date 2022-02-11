@@ -3,7 +3,6 @@
  @import "variables";
  @import "base";
  @import "heading";
- @import "list";
  @import "inline";
 
  #{$root-selector} {
@@ -30,7 +29,6 @@
    // 1. 引入各模块
    @include Base();
    @include Heading();
-   @include List();
    @include Inline();
    @include FontModifier();
  

@@ -114,7 +114,6 @@ html.theme6 .md-body {
     margin-bottom: 2em;
     padding: 1.2em 1em 1em;
     background: var(--primary-bg);
-    // filter: brightness(90%);
     filter: drop-shadow(0px 1px 1px #444);
     .custom-container-title {
       font-weight: 700;
@@ -138,11 +137,8 @@ html.theme6 .md-body {
     line-height: 1.8;
     text-indent: 0;
     border: none;
-    // color: #888;
     display: block;
     font-size: 0.9em;
-    // overflow: auto;
-    overflow-scrolling: touch;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
