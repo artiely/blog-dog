@@ -130,6 +130,7 @@ onMounted(() => {
 }
 .md-body{
   box-sizing: border-box;
+  margin-top: calc(var(--nav-height) + 40px) !important;
 }
 .page-meta-box{
   position: relative;

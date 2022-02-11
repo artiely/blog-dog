@@ -16,14 +16,14 @@ import SidebarItems from "@theme/SidebarItems.vue";
 .sidebar-box {
   position: fixed;
   top: 0;
-  width: var(--nav-content-max-width);
+  width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   .con {
     width: 100%;
-    max-width: 900px;
+    max-width: var(--md-body-width);
     position: relative;
     padding: 20px;
   }

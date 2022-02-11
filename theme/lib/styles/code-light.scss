@@ -61,6 +61,16 @@ html,
 body {
   width: 100%;
 }
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--c-brand);
+}
+::-webkit-scrollbar-track {
+  background-color: var(--c-border);
+}
 .lg-backdrop {
   background: var(--detail-img-bg);
   backdrop-filter: blur(20px);
@@ -133,7 +143,7 @@ figure a {
 .md-body {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
   // box-shadow: var(--md-shadow);
-  max-width: 900px;
+  max-width: var(--md-body-width);
   margin: 2em auto;
   padding: 40px;
   border-radius: 6px;
