@@ -1,4 +1,4 @@
-html.dark{
+html.dark {
   --prism-scheme: dark;
   --prism-foreground: #d4cfbf;
   --prism-background: #1e1e1e;
@@ -25,28 +25,32 @@ html.dark{
   --prism-selection-background: #444444;
 
   // --code-bg-color:rgb(40 44 52);
-  --code-bg-color:#282c34;
+  --code-bg-color: #282c34;
 
   --text-color: rgba(184, 193, 202, 1);
 
-  --timeline-bg:#0f040433;
+  --timeline-bg: #0f040433;
   --copy-code-bg: #333;
-  --c-bg:rgba(19, 20, 24,.9);
-  --primary-bg:#16181bbf;
-  --nav-bg:rgba(48,48,48,.8);
-  img{
+  --c-bg: rgba(19, 20, 24, 0.9);
+  --primary-bg: #16181bbf;
+  --nav-bg: rgba(48, 48, 48, 0.8);
+  img {
     filter: brightness(0.8);
   }
-  .cd-timeline-content{
+  .cd-timeline-content {
     filter: drop-shadow(0px 1px 1px #222);
   }
   .md-body {
-    color:#ccc;
+    color: #ccc;
     font-weight: 400;
-    div[class*=language-].line-numbers-mode .line-numbers{
-      color:#666;
+    div[class*="language-"].line-numbers-mode .line-numbers {
+      color: #666;
     }
-    h2,h3,h4,h5,h6{
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       border-bottom: 0;
     }
   }

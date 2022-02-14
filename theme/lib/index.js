@@ -232,6 +232,7 @@ const dogTheme = (options, app) => {
       md.use(require("./markdown/markdown-it-span.js")); // 在标题标签中添加span
       md.use(require("./markdown/markdown-it-table-container.js")) // 在表格外部添加容器
         .use(require("markdown-it-implicit-figures"), { figcaption: true }) // 图示
+        .use(require("./markdown/markdown-it-hr.js")) // hr
         .use(require("markdown-it-deflist")) // 定义列表
         .use(require("./markdown/markdown-it-multiquote")) // 给多级引用加 class
         .use(require("markdown-it-imsize"))
@@ -251,7 +252,7 @@ const dogTheme = (options, app) => {
           extraHtmlBeforeBtn: "", // '' | a html-fragment before <button>
           extraHtmlAfterBtn: "", // '' | a html-fragment after <button>
           showCodeLanguage: false,
-        });
+        }).use(require('markdown-it-checkbox'));
     },
     plugins: [
       

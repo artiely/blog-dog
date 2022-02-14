@@ -56,6 +56,7 @@ onMounted(() => {
     margin: 0 auto;
     justify-content: space-between;
     max-width: var(--nav-content-max-width);
+    height:100%;
     /* width: 44em; */
   }
   .nav {

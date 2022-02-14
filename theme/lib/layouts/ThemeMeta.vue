@@ -77,6 +77,7 @@ const handleTheme = (_theme) => {
     border-radius:100%;
     background: var(--primary-bg);
     cursor: pointer;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
 
   }
   .theme-btn {

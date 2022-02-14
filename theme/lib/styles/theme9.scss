@@ -1,7 +1,7 @@
 // 轻拟
 @import "./sino/variables.scss";
 html.theme9 {
-  --c-bg: #f8f8f8;
+  --c-bg: #e4ebf5;
   --font-family: $font-family-hei;
   --c-brand: #4fad5a;
   --c-text: rgb(47, 53, 49);
@@ -53,7 +53,11 @@ html.theme9 .md-body {
   h3,
   h4,
   h5 {
-    text-shadow: 0px 0px 1px #e4ebf5, 0px -1px 1px #ccc;
+    text-shadow: 0px 0px 1px #e4ebf5, 0px 1px 1px #ccc;
+    border-bottom-style: dashed;
+  }
+  h1{
+    border: none;
   }
   code {
     background-color: #ccc;
@@ -156,7 +160,7 @@ html.theme9 .md-body {
       content: "“";
       display: inline;
       color: var(--c-brand);
-      font-size: 2em;
+      font-size: 3.5em;
       font-family: Arial, serif;
       line-height: 32px;
       font-weight: 700;
