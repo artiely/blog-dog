@@ -1,4 +1,5 @@
 const { path } = require('@vuepress/utils')
+require('dotenv-flow').config();
 module.exports = {
   // base:'/',
   lang: 'zh-CN',
@@ -10,6 +11,10 @@ module.exports = {
   themeConfig: {
     postsDir:path.resolve(__dirname, '../posts'),
     logo: 'https://vuejs.org/images/logo.png',
+    valine:{
+      appId:process.env.VALINE_APPID,
+      appKey:process.env.VALINE_APPKEY
+    },
     navbar: [
       // NavbarItem
       {
@@ -23,6 +28,10 @@ module.exports = {
       {
         text: 'Timeline',
         link: '/timeline',
+      },
+      {
+        text: 'Comment',
+        link: '/comment',
       },
     ],
   },
