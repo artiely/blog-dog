@@ -36,22 +36,16 @@
   --nav-height: 90px;
   --nav-content-max-width: 1200px;
   --nav-active-color: #ff5275;
-  // --md-body-bg-color: #fff;
   // 详情
   --md-body-width: 900px;
-  --timeline-bg: #eeeeee;
+  --timeline-bg: var(--primary-bg);
   --primary-bg: #ffffff78;
 
-  // --primary-shadow-color:rgba(170, 190, 182, 0.226);
   --c-bg: #e4e8ee;
 
   --copy-code-bg: #eee;
 
   --detail-img-bg: rgba(12, 28, 44, 0.8);
-  // --md-shadow:var(--primary-shadow-color) 0px -25px 18px -14px inset,
-  // var(--primary-shadow-color) 0px 1px 2px, var(--primary-shadow-color) 0px 2px 4px,
-  // var(--primary-shadow-color) 0px 4px 8px, var(--primary-shadow-color) 0px 8px 16px,
-  // var(--primary-shadow-color) 0px 16px 32px;
 }
 html,
 body {
@@ -95,24 +89,9 @@ hr {
     border-bottom: 1px dashed var(--c-text);
   }
   .hr {
-    // width: 100%;
-    // border-bottom: 1px dashed var(--c-text);
-    // position: relative;
-    // margin:2em auto;
-    // &::after{
-    //   position: absolute;
     font-size: 12px;
-    //   left: 50%;
-    //   transform:translateX(-50% ) translateY(-50%);
-    //   content:attr(name);
-    //   background:var(--primary-bg);
     padding: 0 0.5em;
-    // }
   }
-}
-th,
-td {
-  // border: none;
 }
 td {
   font-size: 0.9em;
@@ -174,7 +153,6 @@ figure a {
 
 .md-body {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.05);
-  // box-shadow: var(--md-shadow);
   max-width: var(--md-body-width);
   margin: 2em auto;
   padding: 40px;
@@ -187,7 +165,6 @@ figure a {
     padding: 0;
     outline: 0;
     border: 0;
-    // overflow: hidden;
     box-sizing: border-box;
     cursor: pointer;
     position: relative;

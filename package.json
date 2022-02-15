@@ -5,17 +5,25 @@
   "author": "artiely <1119696785@qq.com>",
   "license": "MIT",
   "scripts": {
-    "#postinstall": "patch-package",
+    "yaml": "node yaml.js",
     "dev": "vuepress dev docs",
     "dev2": "vuepress dev docs2",
     "build": "vuepress build docs"
   },
   "dependencies": {
     "address": "^1.1.2",
+    "chalk": "^5.0.0",
     "colorthief": "^2.3.2",
+    "dayjs": "^1.10.7",
     "dotenv-flow": "^3.2.0",
     "express": "^4.17.2",
-    "patch-package": "^6.4.7"
+    "fs-extra": "^10.0.0",
+    "inquirer": "^8.2.0",
+    "js-yaml": "^4.1.0",
+    "patch-package": "^6.4.7",
+    "reading-time": "^1.5.0",
+    "remove-markdown": "^0.3.0",
+    "yargs": "^17.3.1"
   },
   "devDependencies": {
     "vuepress": "^2.0.0-beta.35"

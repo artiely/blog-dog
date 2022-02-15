@@ -33,6 +33,10 @@ module.exports = {
         text: 'Comment',
         link: '/comment',
       },
+      {
+        text: 'Tags',
+        link: '/tag',
+      },
     ],
   },
   // plugins: [

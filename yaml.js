@@ -7,6 +7,14 @@ const execSync = require("child_process").execSync;
 const readingTime = require("reading-time");
 const dayjs = require("dayjs");
 const calendar = require("./calendar");
+const fse = require('fs-extra')
+
+
+let tempDirName = Date.now()
+
+console.log(
+  `\n 开始批量 frontmatter 避免风险文件将自动备份到${tempDirName}`
+)
 
 const readDir=(entry, files)=> {
   const dirInfo = fs.readdirSync(entry);
@@ -202,4 +210,13 @@ const  getPosts=(dir)=> {
   });
 }
 
-getPosts(path.resolve(__dirname, "./docs/posts"));
+let _postsDir = path.resolve(__dirname, "./docs/posts")
+let _tempDir = path.resolve(__dirname, `./.backup/${tempDirName}`)
+
+fse.copy(_postsDir, _tempDir)
+  .then(() => {
+    getPosts(_postsDir);
+  })
+  .catch(err => console.error(err))
+
+

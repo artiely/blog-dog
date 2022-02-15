@@ -4,7 +4,7 @@ secondary: d39d37
 title: windows 好用的软件推荐
 tag: windows
 cover: https://gitee.com/artiely/Figure-bed/raw/master/images/20200316184815.png
-date: 2020-3-16
+date: Sun, 15 Mar 2020 16:00:00 GMT
 base64: 3260d0
 category: Tool
 data: 2020-3-16
@@ -13,6 +13,7 @@ description: windows 好用的软件推荐## wox应用管理新体验。ctrl+spa
 author: artiely
 readTime: 1 min read
 words: 172
+calendar: 庚子,鼠,己卯,戊午,二月,廿三,星期一
 ---
 # windows 好用的软件推荐
 

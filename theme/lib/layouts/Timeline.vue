@@ -69,7 +69,8 @@ onMounted(()=>{
   max-width: 1080px;
   margin: 0 auto;
   /* background: var(--c-bg); */
-  padding: 0 10%;
+  /* padding: 0 10%; */
+  padding-top: 120px;
   border-radius: 2px;
 }
 .cd-container::after {
@@ -86,8 +87,6 @@ Main components
 
 #cd-timeline {
   position: relative;
-  padding: 2em 0;
-  margin-top: 5em;
   margin-bottom: 2em;
 }
 #cd-timeline::before {
@@ -177,6 +176,7 @@ Main components
   padding: 1em;
   opacity: 0;
   transform: translateY(100px) scale(0.6);
+  filter: drop-shadow(var(--light-shadow));
   .timeline-content-info {
     background: rgba(0, 0, 0, 0.2);
     padding: 5px 10px;

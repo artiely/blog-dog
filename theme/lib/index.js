@@ -197,6 +197,18 @@ const dogTheme = (options, app) => {
         // 把它添加到 `app.pages`
         app.pages.push(homepage);
       }
+      if (app.pages.every((page) => page.path !== "/tag")) {
+        // 创建一个主页
+        const homepage = await createPage(app, {
+          path: "/tag",
+          // 设置 frontmatter
+          frontmatter: {
+            layout: "Tags",
+          },
+        });
+        // 把它添加到 `app.pages`
+        app.pages.push(homepage);
+      }
     },
     name: "vuepress-theme-dog",
     alias: Object.fromEntries(
@@ -223,6 +235,7 @@ const dogTheme = (options, app) => {
       404: path.resolve(__dirname, "layouts/404.vue"),
       Timeline: path.resolve(__dirname, "layouts/Timeline.vue"),
       Comment: path.resolve(__dirname, "layouts/Comment.vue"),
+      Tags: path.resolve(__dirname, "layouts/Tags.vue"),
     },
     // clientAppSetupFiles: utils_1.path.resolve(__dirname, './clientAppSetup.js'),
     clientAppEnhanceFiles: path.resolve(__dirname, "./clientAppEnhance.js"),
