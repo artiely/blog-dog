@@ -9,7 +9,7 @@
 
               <div class="cd-timeline-content" >
                 <h2><a :href="`${posts.link}.html`">{{ posts.frontmatter.title }}</a></h2>
-                <div class="timeline-content-info">
+                <!-- <div class="timeline-content-info">
                   <span class="timeline-content-info-title">
                     <i class="fa fa-certificate" aria-hidden="true"></i>
                     {{posts.frontmatter.author}}
@@ -18,7 +18,7 @@
                     <i class="fa fa-calendar-o" aria-hidden="true"></i>
                    {{posts.frontmatter.words}}字 /{{posts.frontmatter.readTime}}
                   </span>
-                </div>
+                </div> -->
                 <p class="timeline-content-summary">
                   {{ posts.frontmatter.summary }}
                 </p>
@@ -208,11 +208,11 @@ Main components
     display: flex;
     flex-wrap: wrap;
     li {
-      background: rgba(0, 0, 0, 0.3);
+      background: var(--c-bg);
       border-radius: 2px;
       display: inline-block;
       padding: 2px 10px;
-      color: rgba(255, 255, 255, 0.7);
+      /* color: rgba(255, 255, 255, 0.7); */
       margin: 3px 2px;
       text-align: center;
       /* flex-grow: 1; */

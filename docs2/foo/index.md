@@ -1,6 +1,0 @@
----
-#layout: CustomHome
----
-# foo
-
-<Test />

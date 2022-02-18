@@ -24,7 +24,6 @@ import {hexToRgba} from '../utils/index.js'
 
 let isLoaded = ref(false);
 const imgLoaded = () => {
-  console.log("加载完毕");
   isLoaded.value = true;
 };
 </script>

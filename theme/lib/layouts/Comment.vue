@@ -14,7 +14,6 @@ import { onMounted } from "vue";
 
 import { useThemeLocaleData } from "@vuepress/plugin-theme-data/lib/client";
 
-console.log("useThemeLocaleData", useThemeLocaleData().value);
 let { valine } = useThemeLocaleData().value;
 onMounted(() => {
   if (valine && valine.appId && valine.appKey) {

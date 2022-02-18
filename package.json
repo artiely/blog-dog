@@ -6,9 +6,9 @@
   "license": "MIT",
   "scripts": {
     "yaml": "node yaml.js",
-    "dev": "vuepress dev docs",
+    "dev": "yarn yaml && vuepress dev docs",
     "dev2": "vuepress dev docs2",
-    "build": "vuepress build docs"
+    "build": "yarn yaml && vuepress build docs"
   },
   "dependencies": {
     "@vuepress/plugin-search": "^2.0.0-beta.35",

@@ -20,7 +20,9 @@
             <Cover :item="item" />
           </a>
         </div>
-        <div class="article-info" v-if="item.frontmatter">
+        <div >
+        
+        <div class="article-info" v-if="item.frontmatter" >
           <h1 class="article-title">
             <a :href="link(item.link)">{{ item.frontmatter.title }}</a>
           </h1>
@@ -53,6 +55,7 @@
             >
             <span class="read">阅读全文 <i class="iconfont icon-you" /></span>
           </a>
+        </div>
         </div>
       </article>
     </div>
@@ -132,6 +135,7 @@ const link = (link) => `${link}.html`;
     flex-direction: column;
     justify-content: space-between;
     flex: 1;
+    /* background-color: var(--primary-bg); */
   }
 
   .category {
