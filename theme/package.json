@@ -26,6 +26,7 @@
     "markdown-it-implicit-figures": "^0.10.0",
     "markdown-it-imsize": "^2.0.1",
     "markdown-it-katex": "^2.0.3",
+    "markdown-it-mark": "^3.0.1",
     "markdown-it-math": "^4.1.1",
     "markdown-it-ruby": "^0.1.1",
     "markdown-it-table-of-contents": "^0.6.0",

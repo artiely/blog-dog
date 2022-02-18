@@ -48,6 +48,9 @@ $color: red !default;
   /* .body{
     padding-top:var(--nav-height);
   } */
+  .body{
+    flex:1;
+  }
 }
 .sidebar {
   background: none;

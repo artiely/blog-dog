@@ -1,3 +1,4 @@
+// 浅云
 html.theme2 {
   --font-family:'TeXGyreAdventor', "Century Gothic", "Didact Gothic", "Yu Gothic", 'Segoe UI Emoji', sans-serif;
   --c-bg: #eaeef1;
@@ -19,6 +20,9 @@ html.theme2 {
   em {
     background: #f6eeff;
   }
+  p,li,a,td{
+    font-family: MicrosoftYaqiHeiLight;
+  }
   h2,h3,h4,h5,h6 {
     .content{
       position: relative;
@@ -30,7 +34,7 @@ html.theme2 {
         bottom: 0;
         height: .4em;
         width: 100%;
-        background: rgba(49, 133 ,95,.6);
+        background: rgba(49, 133 ,95,.3);
         z-index:-1;
       }
     }

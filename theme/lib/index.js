@@ -51,7 +51,7 @@ function getPostsSidebar(dir) {
       let json = yaml.load(frontmatters);
       json.tag = json.tag || json.tags || [];
       if (Object.prototype.toString.call(json.tag) !== "[object Array]") {
-        json.tag = [json.tag];
+        json.tag=json.tag.split(',')
       }
       json.date = dayjs(json.date).format("YYYY-MM-DD");
       json.author = json.author || "Artiely";
@@ -148,7 +148,7 @@ function getPostsSidebar(dir) {
   });
 
   return {
-    power: "artiely",
+    power: "Artiely",
     posts: files,
     tags,
     timeline,
@@ -282,7 +282,7 @@ const dogTheme = (options, app) => {
           extraHtmlBeforeBtn: "", // '' | a html-fragment before <button>
           extraHtmlAfterBtn: "", // '' | a html-fragment after <button>
           showCodeLanguage: false,
-        }).use(require('markdown-it-checkbox'));
+        }).use(require('markdown-it-checkbox')).use(require('markdown-it-mark'));
     },
     plugins: [
       

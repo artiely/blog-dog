@@ -11,6 +11,7 @@
     "build": "vuepress build docs"
   },
   "dependencies": {
+    "@vuepress/plugin-search": "^2.0.0-beta.35",
     "address": "^1.1.2",
     "chalk": "^5.0.0",
     "colorthief": "^2.3.2",
@@ -20,9 +21,11 @@
     "fs-extra": "^10.0.0",
     "inquirer": "^8.2.0",
     "js-yaml": "^4.1.0",
+    "json2yaml": "^1.1.0",
     "patch-package": "^6.4.7",
     "reading-time": "^1.5.0",
     "remove-markdown": "^0.3.0",
+    "yamljs": "^0.3.0",
     "yargs": "^17.3.1"
   },
   "devDependencies": {

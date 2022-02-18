@@ -5,6 +5,7 @@ summary: VS Code 写代码是真好用、真爽、真香！想必你也已经听
 description: VS Code 写代码是真好用、真爽、真香！想必你也已经听过身边不止一个人这么说。最近的 JS 2019 报告中，VS Code 也是以压倒性的优势获胜第一，其他的编辑器只能被无情碾压在地上摩擦……!## 图片预览> 光标悬浮在图片路径上时，显示图片预览，这样我们在敲代码的时候一下子就能知道有没有引用了正确的图片或图标。!## 彩虹缩进> 写代码的时候， ...
 author: artiely
 primary: 25262d
+tag: window,markdown
 readTime: 6 min read
 words: 1049
 group: 1

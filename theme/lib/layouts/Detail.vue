@@ -32,7 +32,7 @@
 import Sidebar from "./Sidebar.vue";
 import ReadingProgress from "./ReadingProgress.vue";
 import { usePageData } from "@vuepress/client";
-import { onMounted } from "vue";
+import { onMounted ,onUpdated} from "vue";
 import pinyin from "pinyin";
 import dayjs from "dayjs";
 import calendar from "../calendar.js";
@@ -75,7 +75,11 @@ const lightImage = () => {
     }
   }
 };
-
+onUpdated(()=>{
+  //FIXME: 地址栏更新后放大图片无效了
+  console.log("====")
+  lightImage()
+})
 onMounted(() => {
   lightImage()
   Array.from(document.querySelectorAll(".content")).map((v) => {

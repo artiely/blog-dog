@@ -2,6 +2,8 @@
   <header class="header">
     <div class="header-main">
       <div class="logo">Artiely'Blog</div>
+      <!-- <SearchBox /> -->
+      <NavbarSearch />
       <nav class="nav">
         <a
           :href="item.link"

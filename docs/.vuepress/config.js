@@ -39,14 +39,11 @@ module.exports = {
       },
     ],
   },
-  // plugins: [
-  //   [
-  //     '@vuepress/register-components',
-  //     {
-  //       componentsDir: path.resolve(__dirname, './components'),
-  //     },
-  //   ],
-  // ],
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+    ],
+  ],
   theme:'vuepress-theme-dog',
   // theme:path.resolve(__dirname, '../../theme/lib/index.js'),
 }
