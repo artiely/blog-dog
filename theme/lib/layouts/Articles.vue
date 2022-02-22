@@ -92,6 +92,7 @@ const handlerStagger = () => {
   import("vanilla-tilt").then((res) => {
     res.default.init(document.querySelectorAll(".article"), {
       max: 5,
+      reverse:true,
     });
   });
 };

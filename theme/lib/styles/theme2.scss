@@ -20,6 +20,13 @@ html.theme2 {
   em {
     background: #f6eeff;
   }
+  figure{
+    padding: 2em 1em;
+    background: #fbfbfb;
+    box-shadow: 0 0 5px rgba(0,0,0,.04);
+    width: 80%;
+    margin:1em auto;
+  }
   p,li,a,td{
     font-family: MicrosoftYaqiHeiLight;
   }

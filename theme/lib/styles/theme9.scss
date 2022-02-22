@@ -44,6 +44,14 @@ html.theme9 {
   .article-info {
     background: var(--primary-bg);
   }
+  .container-comment .v[data-class=v] .vwrap{
+    box-shadow: var(--light-shadow);
+  }
+  .header .nav .link.active{
+    background: #e4ebf5;
+box-shadow: inset 5px 5px 10px #dde4ee,
+            inset -5px -5px 10px #ebf2fc;
+  }
 }
 
 html.theme9 .md-body {

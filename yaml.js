@@ -13,7 +13,7 @@ const fse = require('fs-extra')
 let tempDirName = Date.now()
 
 console.log(
-  `\n 开始批量 frontmatter 避免风险文件将自动备份到${tempDirName}`
+  `\n 开始批量 frontmatter 避免风险文件将自动备份到.backup/${tempDirName}`
 )
 
 const readDir=(entry, files)=> {

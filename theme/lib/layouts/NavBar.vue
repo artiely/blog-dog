@@ -9,6 +9,7 @@
           :href="item.link"
           :class="getPath(item.link)"
           v-for="item in navBar"
+          :target="item.link.startsWith('http')?'_blank':'_self'"
           class="link"
           >{{ item.text }}</a
         >
@@ -83,8 +84,10 @@ onMounted(() => {
     display: flex;
     align-items: center;
     .link {
-      padding: 40px 20px 40px 20px;
+      padding: 0 20px;
       font-size: 20px;
+      height: var(--nav-height);
+      line-height: var(--nav-height);
       &.active {
         color: var(--nav-active-color);
       }

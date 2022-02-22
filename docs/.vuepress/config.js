@@ -30,6 +30,10 @@ module.exports = {
         text: 'Tags',
         link: '/tag',
       },
+      {
+        text: 'Github',
+        link: 'https://github.com/artiely',
+      },
     ],
   },
   plugins: [
