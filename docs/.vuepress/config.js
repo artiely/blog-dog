@@ -8,6 +8,7 @@ module.exports = {
   shouldPrefetch:true,
   themeConfig: {
     postsDir:path.resolve(__dirname, '../posts'),
+    motto:['Miracles sometimes occur,','but one has to work terribly for them.'],
     valine:{
       appId:process.env.VALINE_APPID,
       appKey:process.env.VALINE_APPKEY

@@ -25,26 +25,55 @@
     <div class="default-content">
       <Content />
     </div>
-    <ReadingProgress />
   </div>
+  <div class="prev-next" v-if="prevNext.length">
+    <div class="prev" v-if="prevNext[0]">
+      上一篇:
+
+      <a :href="`${prevNext[0].link}.html`">
+        {{ prevNext[0].frontmatter.title }}
+      </a>
+    </div>
+    <div class="next" v-if="prevNext[1]">
+      下一篇:
+        <a :href="`${prevNext[1].link}.html`">
+          {{ prevNext[1].frontmatter.title }}</a
+        >
+    </div>
+  </div>
+  <ReadingProgress />
 </template>
 <script setup>
 import Sidebar from "./Sidebar.vue";
 import ReadingProgress from "./ReadingProgress.vue";
 import { usePageData } from "@vuepress/client";
-import { onMounted, onUpdated, watch } from "vue";
+import { onMounted, onUpdated, watch, ref } from "vue";
 import pinyin from "pinyin";
 import dayjs from "dayjs";
 import calendar from "../calendar.js";
 import { useRoute } from "vue-router";
-const route = useRoute();
 import "lightgallery/css/lightgallery-bundle.css";
+const prevNext = ref([]);
+const route = useRoute();
 watch(
   () => route.path,
   async () => {
     lightImage();
   }
 );
+const posts = __POSTS__.posts;
+const getPrevNext = () => {
+  let link = usePageData().value.path.slice(0, -5);
+  let index = posts.findIndex((el) => el.link == link);
+  if (index == -1) return;
+  if (index == 0) {
+    prevNext.value = [null, posts[index + 1]];
+  } else if (index == posts.length - 1) {
+    prevNext.value = [posts[index - 1], null];
+  } else {
+    prevNext.value = [posts[index - 1], posts[index + 1]];
+  }
+};
 const { useLayout } = usePageData().value.frontmatter || {};
 const frontmatter = usePageData().value.frontmatter || {};
 
@@ -53,6 +82,7 @@ const [y, m, d] = dayjs(usePageData().value.frontmatter.date)
   .split("-");
 
 const lightImage = () => {
+  getPrevNext();
   var commentContents = document.getElementsByClassName("md-body");
   for (var i = 0; i < commentContents.length; i++) {
     var commentItem = commentContents[i];
@@ -96,6 +126,10 @@ onMounted(() => {
 <style lang="scss">
 .table-of-contents {
   position: fixed;
+}
+.prev-next {
+  max-width: var(--md-body-width);
+  margin: 0 auto;
 }
 @media (max-width: 900px) {
   div[class*="language-"].line-numbers-mode .line-numbers {

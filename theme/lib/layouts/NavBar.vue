@@ -88,6 +88,7 @@ onMounted(() => {
       font-size: 20px;
       height: var(--nav-height);
       line-height: var(--nav-height);
+      font-weight: bolder;
       &.active {
         color: var(--nav-active-color);
       }
@@ -131,6 +132,8 @@ onMounted(() => {
       display: block;
       padding: 1em;
       font-weight: bold;
+      font-size: 1.5em;
+      font-weight: bolder;
     }
   }
 

@@ -6,11 +6,9 @@
         background: `url(${currPic()}) center center / cover no-repeat`,
       }"
     >
-    <div class="mark">
-    
+    <div class="mark" v-if="motto">
       <div>
-        <div class="h1">Miracles sometimes occur,</div>
-        <div class="h1">but one has to work terribly for them.</div>
+        <div class="h1" v-for="item in motto">{{item}}</div>
       </div>
       </div>
     </section>
@@ -25,23 +23,20 @@
 import Articles from "./Articles.vue";
 const list = [
   "https://gitee.com/artiely/Figure-bed/raw/master/image/167-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/1031-1200x800-grayscale.webp",
   "https://gitee.com/artiely/Figure-bed/raw/master/image/1067-1200x800-grayscale.webp",
   "https://gitee.com/artiely/Figure-bed/raw/master/image/490-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/491-1200x800-grayscale.webp",
   "https://gitee.com/artiely/Figure-bed/raw/master/image/511-1200x800-grayscale.webp",
   "https://gitee.com/artiely/Figure-bed/raw/master/image/505-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/526-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/495-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/960-1200x800-grayscale.webp",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/20200408115926.png",
-  // "https://gitee.com/artiely/Figure-bed/raw/master/image/167-1200x800-grayscale.webp",
 ];
 
 const currPic = () => {
   let idx = Math.floor(Math.random() * list.length);
   return list.splice(idx, 1);
 };
+import { useThemeLocaleData } from "@vuepress/plugin-theme-data/lib/client";
+
+const {motto} = useThemeLocaleData().value
+console.log({motto})
 </script>
 <style lang="scss">
 .main {
