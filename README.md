@@ -9,9 +9,9 @@
 使用模板
 ```sh
 # 克隆模板
-git clone 
+git clone  https://github.com/artiely/blog-dog.git
 # 安装依赖
-cd 
+cd blog-dog
 yarn
 # 运行
 yarn dev 
@@ -192,3 +192,8 @@ lang:
 主题自带[valine](https://valine.js.org/)评论，你可以替换为自己喜欢的评论系统
 
 `.env`里填写自己的`appid`和`appkey`
+
+
+## 欢迎贡献此项目
+
+喜欢请帮忙推广一下，点个小星星

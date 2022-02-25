@@ -1,7 +1,7 @@
 const { path } = require('@vuepress/utils')
 require('dotenv-flow').config();
 module.exports = {
-  // base:'/',
+  base:process.env.NODE_ENV=='development'?'/':'/blog-dog/',
   lang: 'zh-CN',
   title: "Artiely'blog",
   description: 'Artiely的博客',

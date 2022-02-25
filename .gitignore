@@ -8,3 +8,5 @@ node_modules
 .backup
 theme
 deploy.local.sh
+docs/.vuepress/dist
+

@@ -7,8 +7,8 @@
   "scripts": {
     "yaml": "node yaml.js",
     "dev": "yarn yaml && vuepress dev docs",
-    "dev2": "vuepress dev docs2",
-    "build": "yarn yaml && vuepress build docs"
+    "build": "yarn yaml && vuepress build docs",
+    "deploy": "node deploy.sh"
   },
   "dependencies": {
     "@vuepress/plugin-search": "^2.0.0-beta.35",
