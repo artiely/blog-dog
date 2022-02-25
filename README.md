@@ -6,7 +6,7 @@
 ![](https://gitee.com/artiely/Figure-bed/raw/master/20220225160753.png)
 
 ## 如何使用
-使用模板
+
 ```sh
 # 克隆模板
 git clone  https://github.com/artiely/blog-dog.git
@@ -20,6 +20,12 @@ yarn dev
 ```
 
 开始写作，将你的markdown文章放入`docs/posts/`下
+
+
+## 打包部署
+
+参见`deploy.sh`文件注释
+
 
 我们推荐使用模板，你也可以直接安装主题`yarn add vuepress-theme-dog`
 

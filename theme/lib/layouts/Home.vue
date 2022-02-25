@@ -91,7 +91,12 @@ console.log({motto})
   align-items: center;
   justify-content: center;
   .h1 {
-    font: normal 300 54px / 1 "Josefin Sans", sans-serif;
+    /* font: normal 300 54px / 1 "Josefin Sans", sans-serif; */
+    font-size: 54px;
+    line-height: 1;
+    font-style: normal;
+    font-weight: 300;
+    font-family: "Josefin Sans", sans-serif;
 
     color: var(--text-color);
     text-shadow: 0 0px 10px rgba(0, 0, 0, 0.8);

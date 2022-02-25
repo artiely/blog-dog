@@ -18,7 +18,7 @@
               <div v-show="tag.tag == currentTag||currentTag==''">
                 <!-- <span class="tag-above">#{{ tag.tag }}</span> -->
 
-                <div class="article-box">
+                <div class="article--tag-box">
                   <div
                     class="article-wrapper"
                     v-for="post in tag.posts"
@@ -124,7 +124,7 @@ const handleTag = (tag)=>{
     font-size: 12px;
   }
 }
-.article-box {
+.article--tag-box {
   display: flex;
   flex-wrap: wrap;
 

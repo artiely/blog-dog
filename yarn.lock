@@ -3961,10 +3961,10 @@ vue@^3.2.28:
     "@vue/server-renderer" "3.2.30"
     "@vue/shared" "3.2.30"
 
-vuepress-theme-dog@^1.0.0-beta.36:
-  version "1.0.0-beta.36"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-dog/-/vuepress-theme-dog-1.0.0-beta.36.tgz#a8ec69269f926d03cad04fb7f149a1a4ad737668"
-  integrity sha512-sDOo24wzd1mUojlNl8VZprAYmx0rEIXrtzEZ9Jovv/eoCZgazMegtVzs+MaVXc5LkLmnscN8zEmOnx4idxbcyg==
+vuepress-theme-dog@^1.0.0-beta.37:
+  version "1.0.0-beta.37"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-dog/-/vuepress-theme-dog-1.0.0-beta.37.tgz#eb423ed07eb1e46bd3a02a72b9a9839b44a47b50"
+  integrity sha512-2WviYWpfhY2Q03eLq/N+CdOg7LYjxgpNwihLOxRnWlPFUNd71c62YeSkv5+g0ry8i/7EZYZD2+q+EHHmRmTabw==
   dependencies:
     "@vueuse/core" "^7.5.5"
     colorthief "^2.3.2"
