@@ -5,6 +5,21 @@
 
 ![](https://gitee.com/artiely/Figure-bed/raw/master/20220225160753.png)
 
+## 示例演示
+
+[artiely.github.io/](artiely.github.io/)
+
+## 图片示例
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/1.png)
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/2.png)
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/3.png)
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/4.png)
+
+
 ## 如何使用
 
 ```sh
