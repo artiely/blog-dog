@@ -1,8 +1,12 @@
 {
   "name": "vuepress-theme-dog",
-  "version": "1.0.0",
+  "version": "1.0.0-beta.36",
   "keywords": [
-    "vuepress-theme"
+    "vuepress-theme",
+    "vuepress-theme-blog",
+    "vuepress@next",
+    "vuepress2",
+    "vuepress-theme-dog"
   ],
   "main": "lib/index.js",
   "files": [
@@ -38,5 +42,19 @@
     "valine": "^1.4.16",
     "vanilla-tilt": "^1.7.2"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "description": "a vuepress blog theme",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {},
+  "author": "artiely",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artiely/vuepress-theme-dog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/artiely/vuepress-theme-dog/issues"
+  },
+  "homepage": "https://github.com/artiely/vuepress-theme-dog#readme"
 }
