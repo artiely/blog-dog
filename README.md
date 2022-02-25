@@ -197,3 +197,7 @@ lang:
 ## 欢迎贡献此项目
 
 喜欢请帮忙推广一下，点个小星星
+
+
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/20220225175423.png)
