@@ -1,4 +1,9 @@
+
+
 # 这是一款自以为是的博客主题
+
+
+![](https://gitee.com/artiely/Figure-bed/raw/master/20220225160753.png)
 
 ## 如何使用
 使用模板
@@ -11,12 +16,15 @@ yarn
 # 运行
 yarn dev 
 # or yarn build
+
 ```
-我们推荐使用模板，你也可以直接安装主题
+
+开始写作，将你的markdown文章放入`docs/posts/`下
+
+我们推荐使用模板，你也可以直接安装主题`yarn add vuepress-theme-dog`
 
 
- 
-## 配置文章的路径
+## 配置文章的路径和菜单
 
 `.vuepress/config.js`
 
@@ -46,71 +54,6 @@ const articles = __POST__
 const nav = __NAVBAR__
 ```
 
-## 自定义主题颜色
-
-新建`.vuepress/styles/palette.scss`文件
-
-重写主题颜色
-
-```scss
-$color: green;
-```
-
-## 自定义页面
-
-新建文件`.vuepress/components`
-
-安装依赖
-
-```
-yarn add  @vuepress/plugin-register-components@next
-```
-
-修改配置`.vuepress/config.js`
-
-```js
-plugins: [
-    [
-      '@vuepress/register-components',
-      {
-        componentsDir: path.resolve(__dirname, './components'),
-      },
-    ],
-],
-```
-配置导航
-```js
-themeConfig: {
-    //...
-    navbar: [
-      // NavbarItem
-      {
-        text: 'Page',
-        link: '/page',// 注意link不要与你的articlesDir文件名重复，除非你知道重复的影响
-      },
-    ],
-  },
-```
-
-新建页面组件`.vuepress/components/Page.vue`
-```
-<template>
-我是新建的页面组件
-</template>
-<script setup>
-const nav = __NAVBAR__
-const post = __POST__
-console.log({nav,post})
-</script>
-```
-
-新建页面`docs/page/index.md`并引入组件
-```md
-<Page />
-```
-重启服务`yarn dev`
-
-访问`/page`就可以看到自定义的页面
 ## 自定义布局
 在 `.vuepress/clientAppEnhance.js` 文件中注册一个布局组件：
 ```js
@@ -148,6 +91,37 @@ import Layout from "@theme/Layout.vue";
 
 ```
 
+## 布局替换规则
+
+```
+---
+layout: CustomHome #全局替换整个页面，你有更大的自由度。
+---
+# foo
+
+<Test /> # 渲染到`.md-body`中
+```
+
+如果你想全局部分替换可以再`CustomHome`导入主题自带组件
+主题提供的自带组件目前有
+```sh
+├──404.vue
+├──Articles.vue
+├──Comment.vue
+├──Cover.vue
+├──Detail.vue
+├──Footer.vue
+├──Home.vue
+├──Layout.vue
+├──NavBar.vue
+├──Page.vue
+├──ReadingProgress.vue
+├──Sidebar.vue
+├──Tags.vue
+├──ThemeMeta.vue
+└──Timeline.vue
+```
+
 
 
 ## 项目结构
@@ -166,8 +140,6 @@ import Layout from "@theme/Layout.vue";
 │ │ ├──2021
 │ │ │ └──2020-3-16-chrome-plugin.md
 │ │ ├──2020-3-16-vscode-plugin.md
-│ │ ├──2020-3-16-windows-plugin.md
-│ │ └──2020-3-18-electron-mirror-down.md
 │ └──README.md
 ├──.gitignore
 ├──README.md
@@ -178,7 +150,7 @@ import Layout from "@theme/Layout.vue";
 ```
 
 ## Frontmatter
-可插件生成的
+可自动生成
 ```yaml
 ---
 #页面的标题。
@@ -199,7 +171,6 @@ cover:
 ```
 非必须的
 ```yaml
-
 #一个系列的文章拥有一样的group值
 group: npm系列
 #页面的永久链接。
@@ -217,25 +188,7 @@ pageClass: custom-page-class
 lang:  
 ```
 
-## 如何为你的网站开启搜索
+## 如何为你的网站开启评论
+主题自带[valine](https://valine.js.org/)评论，你可以替换为自己喜欢的评论系统
 
-todo:
-
-
-## 布局替换规则
-
-```
----
-#layout: CustomHome #全局替换整个页面，你有更大的自由度。
----
-# foo
-
-<Test /> # 渲染到`.md-body`中
-```
-
-如果你想全局部分替换可以再`CustomHome`导入主题自带组件
-主题提供的自带组件目前有
-```js
-import Navbar from '@theme/Navbar.vue'
-import Navbar from '@theme/Layout.vue'
-```
+`.env`里填写自己的`appid`和`appkey`
