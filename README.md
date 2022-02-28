@@ -6,16 +6,17 @@
 
 ![](https://gitee.com/artiely/Figure-bed/raw/master/20220225160753.png)
 
-:green_heart: 基于vuepress@next
+:green_heart: **基于vuepress@next**  vue3+vite
 
-:beers: 使用简单
+:beers: **使用简单** 零配置，直接开始写作markdown即可
 
-:nail_care: 易扩展
+:nail_care: **易扩展** 可自己定义一切
 
-:art: 主题丰富
+:art: **主题丰富** 自带丰富的主题不断迭代
 
-:clipboard: 优化了中文排版
+:clipboard: **优化了中文排版** 优雅的中文排版样式和字体
 
+:rocket: **无服务端** 无需服务器，无接口但可以自己扩展，纯静态资源可以再github，gitee等免费部署
 
 
 ## 示例演示
