@@ -5,6 +5,16 @@
 
 ![](https://gitee.com/artiely/Figure-bed/raw/master/20220225160753.png)
 
+:green_heart: 基于vuepress@next
+
+:beers: 使用简单
+
+:nail_care: 易扩展
+
+:art: 主题丰富
+
+
+
 ## 示例演示
 
 [https://artiely.github.io/](https://artiely.github.io/)
@@ -42,8 +52,12 @@ yarn dev
 参见`deploy.sh`文件注释
 
 
-我们推荐使用模板，你也可以直接安装主题`yarn add vuepress-theme-dog`
 
+-----
+
+以下为自定义内容
+
+我们推荐使用模板，你也可以直接安装主题`yarn add vuepress-theme-dog`
 
 ## 配置文章的路径和菜单
 
