@@ -515,12 +515,20 @@
     "@vueuse/shared" "7.5.5"
     vue-demi "*"
 
-"@vueuse/core@^7.5.5":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-7.6.2.tgz#1b9aa92048991189fac31577ff439296efa5fb4a"
-  integrity sha512-bjAbXJVJO6aElMaZtDz2B70C0L6jFk/jGVqJxWZS5huffxA6dW5DN6tQQJwzOnx9B9rDhePHJIFKsix0qZIH2Q==
+"@vueuse/core@^7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-7.7.0.tgz#ddc5bbc910fbe0e2eda2cc823998dcf4a13265b4"
+  integrity sha512-DS8+dg758CiWnswebYHjS05PqTtc1ZLomsDlkFjG/KC0iFRgFIsGC66AAGuSXLqWCoirp2xN6N2mkrp1aHdI7A==
   dependencies:
-    "@vueuse/shared" "7.6.2"
+    "@vueuse/shared" "7.7.0"
+    vue-demi "*"
+
+"@vueuse/router@^7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/router/-/router-7.7.0.tgz#3b5aac29ff1fb03940dead32235fbd53ee34a388"
+  integrity sha512-iRqj5hyK2iPArIKczL0+QpoiE/ZkbxHCK10X42Oh9MJ0IyFGjF/EVO6482zQFYnO+GnqXpyHRuvWf3Rx2W5hKA==
+  dependencies:
+    "@vueuse/shared" "7.7.0"
     vue-demi "*"
 
 "@vueuse/shared@7.5.5":
@@ -530,10 +538,10 @@
   dependencies:
     vue-demi "*"
 
-"@vueuse/shared@7.6.2":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-7.6.2.tgz#6d83bdb003cd8a56dc779fe501e73a4cb755b802"
-  integrity sha512-ThDld4Mx501tahRuHV6qJGkwCr17GknZrOzlD02Na9qJcH7Pq0quNTLx5cNDou7b1CKNvE3BXi2w/hz9KuPNTQ==
+"@vueuse/shared@7.7.0":
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-7.7.0.tgz#4fa97e68f987c8a10bf075de0e57b986da9f1b38"
+  integrity sha512-ANzMcUnjuUPJ9nWqMAqYt8p0qon6AH5pP5/V/0RSWkwCIWZwi57ujIaxizzMwnJECUF/73BmsRmpvvtokCIrKw==
   dependencies:
     vue-demi "*"
 
@@ -2848,7 +2856,7 @@ node-releases@^2.0.1:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.1.tgz#3d1d395f204f1f2f29a54358b9fb678765ad2fc5"
   integrity sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==
 
-nodejieba@^2.2.1:
+nodejieba@^2.5.2:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/nodejieba/-/nodejieba-2.6.0.tgz#f56dd4f0660cd294af0e2834f9008ef92dfe36c0"
   integrity sha512-cyEOLRGLjDuxbTuv6nuMAK3NpML4ft9i7st98TFHvXtg+m3RFhIuf4INBHGp3VhUaqPsCTfAkhHB/ZNTFiwJjg==
@@ -3083,14 +3091,14 @@ pify@^4.0.1:
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
 pinyin@^2.10.2:
-  version "2.10.2"
-  resolved "https://registry.yarnpkg.com/pinyin/-/pinyin-2.10.2.tgz#93e3b3cb4430009925163bad10c741778c85b013"
-  integrity sha512-qAcp7+2vnjm6sAd0B9pp5JpyvHbYoQO1v9zCeJQMEgyw2VeRi02l0gR22ZBgfjjvZ1c2EGoVjJHJ1h0rwr34Ug==
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/pinyin/-/pinyin-2.11.0.tgz#c54e579a4a1217b87a9059792513ac367e40aef9"
+  integrity sha512-fASfw1w+Pd3NYOU4h7tXLXKttmk5b+2omreMv+B5dHpnAMiu4WKkHBGKkoZHyrXd+pM8jQVVWqY7j3ACoGxJEg==
   dependencies:
     commander "~1.1.1"
     object-assign "^4.0.1"
   optionalDependencies:
-    nodejieba "^2.2.1"
+    nodejieba "^2.5.2"
 
 pngjs@^3.3.3:
   version "3.4.0"
@@ -3961,12 +3969,13 @@ vue@^3.2.28:
     "@vue/server-renderer" "3.2.30"
     "@vue/shared" "3.2.30"
 
-vuepress-theme-dog@^1.0.0-beta.37:
-  version "1.0.0-beta.37"
-  resolved "https://registry.yarnpkg.com/vuepress-theme-dog/-/vuepress-theme-dog-1.0.0-beta.37.tgz#eb423ed07eb1e46bd3a02a72b9a9839b44a47b50"
-  integrity sha512-2WviYWpfhY2Q03eLq/N+CdOg7LYjxgpNwihLOxRnWlPFUNd71c62YeSkv5+g0ry8i/7EZYZD2+q+EHHmRmTabw==
+vuepress-theme-dog@^1.0.0-beta.38:
+  version "1.0.0-beta.38"
+  resolved "https://registry.yarnpkg.com/vuepress-theme-dog/-/vuepress-theme-dog-1.0.0-beta.38.tgz#0bd31e36a452f60de43cf3e33c2853d1a1dea109"
+  integrity sha512-5EZnaM7kkRz7TnDvd9qiwGlCScBVSq0ads8/qG0GnDc10BNfvwy9AKPOgc9ZtnPqepKV1LP0mn3VZhJaoOKvSw==
   dependencies:
-    "@vueuse/core" "^7.5.5"
+    "@vueuse/core" "^7.7.0"
+    "@vueuse/router" "^7.7.0"
     colorthief "^2.3.2"
     dayjs "^1.10.7"
     gitalk "^1.7.2"
