@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-js-2
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200829105349.png
+cover: ./2020-8-29-frontend-js2.assets/20200829105349.png
 base64: 141414
 author: artiely
 date: Fri, 28 Aug 2020 16:00:00 GMT
@@ -229,7 +229,7 @@ console.log(window.bb); // undefined
 
 在哪里？怎么获取？通过在设置断点，看看浏览器是怎么处理的：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100519.png)
+![](./2020-8-29-frontend-js2.assets/20200829100519.png)
 
 通过上图也可以看到，在全局作用域中，用 let 和 const 声明的全局变量并没有在全局对象中，只是一个块级作用域（Script）中
 
@@ -245,7 +245,7 @@ console.log(bb); // 2
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100533.png)
+![](./2020-8-29-frontend-js2.assets/20200829100533.png)
 
 const和let会生成块级作用域，可以理解为
 

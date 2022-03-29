@@ -1,11 +1,13 @@
 const { path } = require('@vuepress/utils')
 require('dotenv-flow').config();
+const sourceDir = path.join(__dirname,'../')
 module.exports = {
   base:process.env.NODE_ENV=='development'?'/':'/',
   lang: 'zh-CN',
   title: "Artiely'blog",
   description: 'Artiely的博客',
   shouldPrefetch:true,
+  public:`${sourceDir}/posts/`,
   themeConfig: {
     postsDir:path.resolve(__dirname, '../posts'),
     motto:['Miracles sometimes occur,','but one has to work terribly for them.'],

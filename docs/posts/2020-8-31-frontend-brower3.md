@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-浏览器篇-3
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200831112934.png
+cover: ./2020-8-31-frontend-brower3.assets/20200831112934.png
 base64: 2b4dd7
 author: artiely
 date: Sun, 30 Aug 2020 16:00:00 GMT
@@ -21,7 +21,7 @@ words: 7977
 1. 如果开启了Service Worker首先会从Service Worker中拿
 2. 如果新开一个以前打开过的页面缓存会从Disk Cache(磁盘缓存)中拿（前提是命中强缓存）
 3. 刷新当前页面时浏览器会根据当前运行环境内存来决定是从 Memory Cache(内存缓存) 还是 从Disk Cache中拿(可以看到下图最后几个文件有时候是从 Memory Cache中拿有时候是从Disk Cache中拿) 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/weizhi_1.gif)
+![](./2020-8-31-frontend-brower3.assets/weizhi_1.gif)
 
 **注意**：以上回答全部基于chrome浏览器
 
@@ -32,7 +32,7 @@ words: 7977
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104538.png)
+![](./2020-8-31-frontend-brower3.assets/20200831104538.png)
 
 
 
@@ -168,7 +168,7 @@ Cache-control: max-age=2592000
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104610.png)
+![](./2020-8-31-frontend-brower3.assets/20200831104610.png)
 
 
 
@@ -247,7 +247,7 @@ Cache-control: max-age=2592000
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104647.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104647.png)
 
    
 
@@ -257,7 +257,7 @@ Cache-control: max-age=2592000
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104658.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104658.png)
 
    
 
@@ -267,7 +267,7 @@ Cache-control: max-age=2592000
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104711.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104711.png)
 
    
 
@@ -306,13 +306,13 @@ Cache-control: max-age=2592000
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104744.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104744.png)
 
    
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104758.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104758.png)
 
    
 
@@ -327,13 +327,13 @@ Cache-control: max-age=2592000
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104814.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104814.png)
 
    
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104829.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104829.png)
 
    
 
@@ -380,7 +380,7 @@ self.addEventListener('fetch', e => {
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104855.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104855.png)
 
    
 
@@ -388,7 +388,7 @@ self.addEventListener('fetch', e => {
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104908.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104908.png)
 
    
 
@@ -396,7 +396,7 @@ self.addEventListener('fetch', e => {
 
    
 
-   ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831104920.png)
+   ![](./2020-8-31-frontend-brower3.assets/20200831104920.png)
 
    
 

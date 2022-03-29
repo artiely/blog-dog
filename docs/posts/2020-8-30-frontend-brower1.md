@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-浏览器篇-1
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200831112934.png
+cover: ./2020-8-30-frontend-brower1.assets/20200831112934.png
 base64: 2b4dd7
 author: artiely
 date: Sat, 29 Aug 2020 16:00:00 GMT
@@ -130,7 +130,7 @@ words: 5781
 
 Node的事件循环是libuv实现的，引用一张官网的图：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103125.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103125.png)
 
 大体的task（宏任务）执行顺序是这样的：
 
@@ -159,7 +159,7 @@ Node 11以后： 和浏览器的行为统一了，都是每执行一个宏任务
 
 官方的说法是：**进程是 CPU资源分配的最小单位；线程是 CPU调度的最小单位**。这两句话并不好理解，我们先来看张图：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103150.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103150.png)
 
 
 
@@ -230,7 +230,7 @@ Node 11以后： 和浏览器的行为统一了，都是每执行一个宏任务
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103255.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103255.png)
 
 
 
@@ -245,7 +245,7 @@ Node 11以后： 和浏览器的行为统一了，都是每执行一个宏任务
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103324.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103324.png)
 
 
 
@@ -283,7 +283,7 @@ Node 中的 Event Loop 和浏览器中的是完全不相同的东西。Node.js�
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103422.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103422.png)
 
 Node.js的运行机制如下:
 
@@ -300,7 +300,7 @@ Node.js的运行机制如下:
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103517.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103517.png)
 
 
 
@@ -446,7 +446,7 @@ process.nextTick(() => {
 
 **浏览器环境下，microtask的任务队列是每个macrotask执行完之后执行。而在Node.js中，microtask会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行microtask队列的任务**。
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831103717.png)
+![](./2020-8-30-frontend-brower1.assets/20200831103717.png)
 
 
 
@@ -474,7 +474,7 @@ setTimeout(()=>{
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16841d6392e8f537.gif)
+![](./2020-8-30-frontend-brower1.assets/16841d6392e8f537.gif)
 
 
 
@@ -493,7 +493,7 @@ Node端运行结果分两种情况：
 
 Node端的处理过程如下：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16841d5f85468047.gif)
+![](./2020-8-30-frontend-brower1.assets/16841d5f85468047.gif)
 
 
 

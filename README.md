@@ -182,9 +182,10 @@ layout: CustomHome #全局替换整个页面，你有更大的自由度。
 │ └──README.md
 ├──.gitignore
 ├──README.md
-├──color.js
+├──yaml.js #批量自动生成头部的Frontmatter脚本
 ├──package.json
-├──server.js
+├──server.js #打包后预览的脚本
+├──imgToLocal.js #讲图片地址转本地相对路径 用于之前使用的gitee（加了放外链后）等做的图床迁移
 └──yarn.lock
 ```
 

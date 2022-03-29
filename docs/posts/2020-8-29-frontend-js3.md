@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-js-3
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200829105349.png
+cover: ./2020-8-29-frontend-js3.assets/20200829105349.png
 base64: 141414
 author: artiely
 date: Fri, 28 Aug 2020 16:00:00 GMT

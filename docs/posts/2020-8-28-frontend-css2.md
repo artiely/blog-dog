@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-css-2
 tag: CSS
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200829105244.png
+cover: ./2020-8-28-frontend-css2.assets/20200829105244.png
 base64: fafa00
 author: artiely
 date: Thu, 27 Aug 2020 16:00:00 GMT
@@ -34,7 +34,7 @@ words: 3501
 
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093617.png)
+![](./2020-8-28-frontend-css2.assets/20200829093617.png)
 
 0.5px边框
 
@@ -77,7 +77,7 @@ border-width: 0.5px;
 
 准备一张符合你要求的border-image：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093735.png)
+![](./2020-8-28-frontend-css2.assets/20200829093735.png)
 
 底部边框
 
@@ -93,7 +93,7 @@ border-image: url(linenew.png) 0 0 2 0 stretch;
 
 上文是把border设置在边框的底部，所以使用的图片是2px高，上部的1px颜色为透明，下部的1px使用视觉规定的border的颜色。如果边框底部和顶部同时需要border，可以使用下面的border-image：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093659.png)
+![](./2020-8-28-frontend-css2.assets/20200829093659.png)
 
 上下边框
 
@@ -273,7 +273,7 @@ document.querySelector('ul').className = 'scale-1px';
 圣杯布局和双飞翼布局是前端工程师需要日常掌握的重要布局方式。两者的功能相同，都是为了实现一个**两侧宽度固定，中间宽度自适应的三栏布局**。
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829095956.png)
+![](./2020-8-28-frontend-css2.assets/20200829095956.png)
 
 圣杯布局与双飞翼布局
 
@@ -321,7 +321,7 @@ document.querySelector('ul').className = 'scale-1px';
 
 为左右两列预留出相应的空间，得到如下示意图：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100115.png)
+![](./2020-8-28-frontend-css2.assets/20200829100115.png)
 
 创建布局框架
 
@@ -353,7 +353,7 @@ document.querySelector('ul').className = 'scale-1px';
 
 得到如下效果：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100137.png)
+![](./2020-8-28-frontend-css2.assets/20200829100137.png)
 
 设置宽度和清除浮动
 
@@ -372,7 +372,7 @@ document.querySelector('ul').className = 'scale-1px';
 
 得到：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100202.png)
+![](./2020-8-28-frontend-css2.assets/20200829100202.png)
 
 将left移动到预留位置-1
 
@@ -391,7 +391,7 @@ document.querySelector('ul').className = 'scale-1px';
 
 这里使用`position: relative`和`right: 200px`将`left`的位置在原有位置基础上左移200px，以完成`left`的放置：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100217.png)
+![](./2020-8-28-frontend-css2.assets/20200829100217.png)
 
 将left移动到预留位置-2
 
@@ -408,7 +408,7 @@ document.querySelector('ul').className = 'scale-1px';
 
 得到最终的效果图：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100229.png)
+![](./2020-8-28-frontend-css2.assets/20200829100229.png)
 
 将right移动到预留位置
 
@@ -466,7 +466,7 @@ body {
 最后提醒一下很多朋友可能会忽略的小细节：在`#center`中，包含了一条声明`width: 100%`，这是中间栏能够做到自适应的关键。可能会有朋友认为不需要设置这条声明，因为觉得`center`在不设置宽度的情况下会默认将宽度设置为父元素(`container`)的100%宽度。但需要注意到，`center`是浮动元素，由于浮动具有**包裹性**，在不显式设置宽度的情况下会自动“收缩”到内容的尺寸大小。如果去掉`width: 100%`，则当中间栏不包含或者包含较少内容时，整个布局会“崩掉”，而达不到这样的效果：
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100244.png)
+![](./2020-8-28-frontend-css2.assets/20200829100244.png)
 
 中间栏仅包含较少内容
 
@@ -527,7 +527,7 @@ body {
 
 得到如下效果示意图：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100304.png)
+![](./2020-8-28-frontend-css2.assets/20200829100304.png)
 
 双飞翼布局初始设置
 
@@ -546,7 +546,7 @@ body {
 
 得到：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100320.png)
+![](./2020-8-28-frontend-css2.assets/20200829100320.png)
 
 放置left到预留位置
 
@@ -563,14 +563,14 @@ body {
 
 得到最终效果：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100335.png)
+![](./2020-8-28-frontend-css2.assets/20200829100335.png)
 
 双飞翼布局最终效果
 
 最后计算最小页面宽度：由于双飞翼布局没有用到`position:relative`进行定位，所以最小页面宽度应该为200+150=350px。但是当页面宽度缩小到350px附近时，会挤占中间栏的宽度，使得其内容被右侧栏覆盖，如下所示：
 
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100351.png)
+![](./2020-8-28-frontend-css2.assets/20200829100351.png)
 
 中间栏内容被覆盖
 
@@ -684,7 +684,7 @@ body {
 
 使用`border-box`可以将`center`的整个盒模型宽度设置为父元素的100%宽度，此时再利用`padding-left`和`padding-right`可以自动得到中间栏的自适应宽度。不过需要注意的是，由于padding是盒子的一部分，所以padding部分会具有中间栏的背景色，当中间栏高于侧栏时，会出现这样的情况：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100407.png)
+![](./2020-8-28-frontend-css2.assets/20200829100407.png)
 
 padding背景色影响左侧空间
 

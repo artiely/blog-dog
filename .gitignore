@@ -9,4 +9,5 @@ node_modules
 theme
 deploy.local.sh
 docs/.vuepress/dist
+.vscode
 

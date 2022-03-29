@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-js-1
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200829105349.png
+cover: ./2020-8-29-frontend-js1.assets/20200829105349.png
 base64: 141414
 author: artiely
 date: Fri, 28 Aug 2020 16:00:00 GMT
@@ -149,7 +149,7 @@ $(window).on('scroll', function () {
 });
 ```
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16333387f76fbab5.gif)
+![](./2020-8-29-frontend-js1.assets/16333387f76fbab5.gif)
 
 这样做的一个缺点就是比较消耗性能，因为当在滚动的时候，浏览器会无时不刻地在计算判断是否滚动到底部的逻辑，而在实际的场景中是不需要这么做的，在实际场景中可能是这样的：在滚动过程中，每隔一段时间在去计算这个判断逻辑。而函数节流所做的工作就是每隔一段时间去执行一次原本需要无时不刻地在执行的函数，所以在滚动事件中引入函数的节流是一个非常好的实践：
 
@@ -166,7 +166,7 @@ $(window).on('scroll', throttle(function () {
 }));
 ```
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16333387f74f7cba.gif)
+![](./2020-8-29-frontend-js1.assets/16333387f74f7cba.gif)
 
 加上函数节流之后，当页面再滚动的时候，每隔 `300ms` 才会去执行一次判断逻辑。
 
@@ -212,7 +212,7 @@ $('input.user-name').on('input', function () {
 });
 ```
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16333387f758adb0.gif)
+![](./2020-8-29-frontend-js1.assets/16333387f758adb0.gif)
 
 很明显，这样的做法不好的是当用户输入第一个字符的时候，就开始请求判断了，不仅对服务器的压力增大了，对用户体验也未必比原来的好。而理想的做法应该是这样的，当用户输入第一个字符后的一段时间内如果还有字符输入的话，那就暂时不去请求判断用户名是否被占用。在这里引入函数防抖就能很好地解决这个问题：
 
@@ -238,7 +238,7 @@ $('input.user-name').on('input', debounce(function () {
 }));
 ```
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/16333387f75dc4e0.gif)
+![](./2020-8-29-frontend-js1.assets/16333387f75dc4e0.gif)
 
 其实函数防抖的原理也非常地简单，通过闭包保存一个标记来保存 `setTimeout` 返回的值，每当用户输入的时候把前一个 `setTimeout` clear 掉，然后又创建一个新的 `setTimeout`，这样就能保证输入字符后的 `interval` 间隔内如果还有字符输入的话，就不会执行 `fn` 函数了。
 
@@ -436,7 +436,7 @@ WeakSet 与 Set 的区别：
   console.log(weakset)
   ```
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829100449.png)
+![](./2020-8-29-frontend-js1.assets/20200829100449.png)
 
 方法：
 

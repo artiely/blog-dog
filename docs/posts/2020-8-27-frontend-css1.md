@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-css-1
 tag: CSS
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200829105244.png
+cover: ./2020-8-27-frontend-css1.assets/20200829105244.png
 base64: fafa00
 author: artiely
 date: Wed, 26 Aug 2020 16:00:00 GMT
@@ -64,7 +64,7 @@ Flex Box 由伸缩容器和伸缩项目组成。通过设置元素的 display �
 
 　　图片展示：
 
-　　![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829092919.png)
+　　![](./2020-8-27-frontend-css1.assets/20200829092919.png)
 
 　　代码如下：
 
@@ -133,7 +133,7 @@ div.child{
 
    展示图如下：
 
-　　![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093029.png)
+　　![](./2020-8-27-frontend-css1.assets/20200829093029.png)
 
 　　代码如下：
 
@@ -163,7 +163,7 @@ div.child{
 
    展示图如下：
 
-  ![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093051.png)
+  ![](./2020-8-27-frontend-css1.assets/20200829093051.png)
 
 
 
@@ -188,7 +188,7 @@ div.child{
 
 　　展示图如下：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200829093116.png)
+![](./2020-8-27-frontend-css1.assets/20200829093116.png)
 
 　　代码如下：
 

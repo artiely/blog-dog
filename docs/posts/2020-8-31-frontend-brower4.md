@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-浏览器篇-4
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200831112934.png
+cover: ./2020-8-31-frontend-brower4.assets/20200831112934.png
 base64: 2b4dd7
 author: artiely
 date: Sun, 30 Aug 2020 16:00:00 GMT

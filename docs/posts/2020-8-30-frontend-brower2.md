@@ -1,7 +1,7 @@
 ---
 title: 前端面试题汇总-浏览器篇-2
 tag: javaScript
-cover: https://gitee.com/artiely/Figure-bed/raw/master/image/20200831112934.png
+cover: ./2020-8-30-frontend-brower2.assets/20200831112934.png
 base64: 2b4dd7
 author: artiely
 date: Sat, 29 Aug 2020 16:00:00 GMT
@@ -36,7 +36,7 @@ token是一种身份验证的机制，初始时用户提交账号数据给服务
 
 它的工作流程大概是这样：
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831105031.png)
+![](./2020-8-30-frontend-brower2.assets/20200831105031.png)
 
 组件图
 
@@ -93,7 +93,7 @@ token是一种身份验证的机制，初始时用户提交账号数据给服务
 
 ### 生成token
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831105047.png)
+![](./2020-8-30-frontend-brower2.assets/20200831105047.png)
 
 生成token
 
@@ -108,7 +108,7 @@ token是一种身份验证的机制，初始时用户提交账号数据给服务
 
 ### 拦截验证
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831105120.png)
+![](./2020-8-30-frontend-brower2.assets/20200831105120.png)
 
 拦截验证
 
@@ -116,7 +116,7 @@ token是一种身份验证的机制，初始时用户提交账号数据给服务
 
 ###  token刷新
 
-![](https://gitee.com/artiely/Figure-bed/raw/master/image/20200831105137.png)
+![](./2020-8-30-frontend-brower2.assets/20200831105137.png)
 
 token刷新
 
