@@ -52,8 +52,10 @@ yarn dev
 
 
 ## 打包部署
-
-参见`deploy.sh`文件注释
+```
+yarn deploy 
+```
+配置参见`deploy.sh`文件注释
 
 
 
