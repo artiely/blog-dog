@@ -238,6 +238,59 @@ lang:
 
 喜欢请帮忙推广一下，点个小星星
 
-
+## Environment Info:
+```
+System:
+    OS: macOS 10.15.7
+    CPU: (12) x64 Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+    Memory: 331.55 MB / 16.00 GB
+    Shell: 5.7.1 - /bin/zsh
+  Binaries:
+    Node: 14.18.1 - /usr/local/bin/node
+    Yarn: 1.22.10 - /usr/local/bin/yarn
+    npm: 6.14.15 - /usr/local/bin/npm
+  Utilities:
+    Git: 2.24.3 - /usr/bin/git
+  Browsers:
+    Chrome: Not Found
+    Edge: Not Found
+    Firefox: Not Found
+    Safari: 15.2
+  npmPackages:
+    @vuepress/bundler-vite:  2.0.0-beta.35 
+    @vuepress/bundler-webpack: Not Found
+    @vuepress/cli:  2.0.0-beta.35 
+    @vuepress/client:  2.0.0-beta.35 
+    @vuepress/core:  2.0.0-beta.35 
+    @vuepress/markdown:  2.0.0-beta.35 
+    @vuepress/plugin-active-header-links:  2.0.0-beta.35 
+    @vuepress/plugin-back-to-top:  2.0.0-beta.35 
+    @vuepress/plugin-container:  2.0.0-beta.35 
+    @vuepress/plugin-debug: Not Found
+    @vuepress/plugin-docsearch: Not Found
+    @vuepress/plugin-external-link-icon:  2.0.0-beta.35 
+    @vuepress/plugin-git:  2.0.0-beta.35 
+    @vuepress/plugin-google-analytics: Not Found
+    @vuepress/plugin-medium-zoom:  2.0.0-beta.35 
+    @vuepress/plugin-nprogress:  2.0.0-beta.35 
+    @vuepress/plugin-palette:  2.0.0-beta.35 
+    @vuepress/plugin-prismjs:  2.0.0-beta.35 
+    @vuepress/plugin-pwa: Not Found
+    @vuepress/plugin-pwa-popup: Not Found
+    @vuepress/plugin-register-components: Not Found
+    @vuepress/plugin-search: ^2.0.0-beta.35 => 2.0.0-beta.35 
+    @vuepress/plugin-shiki: Not Found
+    @vuepress/plugin-theme-data:  2.0.0-beta.35 
+    @vuepress/plugin-toc: Not Found
+    @vuepress/shared:  2.0.0-beta.35 
+    @vuepress/theme-default:  2.0.0-beta.35 
+    @vuepress/utils:  2.0.0-beta.35 
+    vue:  3.2.30 
+    vue-loader: Not Found
+    vue-router:  4.0.12 
+    vuepress: ^2.0.0-beta.35 => 2.0.0-beta.35 
+    vuepress-vite:  2.0.0-beta.35 
+    vuepress-webpack: Not Found
+```
 
 ![](https://gitee.com/artiely/Figure-bed/raw/master/20220225175423.png)
